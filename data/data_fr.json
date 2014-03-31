@@ -1,0 +1,487 @@
+{
+    "model": "default",
+    "pdfModel": "default",
+    "lastName": "Norris",
+    "firstName": "Chuck",
+    "birthDate": {
+        "day": "10",
+        "month": "03",
+        "year": "1940"
+    },
+    "status": "Marié",
+    "address": {
+        "address": "11872 La Grange Avenue",
+        "zipCode": "CA 90025",
+        "city": "Los Angeles",
+        "country": "USA"
+    },
+    "phone": "(424) 208-7300",
+    "mail": "donttryit@chucknorris.com",
+    "currentJob": "Dieu",
+    "currentJobFirstExperienceDate": {
+        "month": "01",
+        "year": "0"
+    },
+    "currentEmployer": {
+        "name": "Norris Brothers Entertainment, Inc.",
+        "address": {
+            "address": "P.O. Box 872",
+            "zipCode": "TX 77868",
+            "city": "Navasota",
+            "country": "USA"
+        },
+        "phone": "(424) 208-7300"
+    },
+    "htmlPresentation": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae cursus elit. Sed mattis massa ac dui ornare, vitae cursus enim luctus. Sed eget justo nec odio tempor porta vitae eu ligula. Etiam tristique pulvinar erat sit amet feugiat. Donec rutrum auctor consectetur. Maecenas euismod mattis lacinia. Pellentesque sit amet sem ultricies, varius arcu tempor, auctor lacus.</p><p>In mollis aliquet elit, sit amet vulputate turpis aliquet nec. Aliquam commodo at quam id tristique. Nunc iaculis erat ut semper euismod. Nam ac bibendum neque. Duis sit amet neque nisl. <a href=\"#\">Sed suscipit mi enim</a>. Mauris sed sapien felis.</p>",
+    "website": "https://github.com/mfalaize/cv-generator",
+    "workExperience": [
+        {
+            "displayOnPdf": true,
+            "beginDate": "Mar. 1940",
+            "endDate": "Aujourd'hui",
+            "job": "L'emploi",
+            "name": "Le nom de la société",
+            "type": "Le type de la société",
+            "numberOfEmployees": "Le nombre d'employés de la société",
+            "revenue": "Le CA de la société",
+            "address": {
+                "address": "Hollywood Blvd & Vine St",
+                "zipCode": "CA 90068",
+                "city": "Hollywood",
+                "country": "USA"
+            },
+            "phone": "(323) 469-8311",
+            "missions": [
+                {
+                    "description": "La description de la mission.",
+                    "technologies": "Les technologies utilisées pendant la mission."
+                }
+            ],
+            "workEnvironment": "L'environnement de travail (logiciels, EDI...).",
+            "comment": "Le commentaire sur l'expérience."
+        },
+        {
+            "displayOnPdf": true,
+            "beginDate": "Mar. 1940",
+            "endDate": "Aujourd'hui",
+            "job": "Acteur",
+            "name": "Hollywood",
+            "type": "Cinéma",
+            "numberOfEmployees": "",
+            "revenue": "",
+            "address": {
+                "address": "Hollywood Blvd & Vine St",
+                "zipCode": "CA 90068",
+                "city": "Hollywood",
+                "country": "USA"
+            },
+            "phone": "(323) 469-8311",
+            "missions": [
+                {
+                    "description": "Rôle principal dans Walker Texas Ranger.",
+                    "technologies": ""
+                },
+                {
+                    "description": "Second rôle dans Return of the Dragon.",
+                    "technologies": ""
+                }
+            ],
+            "workEnvironment": "Environnement extraordinaire avec Bruce Lee.",
+            "comment": "Pas de commentaire."
+        },
+        {
+            "displayOnPdf": true,
+            "beginDate": "Jan. 0",
+            "endDate": "Jan. 33",
+            "job": "Père de Jésus",
+            "name": "Terre",
+            "type": "La plus grande société au monde",
+            "numberOfEmployees": "9 milliards d'employés",
+            "revenue": "16 milliards de USD de CA",
+            "address": {
+                "address": "11872 La Grange Avenue",
+                "zipCode": "CA 90025",
+                "city": "Los Angeles",
+                "country": "USA"
+            },
+            "phone": "(424) 208-7300",
+            "missions": [
+                {
+                    "description": "Eduquer Jésus et lui apprendre à faire des tours de magie.",
+                    "technologies": "Magie 2.0"
+                }
+            ],
+            "workEnvironment": "",
+            "comment": "Pas de commentaire."
+        }
+    ],
+    "education": [
+        {
+            "displayOnPdf": true,
+            "beginDate": "1945",
+            "endDate": "1944",
+            "school": "Université de Harvard",
+            "location": "Faculté de Médecine",
+            "grade": "Master",
+            "speciality": "Neurochirurgie",
+            "distinction": "Mention Bien"
+        }
+    ],
+    "skills": [
+        {
+            "label": "Informatique",
+            "types": [
+                {
+                    "name": "Java",
+                    "categories": [
+                        {
+                            "name": "EDI",
+                            "skills": [
+                                {
+                                    "name": "Eclipse",
+                                    "level": 5,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Netbeans",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Outils",
+                            "skills": [
+                                {
+                                    "name": "Maven",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Ant",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Spring",
+                            "skills": [
+                                {
+                                    "name": "Spring Framework",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Spring Data",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Spring Security",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Spring Roo",
+                                    "level": 1,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "JPA",
+                            "skills": [
+                                {
+                                    "name": "Hibernate",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "EclipseLink",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "JSF",
+                            "skills": [
+                                {
+                                    "name": "JSF/Facelet",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Richfaces",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Primefaces",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Autres standards",
+                            "skills": [
+                                {
+                                    "name": "CDI",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "JSP",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Servlet",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Tests",
+                            "skills": [
+                                {
+                                    "name": "JUnit",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "TestNG",
+                                    "level": 1,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Selenium",
+                                    "level": 1,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Serveurs",
+                            "skills": [
+                                {
+                                    "name": "Tomcat",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Glassfish",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Base de données",
+                    "categories": [
+                        {
+                            "name": "BDD Relationnelles",
+                            "skills": [
+                                {
+                                    "name": "PostgreSQL",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Oracle",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "SQL Server",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "MySQL",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Mobile",
+                    "categories": [
+                        {
+                            "name": "Smartphones",
+                            "skills": [
+                                {
+                                    "name": "iPhone (Objective-C 2.0 sur iOS 4+)",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Android",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Web",
+                    "categories": [
+                        {
+                            "name": "Javascript",
+                            "skills": [
+                                {
+                                    "name": "jQuery",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "jQuery UI",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "AngularJS",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "ExtJS",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "CSS",
+                            "skills": [
+                                {
+                                    "name": "Bootstrap de Twitter",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "XML",
+                            "skills": [
+                                {
+                                    "name": "XSLT",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Autres",
+                    "categories": [
+                        {
+                            "name": "Versionning",
+                            "skills": [
+                                {
+                                    "name": "SVN",
+                                    "level": 4,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                },
+                                {
+                                    "name": "Git",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "PHP",
+                            "skills": [
+                                {
+                                    "name": "Symfony",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "CMS",
+                            "skills": [
+                                {
+                                    "name": "Joomla",
+                                    "level": 3,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Conception",
+                            "skills": [
+                                {
+                                    "name": "UML",
+                                    "level": 2,
+                                    "htmlDescription": "Une courte description sur comment vous avez appris la compétence."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "contributionLanguages": [
+        {
+            "label": "Java",
+            "contributions": [
+                {
+                    "project": "CV Generator",
+                    "projectLink": "https://github.com/mfalaize/cv-generator",
+                    "targetVersion": "1.0.0",
+                    "type": "Correction de bug",
+                    "description": "La description de la correction du bug.",
+                    "links": [
+                        {
+                            "label": "Issue",
+                            "value": "https://github.com/mfalaize/cv-generator"
+                        },
+                        {
+                            "label": "Commit",
+                            "value": "https://github.com/mfalaize/cv-generator"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "miscellaneous": {
+        "drivingLicence": true,
+        "languages": [
+            {
+                "displayOnPdf": true,
+                "name": "Anglais",
+                "level": "Langue maternelle"
+            },
+            {
+                "name": "Français",
+                "level": "Langue maternelle"
+            }
+        ],
+        "pastimes": [
+            {
+                "displayOnPdf": true,
+                "name": "Tous les sports",
+                "beginYear": "0"
+            },
+            {
+                "displayOnPdf": true,
+                "name": "Tous les instruments de musique",
+                "beginYear": "0"
+            }
+        ]
+    }
+}

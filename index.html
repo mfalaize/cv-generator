@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html ng-app="cvApp" ng-controller="CVController">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+        <script type="text/javascript" src="js/jspdf.min.js"></script>
+        <script type="text/javascript" src="js/cv.js"></script>
+        <script type="text/javascript" ng-src="{{cv.linkPdfModel}}"></script>
+    <ng-include src="cv.linkModelHead"></ng-include>
+</head>
+<body ng-cloak>
+<ng-include src="cv.linkModel"></ng-include>
+</body>
+</html>

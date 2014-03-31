@@ -1,0 +1,227 @@
+<div class="container">
+    <header class="page-header">
+        <h1>Curriculum Vitae <small>{{cv.firstName + " " + cv.lastName}}</small>
+            <span class="btn-group pull-right">
+                <button class="btn btn-primary" ng-click="printCV()">{{locale.printCV}}</button>
+                <button class="btn btn-default" ng-click="downloadCV()">{{locale.pdf}}</button>
+            </span>
+        </h1>
+    </header>
+    <div class="col-md-2">
+        <div class="list-group">
+            <a class="list-group-item active" href="#personalData" data-toggle="tab">{{locale.personalData}}</a>
+            <a class="list-group-item" ng-if="cv.workExperience" href="#workExperience" data-toggle="tab">{{locale.workExperience}}</a>
+            <a class="list-group-item" ng-if="cv.education" href="#education" data-toggle="tab">{{locale.education}}</a>
+            <a class="list-group-item" ng-if="cv.skills" href="#skills" data-toggle="tab">{{locale.skills}}</a>
+            <a class="list-group-item" ng-if="cv.contributionLanguages" href="#contributions" data-toggle="tab">{{locale.contributions}}</a>
+            <a class="list-group-item" ng-if="cv.miscellaneous" href="#miscellaneous" data-toggle="tab">{{locale.miscellaneous}}</a>
+        </div>
+        <div class="text-center">
+            <a href="#" ng-repeat="supportedLocale in supportedLocales" ng-click="changeLocale(supportedLocale.locale, supportedLocale.localeFile, supportedLocale.dataFile)">
+                <img src="model/default/img/blank.gif" class="flag {{supportedLocale.flagClass}}" alt="{{supportedLocale.flagClass}}"/>
+            </a>
+        </div>
+    </div>
+
+    <div class="tab-content col-md-10">
+        <div class="tab-pane fade in active" id="personalData">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>{{locale.currentJob}} :</h4>
+                    <p>{{cv.currentJob}}</p>
+                    <br/>
+                    <h4>{{locale.currentEmployer}} :</h4>
+                    <address>
+                        <strong>{{cv.currentEmployer.name}}</strong>
+                        <div ng-bind-html="formatAddressHtml(cv.currentEmployer.address)"></div>
+                        <div>
+                            {{locale.phone}}: {{cv.currentEmployer.phone}}
+                        </div>
+                    </address>
+                </div>
+                <div class="col-md-3">
+                    <h4>{{locale.age}} :</h4>
+                    <p>{{cv.age}}</p>
+                    <br/>
+                    <h4>{{locale.status}} :</h4>
+                    <p>{{cv.status}}</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>{{locale.address}} :</h4>
+                    <address>
+                        <div ng-bind-html="formatAddressHtml(cv.address)"></div>
+                        <div>
+                            {{locale.phone}}: {{cv.phone}}
+                        </div>
+                    </address>
+                    <br/>
+                    <h4>{{locale.mail}} :</h4>
+                    <p><a href="mailto:{{cv.mail}}">{{cv.mail}}</a></p>
+                </div>
+                <div class="col-md-2">
+                    <img src="img/identity.jpeg" class="img-thumbnail" alt="identity photo"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 well">
+                    <h4>{{locale.presentation}} :</h4>
+                    <div ng-bind-html="cv.htmlPresentation"></div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="workExperience">
+            <div class="row" ng-repeat="exp in cv.workExperience">
+                <div class="col-md-3 text-right">
+                    <h4>{{exp.beginDate}} - {{exp.endDate}}</h4>
+                    <h5>{{exp.job}}</h5>
+                    <address>
+                        <strong>{{exp.name}}</strong>
+                        <div ng-bind-html="formatAddressHtml(exp.address)"></div>
+                        <div>
+                            {{locale.phone}}: {{exp.phone}}
+                        </div>
+                    </address>
+                </div>
+                <div class="col-md-9 well">
+                    <span><strong>{{locale.missions}} :</strong></span>
+                    <ul>
+                        <li ng-repeat="mission in exp.missions">
+                            {{mission.description}}<br/>
+                            <span ng-if="mission.technologies"><strong>{{locale.technologies}} :</strong></span> {{mission.technologies}}
+                        </li>
+                    </ul>
+                    <span ng-if="exp.workEnvironment"><strong>{{locale.workEnvironment}} :</strong> {{exp.workEnvironment}}</span>
+                    <p ng-if="exp.comment"><strong>{{locale.comments}} :</strong> {{exp.comment}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="education">
+            <div class="row" ng-repeat="educ in cv.education">
+                <div class="col-md-3 text-right">
+                    <h4>{{educ.beginDate}} - {{educ.endDate}}</h4>
+                    <h5>{{educ.school}}</h5>
+                    <p>{{educ.location}}</p>
+                </div>
+                <div class="col-md-9 well">
+                    <p><strong>{{educ.grade}}</strong><br/>
+                        {{educ.speciality}}<br/>
+                        <small>{{educ.distinction}}</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="skills">
+            <div class="row">
+                <div class="col-md-12">
+                    <fieldset>
+                        <legend>{{locale.caption}}</legend>
+                        <div ng-bind-html="locale.htmlCaptionSkills"></div>
+                    </fieldset>
+                </div>
+            </div>
+            <div ng-repeat="skill in cv.skills">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>{{skill.label}} :</h4>
+                    </div>
+                </div>
+                <div ng-repeat="type in skill.types" class="row">
+                    <div class="col-md-12">
+                        <h5 class="well well-sm">{{type.name}} :</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{{locale.type}}</th>
+                                    <th>{{locale.skill}}</th>
+                                    <th>{{locale.level}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="actualSkill in type.actualSkills">
+                                    <td ng-if="actualSkill.rowspan" rowspan="{{actualSkill.rowspan}}">{{actualSkill.category}}</td>
+                                    <td>{{actualSkill.name}}</td>
+                                    <td><a href="#" data-toggle="popover"
+                                           data-content="{{actualSkill.htmlDescription}}" class="badge">
+                                            <span ng-if="actualSkill.level >= 1" class="glyphicon glyphicon-star"></span>
+                                            <span ng-if="actualSkill.level >= 2" class="glyphicon glyphicon-star"></span>
+                                            <span ng-if="actualSkill.level >= 3" class="glyphicon glyphicon-star"></span>
+                                            <span ng-if="actualSkill.level >= 4" class="glyphicon glyphicon-star"></span>
+                                            <span ng-if="actualSkill.level >= 5" class="glyphicon glyphicon-star"></span>
+                                            <span ng-if="actualSkill.level < 1" class="glyphicon glyphicon-star-empty"></span>
+                                            <span ng-if="actualSkill.level < 2" class="glyphicon glyphicon-star-empty"></span>
+                                            <span ng-if="actualSkill.level < 3" class="glyphicon glyphicon-star-empty"></span>
+                                            <span ng-if="actualSkill.level < 4" class="glyphicon glyphicon-star-empty"></span>
+                                            <span ng-if="actualSkill.level < 5" class="glyphicon glyphicon-star-empty"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contributions">
+            <div class="row">
+                <div ng-bind-html="locale.htmlContributionsInfos" class="col-md-12">
+                </div>
+            </div>
+            <div class="row" ng-repeat="language in cv.contributionLanguages">
+                <div class="col-md-12">
+                    <h5 class="well well-sm">{{language.label}} :</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{{locale.project}}</th>
+                                <th>{{locale.targetVersion}}</th>
+                                <th>{{locale.type}}</th>
+                                <th>{{locale.description}}</th>
+                                <th>{{locale.links}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="contrib in language.contributions">
+                                <td><a href="{{contrib.projectLink}}">{{contrib.project}}</a></td>
+                                <td>{{contrib.targetVersion}}</td>
+                                <td>{{contrib.type}}</td>
+                                <td>{{contrib.description}}</td>
+                                <td>
+                                    <span ng-repeat="link in contrib.links"><a href="{{link.value}}">{{link.label}}</a><br/></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="miscellaneous">
+            <div class="row">
+                <div class="col-md-3">
+                    <div ng-if="cv.miscellaneous.drivingLicence">
+                        <h4>{{locale.drivingLicence}}</h4>
+                        <br/>
+                    </div>
+                    <h4>{{locale.pastimes}} :</h4>
+                    <ul>
+                        <li ng-repeat="pastime in cv.miscellaneous.pastimes">{{pastime.name}} ({{pastime.duration}})</li>
+                    </ul>
+                </div>
+                <div class="col-md-7">
+                    <h4>{{locale.languages}} :</h4>
+                    <ul>
+                        <li ng-repeat="language in cv.miscellaneous.languages">{{language.name}} ({{language.level}})</li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <img src="img/identity.jpeg" class="img-thumbnail" alt="identity photo"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 well">
+                    <h4>{{locale.aboutThisSite}} :</h4>
+                    <div ng-bind-html="locale.htmlAboutThisSite"></div>
+                    <div ng-show="onReady()"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
