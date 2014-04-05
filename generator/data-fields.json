@@ -1,0 +1,81 @@
+{
+    "fields": [
+        {
+            "key": "model",
+            "inputType": "select",
+            "options": [
+                {
+                    "key": "defaultModel",
+                    "value": "default"
+                }
+            ]
+        },
+        {
+            "key": "pdfModel",
+            "inputType": "select",
+            "options": [
+                {
+                    "key": "defaultModel",
+                    "value": "default"
+                }
+            ]
+        },
+        {
+            "key": "lastName",
+            "inputType": "text"
+        },
+        {
+            "key": "firstName",
+            "inputType": "text"
+        },
+        {
+            "key": "birthDate",
+            "inputType": "date"
+        },
+        {
+            "key": "status",
+            "inputType": "text"
+        },
+        {
+            "key": "address",
+            "inputType": "text"
+        },
+        {
+            "key": "zipCode",
+            "inputType": "text"
+        },
+        {
+            "key": "city",
+            "inputType": "text"
+        },
+        {
+            "key": "country",
+            "inputType": "text"
+        },
+        {
+            "key": "phone",
+            "inputType": "tel"
+        },
+        {
+            "key": "mail",
+            "inputType": "mail"
+        },
+        {
+            "key": "htmlPresentation",
+            "keyLabel": "presentation",
+            "inputType": "textarea"
+        },
+        {
+            "key": "website",
+            "inputType": "url"
+        },
+        {
+            "fieldset": {
+                "key": "workExperience",
+                "inputType": "selectMultiple",
+                "fields": [
+                ]
+            }
+        }
+    ]
+}
