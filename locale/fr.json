@@ -48,5 +48,6 @@
     "city": "Ville",
     "country": "Pays",
     "website": "Site Web",
-    "generateCV": "Générer le CV"
+    "generateCV": "Générer le CV",
+    "loadCV": "Ouvrir un CV existant"
 }

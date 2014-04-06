@@ -26,12 +26,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jszip.min.js"></script>
     </head>
     <body ng-controller="CVGeneratorController" ng-cloak>
         <div class="container">
             <header class="page-header">
                 <h1>Curriculum Vitae Generator <small>v1.0.0</small>
                     <span class="btn-group pull-right">
+                        <input style="display:none;" type="file" id="savedFile">
+                        <button class="btn btn-default" ng-click="loadCV()">{{locale.loadCV}}</button>
                         <button class="btn btn-primary" ng-click="generateCV()">{{locale.generateCV}}</button>
                     </span>
                 </h1>

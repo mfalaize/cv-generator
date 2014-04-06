@@ -72,7 +72,7 @@
         {
             "fieldset": {
                 "key": "workExperience",
-                "inputType": "selectMultiple",
+                "inputType": "addSelectMultiple",
                 "fields": [
                 ]
             }

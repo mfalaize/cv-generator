@@ -22,6 +22,22 @@ var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
 cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$sce",
     function($scope, $http, $sce) {
+        $scope.loadCV = function() {
+            $("#savedFile").click();
+        };
+
+        $scope.generateCV = function() {
+            var zip = new JSZip();
+            var root = zip.folder("cv-generator-1.0.0");
+            var dataFolder = root.folder("data");
+
+            $http.get("../data/data_fr.json").success(function(data) {
+                dataFolder.file("data_fr.json", JSON.stringify(data));
+                var content = zip.generate();
+                location.href = "data:application/zip;base64," + content;
+            });
+        };
+
         $http.get("data-fields.json").success(function(data) {
             $scope.fields = data.fields;
         });
