@@ -70,10 +70,23 @@
             "inputType": "url"
         },
         {
-            "fieldset": {
+            "inputType": "panel",
+            "panel": {
                 "key": "workExperience",
                 "inputType": "addSelectMultiple",
                 "fields": [
+                    {
+                        "key": "displayOnPdf",
+                        "inputType": "checkbox"
+                    },
+                    {
+                        "key": "beginDate",
+                        "inputType": "text"
+                    },
+                    {
+                        "key": "endDate",
+                        "inputType": "text"
+                    }
                 ]
             }
         }

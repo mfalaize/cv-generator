@@ -41,23 +41,85 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </header>
             <form class="form-horizontal">
                 <div class="form-group" ng-repeat="field in fields">
-                    <label class="control-label col-md-2" for="{{field.key}}">
-                        <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
-                        <span ng-if="!field.keyLabel">{{locale[field.key]}}</span> :
-                    </label>
-                    <div class="col-md-10">
-                        <select ng-if="field.inputType === 'select'" class="form-control" id="{{field.key}}">
-                            <option ng-repeat="option in field.options" value="{{option.value}}">{{locale[option.key]}}</option>
-                        </select>
-                        <select ng-if="field.inputType === 'selectMultiple'" multiple class="form-control" id="{{field.key}}">
-                            <option ng-repeat="option in field.options" value="{{option.value}}">{{locale[option.key]}}</option>
-                        </select>
-                        <input ng-if="field.inputType === 'date'" type="date" class="form-control" id="{{field.key}}">
-                        <input ng-if="field.inputType === 'text'" type="text" class="form-control" id="{{field.key}}">
-                        <input ng-if="field.inputType === 'mail'" type="email" class="form-control" id="{{field.key}}">
-                        <input ng-if="field.inputType === 'tel'" type="tel" class="form-control" id="{{field.key}}">
-                        <input ng-if="field.inputType === 'url'" type="url" class="form-control" id="{{field.key}}">
-                        <textarea ng-if="field.inputType === 'textarea'" type="text" class="form-control" id="{{field.key}}" rows="5"></textarea>
+                    <div ng-if="field.inputType !== 'panel'">
+                        <div ng-if="field.inputType !== 'checkbox'">
+                            <label class ="control-label col-md-2" for="{{field.key}}">
+                                <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
+                                <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+                            </label>
+                            <div class="col-md-10">
+                                <select ng-if="field.inputType === 'select'" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                    <option ng-repeat="option in field.options" value="{{option.value}}">{{locale[option.key]}}</option>
+                                </select>
+                                <select ng-if="field.inputType === 'selectMultiple'" multiple class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                    <option ng-repeat="option in field.options" value="{{option.value}}">{{locale[option.key]}}</option>
+                                </select>
+                                <input ng-if="field.inputType === 'date'" type="date" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                <input ng-if="field.inputType === 'text'" type="text" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                <input ng-if="field.inputType === 'mail'" type="email" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                <input ng-if="field.inputType === 'tel'" type="tel" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                <input ng-if="field.inputType === 'url'" type="url" class="form-control" id="{{field.key}}" name="{{field.key}}">
+                                <textarea ng-if="field.inputType === 'textarea'" type="text" class="form-control" id="{{field.key}}" name="{{field.key}}" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div ng-if="field.inputType === 'checkbox'">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="{{field.key}}">
+                                        <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
+                                        <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="field.inputType === 'panel'" id="{{field.panel.key}}-append">
+                        <h2>{{locale[field.panel.key]}}
+                            <button ng-click="addField(field.panel.key)" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
+                        </h2>
+                        <div class="panel panel-default" style="display: none;" id="{{field.panel.key}}">
+                            <div class="panel-heading">{{locale[field.panel.key]}}
+                                <span class="btn-group pull-right">
+                                    <button onclick="removeField(this)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                                </span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group" ng-repeat="f in field.panel.fields">
+                                    <div ng-if="f.inputType !== 'checkbox'">
+                                        <label class="control-label col-md-2" for="{{f.key}}-{{index}}">
+                                            <span ng-if="f.keyLabel">{{locale[f.keyLabel]}}</span>
+                                            <span ng-if="!f.keyLabel">{{locale[f.key]}}</span>
+                                        </label>
+                                        <div class="col-md-10">
+                                            <select ng-if="f.inputType === 'select'" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                                <option ng-repeat="option in f.options" value="{{option.value}}">{{locale[option.key]}}</option>
+                                            </select>
+                                            <select ng-if="f.inputType === 'selectMultiple'" multiple class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                                <option ng-repeat="option in f.options" value="{{option.value}}">{{locale[option.key]}}</option>
+                                            </select>
+                                            <input ng-if="f.inputType === 'date'" type="date" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                            <input ng-if="f.inputType === 'text'" type="text" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                            <input ng-if="f.inputType === 'mail'" type="email" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                            <input ng-if="f.inputType === 'tel'" type="tel" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                            <input ng-if="f.inputType === 'url'" type="url" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}">
+                                            <textarea ng-if="f.inputType === 'textarea'" type="text" class="form-control" name="{{f.key}}" id="{{f.key}}-{{index}}" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div ng-if="f.inputType === 'checkbox'">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="{{f.key}}">
+                                                    <span ng-if="f.keyLabel">{{locale[f.keyLabel]}}</span>
+                                                    <span ng-if="!f.keyLabel">{{locale[f.key]}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>

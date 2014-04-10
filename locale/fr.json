@@ -49,5 +49,8 @@
     "country": "Pays",
     "website": "Site Web",
     "generateCV": "Générer le CV",
-    "loadCV": "Ouvrir un CV existant"
+    "loadCV": "Ouvrir un CV existant",
+    "displayOnPdf": "Afficher sur le PDF",
+    "beginDate": "Date de début",
+    "endDate": "Date de fin"
 }
