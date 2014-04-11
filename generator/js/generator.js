@@ -14,14 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-var id = 0;
+$.event.props.push('dataTransfer');
+var id = 0, i = 0, $this;
 
 function generateUniqueId() {
     return "ui-id-" + id++;
 }
 
 function removeField(button) {
-    var div = $(button).parent().parent().parent();
+    var div = $(button).parents(".panel");
     div.hide("slow", function() {
         div.remove();
     });
@@ -54,9 +55,34 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         $scope.addField = function(key) {
             var div = $("#" + key).clone();
             div.attr("id", generateUniqueId());
+            div.find(".panel-title > a").attr("href", "#collapse" + id);
+            div.find(".panel-collapse").attr("id", "collapse" + id);
             $scope.index = id;
             div.appendTo("#" + key + "-append");
             div.show("slow");
+            div.on({
+                dragstart: function(e) {
+                    $this = $(this);
+                    i = $(this).index();
+                    $(this).find("input").each(function() {
+                        $(this).attr("value", $(this).val());
+                    });
+                    e.dataTransfer.setData("text/html", $(this).html());
+                },
+                dragover: function(e) {
+                    e.preventDefault();
+                },
+                drop: function(e) {
+                    if (i !== $(this).index()) {
+                        var data = e.dataTransfer.getData("text/html");
+                        $(this).find("input").each(function() {
+                            $(this).attr("value", $(this).val());
+                        });
+                        $this.html($(this).html());
+                        $(this).html(data);
+                    }
+                }
+            });
         };
 
         $http.get("data-fields.json").success(function(data) {
@@ -66,4 +92,3 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             $scope.locale = data;
         });
     }]);
-
