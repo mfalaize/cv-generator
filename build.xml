@@ -1,0 +1,32 @@
+<project name="cv-generator" default="snapshot" basedir=".">
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="buildCvDir"  location="${build}/cv"/>
+    <property name="version" value="1.1.0"/>
+    <property name="encoding" value="UTF-8"/>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="copy" depends="init">
+        <copy encoding="${encoding}" todir="${buildCvDir}">
+            <fileset dir="." includes="**/*.html,**/*.css,**/*.js,**/*.json,**/*.png,**/*.jpeg,**/*.gif,LICENSE" excludes="build/**"/>
+            <filterset>
+                <filter token="VERSION" value="${version}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="snapshot" depends="copy">
+        <zip destfile="${build}/${ant.project.name}-${version}-SNAPSHOT.zip" basedir="${buildCvDir}"/>
+    </target>
+
+    <target name="release" depends="copy">
+        <zip destfile="${build}/${ant.project.name}-${version}.zip" basedir="${buildCvDir}"/>
+    </target>
+</project>

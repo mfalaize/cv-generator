@@ -42,10 +42,10 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
         $scope.generateCV = function() {
             var zip = new JSZip();
-            var root = zip.folder("cv-generator-1.0.0");
+            var root = zip.folder("cv-generator-@VERSION@");
             var dataFolder = root.folder("data");
 
-            $http.get("../data/data_fr.json").success(function(data) {
+            $http.get("cv/data/data_fr.json").success(function(data) {
                 dataFolder.file("data_fr.json", JSON.stringify(data));
                 var content = zip.generate();
                 location.href = "data:application/zip;base64," + content;
@@ -88,7 +88,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         $http.get("data-fields.json").success(function(data) {
             $scope.fields = data.fields;
         });
-        $http.get("../locale/fr.json").success(function(data) {
+        $http.get("cv/locale/fr.json").success(function(data) {
             $scope.locale = data;
         });
     }]);

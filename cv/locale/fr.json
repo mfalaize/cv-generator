@@ -52,5 +52,8 @@
     "loadCV": "Ouvrir un CV existant",
     "displayOnPdf": "Afficher sur le PDF",
     "beginDate": "Date de début",
-    "endDate": "Date de fin"
+    "endDate": "Date de fin",
+    "enums": {
+        "status": ["Célibataire", "En union libre", "Marié"]
+    }
 }
