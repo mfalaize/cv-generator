@@ -1,5 +1,8 @@
 {
     "model": "default",
+    "modelConfig": {
+        "theme": "default"
+    },
     "pdfModel": "default",
     "lastName": "Norris",
     "firstName": "Chuck",

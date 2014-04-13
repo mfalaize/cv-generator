@@ -5,8 +5,32 @@
             "inputType": "select",
             "options": [
                 {
-                    "key": "defaultModel",
-                    "value": "default"
+                    "keyLabel": "defaultModel",
+                    "value": "default",
+                    "onchange": [
+                        {
+                            "key": "theme",
+                            "inputType": "select",
+                            "options": [
+                                {
+                                    "label": "Bootstrap (default)",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"
+                                },
+                                {
+                                    "label": "Amelia",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/amelia/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Cerulean",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cerulean/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Cosmo",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cosmo/bootstrap.min.css"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -15,7 +39,7 @@
             "inputType": "select",
             "options": [
                 {
-                    "key": "defaultModel",
+                    "keyLabel": "defaultModel",
                     "value": "default"
                 }
             ]

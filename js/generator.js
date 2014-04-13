@@ -85,6 +85,18 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             });
         };
 
+        $scope.getOption = function(field) {
+            if (field && field.options && field.value) {
+                for (var i = 0; i < field.options.length; i++) {
+                    var option = field.options[i];
+                    if (option.value === field.value) {
+                        return option;
+                    }
+                }
+            }
+            return undefined;
+        };
+
         $http.get("data-fields.json").success(function(data) {
             $scope.fields = data.fields;
         });
