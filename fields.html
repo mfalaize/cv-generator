@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
         </label>
         <div class="col-md-10">
-            <select ng-if="field.inputType === 'select'" ng-model="field.value" onchange='$("#{{field.key}}- append").show("slow");' class="form-control" id="{{field.key}}" name="{{field.key}}">
+            <select ng-if="field.inputType === 'select'" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
                 <option ng-repeat="option in field.options" value="{{option.value}}">
                 <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
                 <span ng-if="option.label">{{option.label}}</span>

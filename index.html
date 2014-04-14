@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <link rel="stylesheet" type="text/css" media="screen" href="css/flags.css"/>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular-animate.min.js"></script>
         <script type="text/javascript" src="js/generator.js"></script>
         <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
@@ -83,8 +84,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     </div>
                                 </div>
                             </div>
-                            <div ng-if="getOption(field)">
-                                <div class="form-group" ng-repeat="onchange in getOption(field).onchange" ng-init="field = onchange">
+                            <div class="animation" style="display: none;" ng-if="getOption(fi)">
+                                <div class="form-group" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
                                     <ng-include src="'fields.html'"></ng-include>
                                 </div>
                             </div>

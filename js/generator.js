@@ -29,8 +29,17 @@ function removeField(button) {
 }
 
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
-    "cvGeneratorControllers"
+    "cvGeneratorControllers",
+    "ngAnimate"
 ]);
+
+cvGeneratorApp.animation(".animation", function() {
+    return {
+        enter: function(element, done) {
+            $(element).show("slow");
+        }
+    };
+});
 
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
