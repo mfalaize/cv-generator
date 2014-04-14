@@ -84,8 +84,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                     </div>
                                 </div>
                             </div>
-                            <div class="animation" style="display: none;" ng-if="getOption(fi)">
-                                <div class="form-group" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
+                            <div ng-if="fi.value">
+                                <div class="form-group animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
                                     <ng-include src="'fields.html'"></ng-include>
                                 </div>
                             </div>

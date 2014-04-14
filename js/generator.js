@@ -36,7 +36,16 @@ var cvGeneratorApp = angular.module("cvGeneratorApp", [
 cvGeneratorApp.animation(".animation", function() {
     return {
         enter: function(element, done) {
+            // We hide immediatly before showing because the element cannot be set
+            // with display: none as it is not displayed at the first page load.
+            // This workaround is invisible for our eyes.
+            $(element).hide();
             $(element).show("slow");
+        },
+        leave: function(element, done) {
+            $(element).hide("slow", function() {
+                $(element).remove();
+            });
         }
     };
 });
