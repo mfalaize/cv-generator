@@ -56,37 +56,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="tab-pane active" id="fr">
                     <form class="form-horizontal">
                         <div ng-repeat="fi in fields" ng-init="field = fi">
-                            <div class="form-group">
-                                <div ng-if="fi.inputType !== 'panel'">
-                                    <ng-include src="'fields.html'"></ng-include>
-                                </div>
-                                <div ng-if="fi.inputType === 'panel'">
-                                    <h2>{{locale[fi.panel.key]}}
-                                        <button ng-click="addField(fi.panel.key)" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></button>
-                                    </h2>
-                                    <div class="panel-group" id="{{fi.panel.key}}-append"></div>
-                                    <div draggable="true" class="panel panel-default" style="display: none;" id="{{fi.panel.key}}">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="{{fi.panel.key}}-append" href="#">{{locale[fi.panel.key]}}</a>
-                                                <span class="btn-group pull-right">
-                                                    <button onclick="removeField(this)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group" ng-repeat="f in fi.panel.fields" ng-init="field = f">
-                                                    <ng-include src="'fields.html'"></ng-include>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ng-include src="'include/panel.html'"></ng-include>
                             <div ng-if="fi.value">
-                                <div class="form-group animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
-                                    <ng-include src="'fields.html'"></ng-include>
+                                <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
+                                    <ng-include src="'include/panel.html'"></ng-include>
                                 </div>
                             </div>
                         </div>

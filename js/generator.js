@@ -21,8 +21,53 @@ function generateUniqueId() {
     return "ui-id-" + id++;
 }
 
+function addField(button) {
+    var key = $(button).children().first().text();
+    var genericDiv = $(button).parents("div").first().find("#" + key);
+    console.log(genericDiv.html());
+    var div = genericDiv.clone();
+    div.attr("id", generateUniqueId());
+    div.find(".panel-title > a").attr("href", "#collapse" + id);
+    div.find(".panel-collapse").attr("id", "collapse" + id);
+    div.find("input, select, .panel-group").each(function() {
+        $(this).attr("id", $(this).attr("id") + id);
+    });
+    div.find("label").each(function() {
+        $(this).attr("for", $(this).attr("for") + id);
+    });
+    div.find("a[data-toggle='collapse']").each(function() {
+        $(this).attr("data-parent", $(this).attr("data-parent" + id));
+    });
+    var appendDiv = genericDiv.prev();
+    div.appendTo(appendDiv);
+    div.show("slow");
+    div.on({
+        dragstart: function(e) {
+            $this = $(this);
+            i = $(this).index();
+            $(this).find("input").each(function() {
+                $(this).attr("value", $(this).val());
+            });
+            e.dataTransfer.setData("text/html", $(this).html());
+        },
+        dragover: function(e) {
+            e.preventDefault();
+        },
+        drop: function(e) {
+            if (i !== $(this).index()) {
+                var data = e.dataTransfer.getData("text/html");
+                $(this).find("input").each(function() {
+                    $(this).attr("value", $(this).val());
+                });
+                $this.html($(this).html());
+                $(this).html(data);
+            }
+        }
+    });
+}
+
 function removeField(button) {
-    var div = $(button).parents(".panel");
+    var div = $(button).parents(".panel").first();
     div.hide("slow", function() {
         div.remove();
     });
@@ -67,39 +112,6 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 dataFolder.file("data_fr.json", JSON.stringify(data));
                 var content = zip.generate();
                 location.href = "data:application/zip;base64," + content;
-            });
-        };
-
-        $scope.addField = function(key) {
-            var div = $("#" + key).clone();
-            div.attr("id", generateUniqueId());
-            div.find(".panel-title > a").attr("href", "#collapse" + id);
-            div.find(".panel-collapse").attr("id", "collapse" + id);
-            $scope.index = id;
-            div.appendTo("#" + key + "-append");
-            div.show("slow");
-            div.on({
-                dragstart: function(e) {
-                    $this = $(this);
-                    i = $(this).index();
-                    $(this).find("input").each(function() {
-                        $(this).attr("value", $(this).val());
-                    });
-                    e.dataTransfer.setData("text/html", $(this).html());
-                },
-                dragover: function(e) {
-                    e.preventDefault();
-                },
-                drop: function(e) {
-                    if (i !== $(this).index()) {
-                        var data = e.dataTransfer.getData("text/html");
-                        $(this).find("input").each(function() {
-                            $(this).attr("value", $(this).val());
-                        });
-                        $this.html($(this).html());
-                        $(this).html(data);
-                    }
-                }
             });
         };
 
