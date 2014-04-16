@@ -30,42 +30,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/jszip.min.js"></script>
     </head>
-    <body ng-controller="CVGeneratorController" ng-cloak>
-        <div class="container">
-            <header class="page-header">
-                <h1>Curriculum Vitae Generator <small>v@VERSION@</small>
-                    <span class="btn-group pull-right">
-                        <input style="display:none;" type="file" id="savedFile">
-                        <button class="btn btn-default" ng-click="loadCV()">{{locale.loadCV}}</button>
-                        <button class="btn btn-primary" ng-click="generateCV()">{{locale.generateCV}}</button>
-                    </span>
-                </h1>
-            </header>
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#fr" data-toggle="tab">
-                        <img src="img/blank.gif" class="flag flag-fr" alt="flag-fr"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"><span class="glyphicon glyphicon-plus"></span></a>
-                </li>
-            </ul>
-            <br/>
-            <div class="tab-content">
-                <div class="tab-pane active" id="fr">
-                    <form class="form-horizontal">
-                        <div ng-repeat="fi in fields" ng-init="field = fi">
-                            <ng-include src="'include/panel.html'"></ng-include>
-                            <div ng-if="fi.value">
-                                <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange">
-                                    <ng-include src="'include/panel.html'"></ng-include>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+    <body ng-controller="CVGeneratorController">
+        <div class="modal fade" id="localeModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Choose your language</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="control-label">Choose your CV language</label>
+                        <select id="locale" class="form-control">
+                            <option ng-repeat="supported in supportedLocales" value="{{supported.locale}}">{{supported.label}}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="loadGenerator()">Choose</button>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div ng-if="showGenerator">
+            <ng-include src="'include/generator.html'"></ng-include>
         </div>
     </body>
 </html>

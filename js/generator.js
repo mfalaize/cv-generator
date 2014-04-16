@@ -98,6 +98,9 @@ var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
 cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$sce",
     function($scope, $http, $sce) {
+        $scope.showGenerator = false;
+        $("#localeModal").modal("show");
+
         $scope.loadCV = function() {
             $("#savedFile").click();
         };
@@ -126,10 +129,30 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             return undefined;
         };
 
-        $http.get("data-fields.json").success(function(data) {
+        $scope.loadGenerator = function() {
+            var localeKey = $("#locale").val();
+            var locale = null;
+            for (var i = 0; i < $scope.supportedLocales.length; i++) {
+                var l = $scope.supportedLocales[i];
+                if (l.locale === localeKey) {
+                    locale = l;
+                    break;
+                }
+            }
+            if (locale !== null) {
+                $scope.choosenLocale = locale;
+                $http.get("cv/locale/" + locale.localeFile).success(function(data) {
+                    $scope.locale = data;
+                    $("#localeModal").modal("hide");
+                    $scope.showGenerator = true;
+                });
+            }
+        };
+
+        $http.get("data/data-fields.json").success(function(data) {
             $scope.fields = data.fields;
         });
-        $http.get("cv/locale/fr.json").success(function(data) {
-            $scope.locale = data;
+        $http.get("data/locales.json").success(function(data) {
+            $scope.supportedLocales = data.supportedLocales;
         });
     }]);
