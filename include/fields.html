@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </select>
         <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'text'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" min="{{field.min}}" max="{{field.max}}" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">

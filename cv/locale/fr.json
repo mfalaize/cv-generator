@@ -69,5 +69,8 @@
     "programmingLanguage": "Langage de programmation",
     "projectLink": "Lien du projet",
     "label": "Libellé",
-    "link": "Lien"
+    "link": "Lien",
+    "skillType": "Type de compétence",
+    "subTypes": "Sous-types",
+    "categories": "Catégories"
 }
