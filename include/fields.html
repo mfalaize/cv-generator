@@ -32,19 +32,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
-        <input ng-if="field.inputType === 'date'" type="date" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'text'" type="text" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'mail'" type="email" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'tel'" type="tel" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'url'" type="url" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <textarea ng-if="field.inputType === 'textarea'" type="text" class="form-control" id="{{field.key}}" name="{{field.key}}" rows="5"></textarea>
+        <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'text'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <textarea ng-if="field.inputType === 'textarea'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}" rows="5"></textarea>
     </div>
 </div>
 <div ng-if="field.inputType === 'checkbox'">
     <div class="col-md-offset-2 col-md-10">
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="{{field.key}}">
+                <input type="checkbox" ng-model="field.value" id="{{field.key}}">
                 <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
                 <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
             </label>

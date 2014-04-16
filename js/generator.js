@@ -24,7 +24,6 @@ function generateUniqueId() {
 function addField(button) {
     var key = $(button).children().first().text();
     var genericDiv = $(button).parents("div").first().find("#" + key);
-    console.log(genericDiv.html());
     var div = genericDiv.clone();
     div.attr("id", generateUniqueId());
     div.find(".panel-title > a").attr("href", "#collapse" + id);

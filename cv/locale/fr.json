@@ -53,5 +53,21 @@
     "displayOnPdf": "Afficher sur le PDF",
     "beginDate": "Date de début",
     "endDate": "Date de fin",
-    "theme": "Thème"
+    "theme": "Thème",
+    "job": "Emploi",
+    "companyName": "Nom de la société",
+    "numberOfEmployees": "Nombre d'employés",
+    "revenue": "CA",
+    "comment": "Commentaire",
+    "school": "Ecole",
+    "location": "Division",
+    "grade": "Diplôme",
+    "speciality": "Spécialité",
+    "distinction": "Mention",
+    "name": "Nom",
+    "beginYear": "Année de début",
+    "programmingLanguage": "Langage de programmation",
+    "projectLink": "Lien du projet",
+    "label": "Libellé",
+    "link": "Lien"
 }

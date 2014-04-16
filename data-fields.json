@@ -149,92 +149,216 @@
             "inputType": "url"
         },
         {
+            "key": "drivingLicence",
+            "inputType": "checkbox"
+        },
+        {
+            "key": "workExperience",
             "inputType": "panel",
-            "panel": {
-                "key": "workExperience",
-                "fields": [
-                    {
-                        "key": "displayOnPdf",
-                        "inputType": "checkbox"
-                    },
-                    {
-                        "key": "beginDate",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "endDate",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "job",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "name",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "type",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "numberOfEmployees",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "revenue",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "address",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "zipCode",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "city",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "country",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "phone",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "job",
-                        "inputType": "text"
-                    },
-                    {
-                        "inputType": "panel",
-                        "panel": {
-                            "key": "missions",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "beginDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "endDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "job",
+                    "inputType": "text"
+                },
+                {
+                    "key": "name",
+                    "keyLabel": "companyName",
+                    "inputType": "text"
+                },
+                {
+                    "key": "type",
+                    "inputType": "text"
+                },
+                {
+                    "key": "numberOfEmployees",
+                    "inputType": "text"
+                },
+                {
+                    "key": "revenue",
+                    "inputType": "text"
+                },
+                {
+                    "key": "address",
+                    "inputType": "text"
+                },
+                {
+                    "key": "zipCode",
+                    "inputType": "text"
+                },
+                {
+                    "key": "city",
+                    "inputType": "text"
+                },
+                {
+                    "key": "country",
+                    "inputType": "text"
+                },
+                {
+                    "key": "phone",
+                    "inputType": "tel"
+                },
+                {
+                    "key": "missions",
+                    "inputType": "panel",
+                    "fields": [
+                        {
+                            "key": "description",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "technologies",
+                            "inputType": "textarea"
+                        }
+                    ]
+                },
+                {
+                    "key": "workEnvironment",
+                    "inputType": "textarea"
+                },
+                {
+                    "key": "comment",
+                    "inputType": "textarea"
+                }
+            ]
+        },
+        {
+            "key": "education",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "beginDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "endDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "school",
+                    "inputType": "text"
+                },
+                {
+                    "key": "location",
+                    "inputType": "text"
+                },
+                {
+                    "key": "grade",
+                    "inputType": "text"
+                },
+                {
+                    "key": "speciality",
+                    "inputType": "text"
+                },
+                {
+                    "key": "distinction",
+                    "inputType": "text"
+                }
+            ]
+        },
+        {
+            "key": "languages",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "name",
+                    "inputType": "text"
+                },
+                {
+                    "key": "level",
+                    "inputType": "text"
+                }
+            ]
+        },
+        {
+            "key": "pastimes",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "name",
+                    "inputType": "text"
+                },
+                {
+                    "key": "beginYear",
+                    "inputType": "number"
+                }
+            ]
+        },
+        {
+            "key": "contributionsLanguages",
+            "keyLabel": "contributions",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "label",
+                    "keyLabel": "programmingLanguage",
+                    "inputType": "text"
+                },
+                {
+                    "key": "contributions",
+                    "inputType": "panel",
+                    "fields": [
+                        {
+                            "key": "project",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "projectLink",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "targetVersion",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "type",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "description",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "links",
+                            "inputType": "panel",
                             "fields": [
                                 {
-                                    "key": "description",
+                                    "key": "label",
                                     "inputType": "text"
                                 },
                                 {
-                                    "key": "technologies",
+                                    "key": "value",
+                                    "keyLabel": "link",
                                     "inputType": "text"
                                 }
                             ]
                         }
-                    },
-                    {
-                        "key": "workEnvironment",
-                        "inputType": "text"
-                    },
-                    {
-                        "key": "comment",
-                        "inputType": "text"
-                    }
-                ]
-            }
+                    ]
+                }
+            ]
         }
     ]
 }
