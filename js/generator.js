@@ -105,6 +105,18 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             $("#savedFile").click();
         };
 
+        $scope.saveCV = function() {
+            var saveJson = new Array();
+            $(".tab-pane").each(function() {
+                var localeContent = new Array();
+                localeContent.test = "supertest";
+                saveJson[$(this).attr("id")] = localeContent;
+            });
+            var exportData = 'data:text/json;charset=utf-8,';
+            exportData += encodeURIComponent(JSON.stringify(saveJson));
+            $("#saveCV").attr("href", exportData);
+        };
+
         $scope.generateCV = function() {
             var zip = new JSZip();
             var root = zip.folder("cv-generator-@VERSION@");

@@ -11,6 +11,7 @@
     "website": "Website",
     "generateCV": "Generate the CV",
     "loadCV": "Open existing CV",
+    "saveCV": "Save CV",
     "displayOnPdf": "Display on PDF",
     "beginDate": "Begin date",
     "endDate": "End date",
