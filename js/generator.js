@@ -131,28 +131,78 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
         $scope.loadGenerator = function() {
             var localeKey = $("#locale").val();
-            var locale = null;
+            var indexLocale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
                 var l = $scope.supportedLocales[i];
                 if (l.locale === localeKey) {
-                    locale = l;
+                    indexLocale = i;
                     break;
                 }
             }
-            if (locale !== null) {
-                $scope.choosenLocale = locale;
-                $http.get("cv/locale/" + locale.localeFile).success(function(data) {
-                    $scope.locale = data;
+            if (indexLocale !== null) {
+                var locale = $scope.supportedLocales[indexLocale];
+
+                if ($scope.choosenLocale === undefined) {
+                    // This is the first time we choose a language
+                    $scope.choosenLocale = locale;
+
+                    $http.get("cv/locale/" + locale.localeFile).success(function(data) {
+                        $http.get("locale/" + locale.localeFile).success(function(data2) {
+                            // We concatenate the two locale files
+                            for (var key in data2) {
+                                data[key] = data2[key];
+                            }
+                            $scope.locale = data;
+                            $scope.showGenerator = true;
+                            $("#localeModal").modal("hide");
+                        });
+                    });
+                } else {
+                    // The default language is already set, we have to add a new language here
+                    var div = $("#" + $scope.choosenLocale.locale).clone();
+                    div.attr("id", locale.locale);
+                    var li = $("#defaultLocale").clone();
+                    li.attr("id", "li_" + locale.locale);
+                    li.find("a").attr("href", "#" + locale.locale);
+                    li.find("img").attr("class", "flag " + locale.flagClass);
+                    li.find("img").attr("alt", locale.flagClass);
+                    $(".active").each(function() {
+                        $(this).removeClass("active");
+                    });
+                    li.insertBefore("#addLanguage");
+                    div.appendTo(".tab-content");
                     $("#localeModal").modal("hide");
-                    $scope.showGenerator = true;
-                });
+                }
             }
+        };
+
+        $scope.addLanguage = function() {
+            $("#localeModal").modal("show");
         };
 
         $http.get("data/data-fields.json").success(function(data) {
             $scope.fields = data.fields;
         });
-        $http.get("data/locales.json").success(function(data) {
+        $http.get("locale/locales.json").success(function(data) {
             $scope.supportedLocales = data.supportedLocales;
+
+            $scope.getSupportedLocales = function() {
+                var supportedLocales = new Array();
+                for (var i = 0; i < $scope.supportedLocales.length; i++) {
+                    var locale = $scope.supportedLocales[i];
+                    var available = true;
+                    $(".tab-pane").each(function() {
+                        var localeUnavailable = $(this).attr("id");
+                        if (locale.locale === localeUnavailable) {
+                            available = false;
+                        }
+                    });
+                    if (available) {
+                        supportedLocales.push(locale);
+                    }
+                }
+                return supportedLocales;
+
+            };
         });
     }]);

@@ -35,12 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Choose your language</h4>
                     </div>
                     <div class="modal-body">
                         <label class="control-label">Choose your CV language</label>
                         <select id="locale" class="form-control">
-                            <option ng-repeat="supported in supportedLocales" value="{{supported.locale}}">{{supported.label}}</option>
+                            <option ng-repeat="supported in getSupportedLocales()" value="{{supported.locale}}">{{supported.label}}</option>
                         </select>
                     </div>
                     <div class="modal-footer">

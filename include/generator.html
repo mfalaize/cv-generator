@@ -25,13 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </h1>
     </header>
     <ul class="nav nav-tabs">
-        <li class="active">
+        <li id="defaultLocale" class="active">
             <a href="#{{choosenLocale.locale}}" data-toggle="tab">
                 <img src="img/blank.gif" class="flag {{choosenLocale.flagClass}}" alt="{{choosenLocale.flagClass}}"/>
             </a>
         </li>
-        <li>
-            <a href="#"><span class="glyphicon glyphicon-plus"></span></a>
+        <li id="addLanguage">
+            <a href="#" ng-click="addLanguage()"><span class="glyphicon glyphicon-plus"></span></a>
         </li>
     </ul>
     <br/>
