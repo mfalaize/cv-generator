@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <br/>
     <div class="tab-content">
         <div class="tab-pane active" id="{{choosenLocale.locale}}">
-            <form class="form-horizontal">
+            <div class="form-horizontal">
                 <div ng-repeat="fi in fields" ng-init="field = fi">
                     <ng-include src="'include/panel.html'"></ng-include>
                     <div ng-if="fi.value">
@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

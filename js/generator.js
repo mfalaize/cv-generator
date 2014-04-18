@@ -106,10 +106,39 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         };
 
         $scope.saveCV = function() {
-            var saveJson = new Array();
+            var saveJson = new Object();
             $(".tab-pane").each(function() {
-                var localeContent = new Array();
-                localeContent.test = "supertest";
+                var localeContent = new Object();
+                var tempContent = localeContent;
+
+                var eachFunction = function() {
+                    var name = $(this).attr("name");
+                    var children = $(this).children();
+
+                    if (name !== undefined) {
+                        var tagname = $(this).get(0).tagName;
+                        if (tagname === "DIV") {
+                            if ($(this).attr("style") !== "display: none;") {
+                                if (tempContent[name] === undefined) {
+                                    tempContent[name] = new Array();
+                                }
+                                var temp = tempContent;
+                                tempContent = new Object();
+                                children.each(eachFunction);
+                                temp[name].push(tempContent);
+                                tempContent = temp;
+                            }
+                        } else {
+                            tempContent[name] = $(this).val();
+                        }
+                    } else {
+                        children.each(eachFunction);
+                    }
+                };
+
+                // We recursively retrieve all values
+                $(this).children().each(eachFunction);
+
                 saveJson[$(this).attr("id")] = localeContent;
             });
             var exportData = 'data:text/json;charset=utf-8,';
