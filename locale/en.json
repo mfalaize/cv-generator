@@ -34,5 +34,6 @@
     "link": "Link",
     "skillType": "Skill type",
     "subTypes": "Subtypes",
-    "categories": "Categories"
+    "categories": "Categories",
+    "photo": "Identity photo"
 }

@@ -34,5 +34,6 @@
     "link": "Lien",
     "skillType": "Type de compétence",
     "subTypes": "Sous-types",
-    "categories": "Catégories"
+    "categories": "Catégories",
+    "photo": "Photo d'identité"
 }

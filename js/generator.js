@@ -195,6 +195,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                 locales.push($(this).attr("id"));
             });
 
+            // get identity photo
+            var photo = $("input[name='photo']").first()[0].files[0];
+            if (photo) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var content = e.target.result;
+                    root.folder("img").file("identity.jpeg", content);
+                };
+                reader.readAsArrayBuffer(photo);
+            }
+
             var urls = ["js/cv.js", "js/jspdf.min.js", "index.html", modelPath + model + ".html",
                 modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js",
                 "locale/locales.json"];
