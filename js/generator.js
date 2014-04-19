@@ -63,6 +63,8 @@ function addField(button) {
             }
         }
     });
+
+    return div;
 }
 
 function removeField(button) {
@@ -70,6 +72,35 @@ function removeField(button) {
     div.hide("slow", function() {
         div.remove();
     });
+}
+
+function loadSavedFile(file) {
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var content = e.target.result;
+            var cv = JSON.parse(content);
+            $.each(cv, function(locale, fields) {
+                var parent = locale;
+
+                var eachFunction = function(field, value) {
+                    if (value instanceof Array) {
+                        for (var i = 0; i < value.length; i++) {
+                            var div = addField($("#" + field + "-add"));
+                            parent = div.attr("id");
+                            $.each(value[i], eachFunction);
+                        }
+                        parent = locale;
+                    } else {
+                        $("#" + parent).find("[name='" + field + "']").val(value);
+                    }
+                };
+
+                $.each(fields, eachFunction);
+            });
+        };
+        reader.readAsText(file);
+    }
 }
 
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
@@ -143,7 +174,10 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             });
             var exportData = 'data:text/json;charset=utf-8,';
             exportData += encodeURIComponent(JSON.stringify(saveJson));
-            $("#saveCV").attr("href", exportData);
+            var saveLink = $("#saveCV");
+            var nameFile = angular.lowercase($("input[name='lastName']").first().val()) + "_" + angular.lowercase($("input[name='firstName']").first().val()) + ".cvg";
+            saveLink.attr("download", nameFile);
+            saveLink.attr("href", exportData);
         };
 
         $scope.generateCV = function() {

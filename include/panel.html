@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <h3>
         <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
         <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
-        <button onclick="addField(this);" class="btn btn-success btn-xs">
+        <button id="{{field.key}}-add" onclick="addField(this);" class="btn btn-success btn-xs">
             <span style="display: none;">{{field.key}}</span>
             <span class="glyphicon glyphicon-plus"></span>
         </button>

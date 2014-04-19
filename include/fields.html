@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
-        <select ng-if="field.inputType === 'selectMultiple'" multiple class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <select ng-if="field.inputType === 'selectMultiple'" multiple ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
             <option ng-repeat="option in field.options" value="{{option.value}}">
             <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
             <span ng-if="option.label">{{option.label}}</span>
