@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <header class="page-header">
         <h1>Curriculum Vitae Generator <small>v@VERSION@</small>
             <span class="btn-group pull-right">
-                <input style="display:none;" type="file" id="savedFile" onchange="loadSavedFile(this.files[0])">
+                <input style="display:none;" type="file" accept=".cvg" id="savedFile" onchange="loadSavedFile(this.files[0])">
                 <a id="saveCV" class="btn btn-default" ng-click="saveCV()" download="cv.json">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                     <span> {{locale.saveCV}}</span>

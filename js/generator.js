@@ -127,8 +127,8 @@ cvGeneratorApp.animation(".animation", function() {
 
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
-cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$sce",
-    function($scope, $http, $sce) {
+cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
+    function($scope, $http) {
         $scope.showGenerator = false;
         $("#localeModal").modal("show");
 
@@ -182,14 +182,83 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
         $scope.generateCV = function() {
             var zip = new JSZip();
-            var root = zip.folder("cv-generator-@VERSION@");
-            var dataFolder = root.folder("data");
+            var lastName = angular.lowercase($("input[name='lastName']").first().val());
+            var firstName = angular.lowercase($("input[name='firstName']").first().val());
+            var root = zip.folder("cv-" + lastName + "-" + firstName + "-v@VERSION@");
 
-            $http.get("cv/data/data_fr.json").success(function(data) {
-                dataFolder.file("data_fr.json", JSON.stringify(data));
-                var content = zip.generate();
-                location.href = "data:application/zip;base64," + content;
+            var model = $("select[name='model']").first().val();
+            var pdfModel = $("select[name='pdfModel']").first().val();
+            var modelPath = "model/" + model + "/";
+
+            var locales = new Array();
+            $(".tab-pane").each(function() {
+                locales.push($(this).attr("id"));
             });
+
+            var urls = ["js/cv.js", "js/jspdf.min.js", "index.html", modelPath + model + ".html",
+                modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js",
+                "locale/locales.json"];
+
+            var i = 0;
+            var url = urls[i];
+
+            var getFunction = function(data) {
+                var addFile = true;
+
+                if (url === "locale/locales.json") {
+                    var newLocales = new Object();
+                    newLocales.supportedLocales = new Array();
+                    for (var j = 0; j < data.supportedLocales.length; j++) {
+                        var supportedLocale = data.supportedLocales[j];
+                        if (locales.indexOf(supportedLocale.locale) !== -1) {
+                            if ($scope.choosenLocale.locale === supportedLocale.locale) {
+                                data.supportedLocales[j].default = true;
+                            } else {
+                                data.supportedLocales[j].default = false;
+                            }
+                            newLocales.supportedLocales.push(data.supportedLocales[j]);
+                            urls.push("locale/" + supportedLocale.localeFile);
+                        }
+                    }
+                    data = newLocales;
+                }
+
+                if (url === modelPath + "index.json") {
+                    for (var j = 0; j < data.index.length; j++) {
+                        urls.push(modelPath + data.index[j]);
+                    }
+                    addFile = false;
+                }
+
+                var folders = url.split("/");
+                var folderString = "";
+
+                for (var j = 0; j < (folders.length - 1); j++) {
+                    if (folderString !== "") {
+                        folderString += "/";
+                    }
+                    folderString += folders[j];
+                }
+
+                if (data instanceof Object) {
+                    data = JSON.stringify(data);
+                }
+
+                if (addFile) {
+                    root.folder(folderString).file(folders[folders.length - 1], data);
+                }
+
+                i++;
+                if (i < urls.length) {
+                    url = urls[i];
+                    $http.get("cv/" + url).success(getFunction);
+                } else {
+                    var content = zip.generate();
+                    location.href = "data:application/zip;base64," + content;
+                }
+            };
+
+            $http.get("cv/" + url).success(getFunction);
         };
 
         $scope.getOption = function(field) {
