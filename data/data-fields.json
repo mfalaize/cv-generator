@@ -145,6 +145,38 @@
             "inputType": "mail"
         },
         {
+            "key": "currentJob",
+            "inputType": "text"
+        },
+        {
+            "key": "currentJobFirstExperienceDate",
+            "inputType": "date"
+        },
+        {
+            "key": "currentEmployer.name",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.address",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.zipCode",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.city",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.country",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.phone",
+            "inputType": "tel"
+        },
+        {
             "key": "htmlPresentation",
             "keyLabel": "presentation",
             "inputType": "textarea"

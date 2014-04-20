@@ -96,32 +96,36 @@ function loadCV($scope, $http, $sce, dataFile) {
         data.experienceDuration = stringFormatDuration($scope, duration);
 
         // pastimes duration calculation
-        for (var i = 0; i < data.miscellaneous.pastimes.length; i++) {
-            var pastime = data.miscellaneous.pastimes[i];
-            temp = new Date();
-            temp.setFullYear(pastime.beginYear);
-            duration = diffDate(temp, new Date());
-            pastime.duration = stringFormatDuration($scope, duration);
+        if (data.miscellaneous && data.miscellaneous.pastimes) {
+            for (var i = 0; i < data.miscellaneous.pastimes.length; i++) {
+                var pastime = data.miscellaneous.pastimes[i];
+                temp = new Date();
+                temp.setFullYear(pastime.beginYear);
+                duration = diffDate(temp, new Date());
+                pastime.duration = stringFormatDuration($scope, duration);
+            }
         }
 
         // skills reformatting
-        for (var i = 0; i < data.skills.length; i++) {
-            var skill = data.skills[i];
-            for (var j = 0; j < skill.types.length; j++) {
-                var type = skill.types[j];
-                type.actualSkills = [];
-                for (var k = 0; k < type.categories.length; k++) {
-                    var category = type.categories[k];
-                    for (var l = 0; l < category.skills.length; l++) {
-                        var actualSkill = category.skills[l];
-                        if (l === 0) {
-                            actualSkill.rowspan = category.skills.length;
+        if (data.skills) {
+            for (var i = 0; i < data.skills.length; i++) {
+                var skill = data.skills[i];
+                for (var j = 0; j < skill.types.length; j++) {
+                    var type = skill.types[j];
+                    type.actualSkills = [];
+                    for (var k = 0; k < type.categories.length; k++) {
+                        var category = type.categories[k];
+                        for (var l = 0; l < category.skills.length; l++) {
+                            var actualSkill = category.skills[l];
+                            if (l === 0) {
+                                actualSkill.rowspan = category.skills.length;
+                            }
+                            actualSkill.category = category.name;
+                            // HTML escaping
+                            actualSkill.htmlDescription = $sce.trustAsHtml(actualSkill.htmlDescription);
                         }
-                        actualSkill.category = category.name;
-                        // HTML escaping
-                        actualSkill.htmlDescription = $sce.trustAsHtml(actualSkill.htmlDescription);
+                        type.actualSkills = type.actualSkills.concat(category.skills);
                     }
-                    type.actualSkills = type.actualSkills.concat(category.skills);
                 }
             }
         }

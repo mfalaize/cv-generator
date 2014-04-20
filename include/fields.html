@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="col-md-offset-2 col-md-10">
         <div class="checkbox">
             <label>
-                <input type="checkbox" ng-model="field.value" id="{{field.key}}">
+                <input type="checkbox" ng-model="field.value" id="{{field.key}}" name="{{field.key}}">
                 <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
                 <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
             </label>

@@ -28,7 +28,7 @@ function addField(button) {
     div.attr("id", generateUniqueId());
     div.find(".panel-title > a").attr("href", "#collapse" + id);
     div.find(".panel-collapse").attr("id", "collapse" + id);
-    div.find("input, select, .panel-group").each(function() {
+    div.find("input, select, textarea, .panel-group").each(function() {
         $(this).attr("id", $(this).attr("id") + id);
     });
     div.find("label").each(function() {
@@ -85,14 +85,20 @@ function loadSavedFile(file) {
 
                 var eachFunction = function(field, value) {
                     if (value instanceof Array) {
+                        var temp = parent;
                         for (var i = 0; i < value.length; i++) {
-                            var div = addField($("#" + field + "-add"));
+                            var div = addField($("#" + parent).find("#" + field + "-add"));
                             parent = div.attr("id");
                             $.each(value[i], eachFunction);
+                            parent = temp;
                         }
-                        parent = locale;
                     } else {
-                        $("#" + parent).find("[name='" + field + "']").val(value);
+                        var jfield = $("#" + parent).find("[name='" + field + "']");
+                        if (jfield.attr("type") === "checkbox") {
+                            jfield.prop("checked", value);
+                        } else {
+                            jfield.val(value);
+                        }
                     }
                 };
 
@@ -160,7 +166,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                                 tempContent = temp;
                             }
                         } else {
-                            tempContent[name] = $(this).val();
+                            var val = $(this).val();
+                            if ($(this).attr("type") === "checkbox") {
+                                val = $(this).is(":checked");
+                            }
+                            tempContent[name] = val;
                         }
                     } else {
                         children.each(eachFunction);
@@ -192,10 +202,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
 
             var locales = new Array();
             $(".tab-pane").each(function() {
-                locales.push($(this).attr("id"));
+                var locale = $(this).attr("id");
+                locales.push(locale);
             });
 
-            // get identity photo
+            // Get identity photo
             var photo = $("input[name='photo']").first()[0].files[0];
             if (photo) {
                 var reader = new FileReader();
@@ -229,6 +240,83 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                             }
                             newLocales.supportedLocales.push(data.supportedLocales[j]);
                             urls.push("locale/" + supportedLocale.localeFile);
+
+                            // Generate the locale data
+                            var dataLocale = new Object();
+                            var tempContent = dataLocale;
+
+                            var eachFunction = function() {
+                                var name = $(this).attr("name");
+                                var children = $(this).children();
+
+                                if (name !== undefined) {
+                                    var tagname = $(this).get(0).tagName;
+                                    if (tagname === "DIV") {
+                                        if ($(this).attr("style") !== "display: none;") {
+                                            if (name.indexOf(".") !== -1) {
+                                                var splitName = name.split(".");
+                                                tempContent[splitName[0] + "Config"] = new Object();
+                                                var temp = tempContent;
+                                                tempContent = tempContent[splitName[0] + "Config"];
+                                                children.each(eachFunction);
+                                                tempContent = temp;
+                                            } else {
+                                                if (tempContent[name] === undefined) {
+                                                    tempContent[name] = new Array();
+                                                }
+                                                var temp = tempContent;
+                                                tempContent = new Object();
+                                                children.each(eachFunction);
+                                                temp[name].push(tempContent);
+                                                tempContent = temp;
+                                            }
+                                        }
+                                    } else {
+                                        var val = $(this).val();
+                                        if ($(this).attr("type") === "checkbox") {
+                                            val = $(this).is(":checked");
+                                        }
+
+                                        var temp = tempContent;
+                                        if (name.search("^currentEmployer\.") !== -1) {
+                                            var realName = name.split(".");
+                                            name = realName[1];
+                                            if (tempContent.currentEmployer === undefined) {
+                                                tempContent.currentEmployer = new Object();
+                                            }
+                                            tempContent = tempContent.currentEmployer;
+                                        }
+
+                                        if (angular.isString(val) && val.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$") !== -1) {
+                                            // It is a date
+                                            var splitDate = val.split("-");
+                                            tempContent[name] = new Object();
+                                            tempContent[name].day = splitDate[2];
+                                            tempContent[name].month = splitDate[1];
+                                            tempContent[name].year = splitDate[0];
+                                        } else if ($.inArray(name, ["address", "zipCode", "city", "country"]) !== -1) {
+                                            // It is an address
+                                            if (tempContent.address === undefined) {
+                                                tempContent.address = new Object();
+                                            }
+                                            tempContent.address[name] = val;
+                                        } else if ($.inArray(name, ["drivingLicence", "languages", "pastimes"]) !== -1) {
+                                            if (tempContent.miscellaneous === undefined) {
+                                                tempContent.miscellaneous = new Object();
+                                            }
+                                            tempContent.miscellaneous[name] = val;
+                                        } else {
+                                            tempContent[name] = val;
+                                        }
+                                        tempContent = temp;
+                                    }
+                                } else {
+                                    children.each(eachFunction);
+                                }
+                            };
+
+                            $("#" + supportedLocale.locale).children().each(eachFunction);
+                            root.folder("data").file(supportedLocale.dataFile, JSON.stringify(dataLocale));
                         }
                     }
                     data = newLocales;

@@ -35,5 +35,13 @@
     "skillType": "Type de compétence",
     "subTypes": "Sous-types",
     "categories": "Catégories",
-    "photo": "Photo d'identité"
+    "photo": "Photo d'identité",
+    "currentJob": "Emploi actuel",
+    "currentJobFirstExperienceDate": "Date de début d'expérience",
+    "currentEmployer.name": "Nom de l'employeur actuel",
+    "currentEmployer.address": "Adresse de l'employeur actuel",
+    "currentEmployer.zipCode": "Code postal de l'employeur actuel",
+    "currentEmployer.city": "Ville de l'employeur actuel",
+    "currentEmployer.country": "Pays de l'employeur actuel",
+    "currentEmployer.phone": "Tél de l'employeur actuel"
 }

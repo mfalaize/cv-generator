@@ -87,17 +87,19 @@ function pdfContent(cv, locale, img) {
 
     doc.setFontSize(10);
     addLine();
-    for (var i = 0; i < cv.education.length; i++) {
-        var education = cv.education[i];
-        if (education.displayOnPdf) {
-            doc.setFontType("bold");
-            addLine();
-            addText(margin2, education.beginDate + " - " + education.endDate);
-            doc.setFontType("normal");
-            addLine();
-            addText(margin2, education.grade);
-            addLine();
-            addText(margin3, education.school);
+    if (cv.education) {
+        for (var i = 0; i < cv.education.length; i++) {
+            var education = cv.education[i];
+            if (education.displayOnPdf) {
+                doc.setFontType("bold");
+                addLine();
+                addText(margin2, education.beginDate + " - " + education.endDate);
+                doc.setFontType("normal");
+                addLine();
+                addText(margin2, education.grade);
+                addLine();
+                addText(margin3, education.school);
+            }
         }
     }
 
@@ -109,40 +111,44 @@ function pdfContent(cv, locale, img) {
     doc.setFontSize(10);
     addLine();
 
-    for (var i = 0; i < cv.workExperience.length; i++) {
-        var experience = cv.workExperience[i];
-        if (experience.displayOnPdf) {
-            doc.setFontType("bold");
-            addLine();
-            addText(margin2, experience.beginDate + " - " + experience.endDate);
-            doc.setFontType("normal");
-            addLine();
-            addText(margin2, experience.job);
-            addLine();
-            addText(margin3, experience.name + ", " + experience.address.city + " (" + experience.address.country + ")");
-            addLine();
-            var typeCompany = experience.type;
-            if (experience.numberOfEmployees) {
-                typeCompany += " (" + experience.numberOfEmployees;
-                if (experience.revenue) {
-                    typeCompany += ", " + experience.revenue;
-                }
-                typeCompany += ")";
-            } else if (experience.revenue) {
-                typeCompany += " (" + experience.revenue + ")";
-            }
-            addText(margin3, typeCompany);
-
-            for (var j = 0; j < experience.missions.length; j++) {
-                var mission = experience.missions[j];
+    if (cv.workExperience) {
+        for (var i = 0; i < cv.workExperience.length; i++) {
+            var experience = cv.workExperience[i];
+            if (experience.displayOnPdf) {
+                doc.setFontType("bold");
                 addLine();
+                addText(margin2, experience.beginDate + " - " + experience.endDate);
                 doc.setFontType("normal");
-                addText(margin3, "• " + mission.description + " :");
                 addLine();
-                doc.setFontType("italic");
-                doc.setTextColor(150);
-                addText(margin4, mission.technologies);
-                doc.setTextColor(0);
+                addText(margin2, experience.job);
+                addLine();
+                addText(margin3, experience.name + ", " + experience.address.city + " (" + experience.address.country + ")");
+                addLine();
+                var typeCompany = experience.type;
+                if (experience.numberOfEmployees) {
+                    typeCompany += " (" + experience.numberOfEmployees;
+                    if (experience.revenue) {
+                        typeCompany += ", " + experience.revenue;
+                    }
+                    typeCompany += ")";
+                } else if (experience.revenue) {
+                    typeCompany += " (" + experience.revenue + ")";
+                }
+                addText(margin3, typeCompany);
+
+                if (experience.missions) {
+                    for (var j = 0; j < experience.missions.length; j++) {
+                        var mission = experience.missions[j];
+                        addLine();
+                        doc.setFontType("normal");
+                        addText(margin3, "• " + mission.description + " :");
+                        addLine();
+                        doc.setFontType("italic");
+                        doc.setTextColor(150);
+                        addText(margin4, mission.technologies);
+                        doc.setTextColor(0);
+                    }
+                }
             }
         }
     }
@@ -154,17 +160,19 @@ function pdfContent(cv, locale, img) {
 
     addLine();
 
-    for (var i = 0; i < cv.miscellaneous.languages.length; i++) {
-        var language = cv.miscellaneous.languages[i];
-        if (language.displayOnPdf) {
-            doc.setFontSize(10);
-            doc.setFontType("bold");
-            addLine();
-            addText(margin2, language.name);
+    if (cv.miscellaneous.languages) {
+        for (var i = 0; i < cv.miscellaneous.languages.length; i++) {
+            var language = cv.miscellaneous.languages[i];
+            if (language.displayOnPdf) {
+                doc.setFontSize(10);
+                doc.setFontType("bold");
+                addLine();
+                addText(margin2, language.name);
 
-            doc.setFontType("normal");
-            addLine();
-            addText(margin3, language.level);
+                doc.setFontType("normal");
+                addLine();
+                addText(margin3, language.level);
+            }
         }
     }
 
@@ -175,13 +183,15 @@ function pdfContent(cv, locale, img) {
 
     addLine();
 
-    for (var i = 0; i < cv.miscellaneous.pastimes.length; i++) {
-        var pastime = cv.miscellaneous.pastimes[i];
-        if (pastime.displayOnPdf) {
-            doc.setFontSize(10);
-            doc.setFontType("normal");
-            addLine();
-            addText(margin2, pastime.name + " (" + pastime.duration + ")");
+    if (cv.miscellaneous.pastimes) {
+        for (var i = 0; i < cv.miscellaneous.pastimes.length; i++) {
+            var pastime = cv.miscellaneous.pastimes[i];
+            if (pastime.displayOnPdf) {
+                doc.setFontSize(10);
+                doc.setFontType("normal");
+                addLine();
+                addText(margin2, pastime.name + " (" + pastime.duration + ")");
+            }
         }
     }
 

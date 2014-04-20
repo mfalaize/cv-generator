@@ -35,5 +35,13 @@
     "skillType": "Skill type",
     "subTypes": "Subtypes",
     "categories": "Categories",
-    "photo": "Identity photo"
+    "photo": "Identity photo",
+    "currentJob": "Current job",
+    "currentJobFirstExperienceDate": "Current job date of first experience",
+    "currentEmployer.name": "Current employer name",
+    "currentEmployer.address": "Current employer address",
+    "currentEmployer.zipCode": "Current employer zipcode",
+    "currentEmployer.city": "Current employer city",
+    "currentEmployer.country": "Current employer country",
+    "currentEmployer.phone": "Current employer phone"
 }
