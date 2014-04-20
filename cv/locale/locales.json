@@ -3,14 +3,15 @@
         {
             "locale": "en_US",
             "localeFile": "en.json",
+            "dataFile": "data_en.json",
             "flagClass": "flag-us",
-            "label": "English"
+            "default": true
         },
         {
             "locale": "fr_FR",
             "localeFile": "fr.json",
-            "flagClass": "flag-fr",
-            "label": "Français"
+            "dataFile": "data_fr.json",
+            "flagClass": "flag-fr"
         }
     ]
 }

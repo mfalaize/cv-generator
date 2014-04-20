@@ -1,0 +1,62 @@
+<!--
+Copyright (C) 2014 Maxime Falaize
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="container" ng-cloak>
+    <header class="page-header">
+        <h1>Curriculum Vitae Generator <small>v@VERSION@</small>
+            <span class="btn-group pull-right">
+                <input style="display:none;" type="file" accept=".cvg" id="savedFile" onchange="loadSavedFile(this.files[0])">
+                <a id="saveCV" class="btn btn-default" ng-click="saveCV()" download="cv.json">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    <span> {{locale.saveCV}}</span>
+                </a>
+                <button class="btn btn-default" ng-click="loadCV()">
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                    <span> {{locale.loadCV}}</span
+                </button>
+                <button class="btn btn-primary" ng-click="generateCV()">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    <span> {{locale.generateCV}}</span>
+                </button>
+            </span>
+        </h1>
+    </header>
+    <ul class="nav nav-tabs">
+        <li id="defaultLocale" class="active">
+            <a href="#{{choosenLocale.locale}}" data-toggle="tab">
+                <img src="img/blank.gif" class="flag {{choosenLocale.flagClass}}" alt="{{choosenLocale.flagClass}}"/>
+            </a>
+        </li>
+        <li id="addLanguage">
+            <a href="#" ng-click="addLanguage()"><span class="glyphicon glyphicon-plus"></span></a>
+        </li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+        <div class="tab-pane active" id="{{choosenLocale.locale}}">
+            <div class="form-horizontal">
+                <div ng-repeat="fi in fields" ng-init="field = fi">
+                    <ng-include src="'include/panel.html'"></ng-include>
+                    <div ng-if="fi.value">
+                        <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange" added="true" name="{{fi.key}}.{{onchange.key}}">
+                            <ng-include src="'include/panel.html'"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

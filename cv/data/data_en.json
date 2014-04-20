@@ -1,5 +1,8 @@
 {
     "model": "default",
+    "modelConfig": {
+        "theme": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"
+    },
     "pdfModel": "default",
     "lastName": "Norris",
     "firstName": "Chuck",

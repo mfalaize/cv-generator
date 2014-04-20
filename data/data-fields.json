@@ -1,0 +1,454 @@
+{
+    "fields": [
+        {
+            "key": "model",
+            "inputType": "select",
+            "value": "default",
+            "options": [
+                {
+                    "keyLabel": "defaultModel",
+                    "value": "default",
+                    "onchange": [
+                        {
+                            "key": "theme",
+                            "inputType": "select",
+                            "value": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css",
+                            "options": [
+                                {
+                                    "label": "Bootstrap (default)",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"
+                                },
+                                {
+                                    "label": "Amelia",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/amelia/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Cerulean",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cerulean/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Cosmo",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cosmo/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Custom",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/custom/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Cyborg",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cyborg/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Darkly",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/darkly/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Flatly",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/flatly/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Journal",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/journal/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Lumen",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/lumen/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Readable",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/readable/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Simplex",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/simplex/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Slate",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/slate/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Spacelab",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/spacelab/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Superhero",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/superhero/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "United",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/united/bootstrap.min.css"
+                                },
+                                {
+                                    "label": "Yeti",
+                                    "value": "//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/yeti/bootstrap.min.css"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "pdfModel",
+            "inputType": "select",
+            "value": "default",
+            "options": [
+                {
+                    "keyLabel": "defaultModel",
+                    "value": "default"
+                }
+            ]
+        },
+        {
+            "key": "lastName",
+            "inputType": "text"
+        },
+        {
+            "key": "firstName",
+            "inputType": "text"
+        },
+        {
+            "key": "photo",
+            "inputType": "file",
+            "accept": ".jpg,.jpeg"
+        },
+        {
+            "key": "birthDate",
+            "inputType": "date"
+        },
+        {
+            "key": "status",
+            "inputType": "text"
+        },
+        {
+            "key": "address",
+            "inputType": "text"
+        },
+        {
+            "key": "zipCode",
+            "inputType": "text"
+        },
+        {
+            "key": "city",
+            "inputType": "text"
+        },
+        {
+            "key": "country",
+            "inputType": "text"
+        },
+        {
+            "key": "phone",
+            "inputType": "tel"
+        },
+        {
+            "key": "mail",
+            "inputType": "mail"
+        },
+        {
+            "key": "currentJob",
+            "inputType": "text"
+        },
+        {
+            "key": "currentJobFirstExperienceDate",
+            "inputType": "date"
+        },
+        {
+            "key": "currentEmployer.name",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.address",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.zipCode",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.city",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.country",
+            "inputType": "text"
+        },
+        {
+            "key": "currentEmployer.phone",
+            "inputType": "tel"
+        },
+        {
+            "key": "htmlPresentation",
+            "keyLabel": "presentation",
+            "inputType": "textarea"
+        },
+        {
+            "key": "website",
+            "inputType": "url"
+        },
+        {
+            "key": "drivingLicence",
+            "inputType": "checkbox"
+        },
+        {
+            "key": "workExperience",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "beginDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "endDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "job",
+                    "inputType": "text"
+                },
+                {
+                    "key": "name",
+                    "keyLabel": "companyName",
+                    "inputType": "text"
+                },
+                {
+                    "key": "type",
+                    "inputType": "text"
+                },
+                {
+                    "key": "numberOfEmployees",
+                    "inputType": "text"
+                },
+                {
+                    "key": "revenue",
+                    "inputType": "text"
+                },
+                {
+                    "key": "address",
+                    "inputType": "text"
+                },
+                {
+                    "key": "zipCode",
+                    "inputType": "text"
+                },
+                {
+                    "key": "city",
+                    "inputType": "text"
+                },
+                {
+                    "key": "country",
+                    "inputType": "text"
+                },
+                {
+                    "key": "phone",
+                    "inputType": "tel"
+                },
+                {
+                    "key": "missions",
+                    "inputType": "panel",
+                    "fields": [
+                        {
+                            "key": "description",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "technologies",
+                            "inputType": "textarea"
+                        }
+                    ]
+                },
+                {
+                    "key": "workEnvironment",
+                    "inputType": "textarea"
+                },
+                {
+                    "key": "comment",
+                    "inputType": "textarea"
+                }
+            ]
+        },
+        {
+            "key": "education",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "beginDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "endDate",
+                    "inputType": "text"
+                },
+                {
+                    "key": "school",
+                    "inputType": "text"
+                },
+                {
+                    "key": "location",
+                    "inputType": "text"
+                },
+                {
+                    "key": "grade",
+                    "inputType": "text"
+                },
+                {
+                    "key": "speciality",
+                    "inputType": "text"
+                },
+                {
+                    "key": "distinction",
+                    "inputType": "text"
+                }
+            ]
+        },
+        {
+            "key": "languages",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "name",
+                    "inputType": "text"
+                },
+                {
+                    "key": "level",
+                    "inputType": "text"
+                }
+            ]
+        },
+        {
+            "key": "pastimes",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "displayOnPdf",
+                    "inputType": "checkbox"
+                },
+                {
+                    "key": "name",
+                    "inputType": "text"
+                },
+                {
+                    "key": "beginYear",
+                    "inputType": "number"
+                }
+            ]
+        },
+        {
+            "key": "contributionsLanguages",
+            "keyLabel": "contributions",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "label",
+                    "keyLabel": "programmingLanguage",
+                    "inputType": "text"
+                },
+                {
+                    "key": "contributions",
+                    "inputType": "panel",
+                    "fields": [
+                        {
+                            "key": "project",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "projectLink",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "targetVersion",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "type",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "description",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "links",
+                            "inputType": "panel",
+                            "fields": [
+                                {
+                                    "key": "label",
+                                    "inputType": "text"
+                                },
+                                {
+                                    "key": "value",
+                                    "keyLabel": "link",
+                                    "inputType": "text"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "skills",
+            "inputType": "panel",
+            "fields": [
+                {
+                    "key": "label",
+                    "keyLabel": "skillType",
+                    "inputType": "text"
+                },
+                {
+                    "key": "types",
+                    "keyLabel": "subTypes",
+                    "inputType": "panel",
+                    "fields": [
+                        {
+                            "key": "name",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "categories",
+                            "inputType": "panel",
+                            "fields": [
+                                {
+                                    "key": "name",
+                                    "inputType": "text"
+                                },
+                                {
+                                    "key": "skills",
+                                    "inputType": "panel",
+                                    "fields": [
+                                        {
+                                            "key": "name",
+                                            "inputType": "text"
+                                        },
+                                        {
+                                            "key": "level",
+                                            "inputType": "number",
+                                            "min": "1",
+                                            "max": "5"
+                                        },
+                                        {
+                                            "key": "htmlDescription",
+                                            "keyLabel": "description",
+                                            "inputType": "textarea"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
