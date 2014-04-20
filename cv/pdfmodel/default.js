@@ -153,6 +153,7 @@ function pdfContent(cv, locale, img) {
         }
     }
 
+    doc.setFontType("normal");
     doc.setFontSize(14);
     addLine(2);
     addText(margin, angular.uppercase(locale.languages));

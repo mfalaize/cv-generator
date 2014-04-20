@@ -152,7 +152,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                     var name = $(this).attr("name");
                     var children = $(this).children();
 
-                    if (name !== undefined) {
+                    if (name !== undefined && $(this).attr("added") !== "true") {
                         var tagname = $(this).get(0).tagName;
                         if (tagname === "DIV") {
                             if ($(this).attr("style") !== "display: none;") {
