@@ -100,6 +100,8 @@ function loadSavedFile(file) {
                         var jfield = $("#" + parent).find("[name='" + field + "']");
                         if (jfield.attr("type") === "checkbox") {
                             jfield.prop("checked", value);
+                        } else if (jfield.attr("type") === "file") {
+                            addImagePreview(value, jfield);
                         } else {
                             jfield.val(value);
                         }
@@ -111,6 +113,33 @@ function loadSavedFile(file) {
         };
         reader.readAsText(file);
     }
+}
+
+function addImagePreview(content, elementToInsertAfter) {
+    $("<img src=\"" + content + "\" class=\"img-thumbnail\"/>").hide().insertAfter(elementToInsertAfter).show("slow");
+}
+
+function loadImage(input) {
+    var image = input.files[0];
+    if (image) {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            var content = reader.result;
+            addImagePreview(content, input);
+        };
+        reader.readAsDataURL(image);
+    }
+}
+
+function _base64ToArrayBuffer(base64) {
+    var binary_string = window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+        var ascii = binary_string.charCodeAt(i);
+        bytes[i] = ascii;
+    }
+    return bytes.buffer;
 }
 
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
@@ -174,6 +203,9 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             if ($(this).attr("type") === "checkbox") {
                                 val = $(this).is(":checked");
                             }
+                            if ($(this).attr("type") === "file") {
+                                val = $(this).next().attr("src");
+                            }
                             tempContent[name] = val;
                         }
                     } else {
@@ -211,15 +243,8 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             });
 
             // Get identity photo
-            var photo = $("input[name='photo']").first()[0].files[0];
-            if (photo) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var content = e.target.result;
-                    root.folder("img").file("identity.jpeg", content);
-                };
-                reader.readAsArrayBuffer(photo);
-            }
+            var photo = _base64ToArrayBuffer($("input[name='photo']").first().next().attr("src").split(",")[1]);
+            root.folder("img").file("identity.jpeg", photo);
 
             var urls = ["js/cv.js", "js/jspdf.min.js", "index.html", modelPath + model + ".html",
                 modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js",

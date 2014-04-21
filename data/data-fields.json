@@ -109,8 +109,8 @@
         },
         {
             "key": "photo",
-            "inputType": "file",
-            "accept": ".jpg,.jpeg"
+            "inputType": "image",
+            "accept": "image/jpeg"
         },
         {
             "key": "birthDate",

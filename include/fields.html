@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
         <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'file'" type="file" ng-model="field.value" accept="{{field.accept}}" id="{{field.key}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'image'" type="file" ng-model="field.value" accept="{{field.accept}}" id="{{field.key}}" name="{{field.key}}" onchange="loadImage(this)">
         <textarea ng-if="field.inputType === 'textarea'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}" rows="5"></textarea>
     </div>
 </div>
