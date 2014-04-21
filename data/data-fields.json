@@ -345,7 +345,7 @@
             ]
         },
         {
-            "key": "contributionsLanguages",
+            "key": "contributionLanguages",
             "keyLabel": "contributions",
             "inputType": "panel",
             "fields": [

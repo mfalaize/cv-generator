@@ -261,14 +261,29 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                                                 children.each(eachFunction);
                                                 tempContent = temp;
                                             } else {
-                                                if (tempContent[name] === undefined) {
-                                                    tempContent[name] = new Array();
+                                                if ($.inArray(name, ["languages", "pastimes"]) !== -1) {
+                                                    if (tempContent.miscellaneous === undefined) {
+                                                        tempContent.miscellaneous = new Object();
+                                                    }
+                                                    if (tempContent.miscellaneous[name] === undefined) {
+                                                        tempContent.miscellaneous[name] = new Array();
+                                                    }
+                                                    var temp = tempContent;
+                                                    tempContent = new Object();
+                                                    children.each(eachFunction);
+                                                    temp.miscellaneous[name].push(tempContent);
+                                                    tempContent = temp;
+                                                } else {
+
+                                                    if (tempContent[name] === undefined) {
+                                                        tempContent[name] = new Array();
+                                                    }
+                                                    var temp = tempContent;
+                                                    tempContent = new Object();
+                                                    children.each(eachFunction);
+                                                    temp[name].push(tempContent);
+                                                    tempContent = temp;
                                                 }
-                                                var temp = tempContent;
-                                                tempContent = new Object();
-                                                children.each(eachFunction);
-                                                temp[name].push(tempContent);
-                                                tempContent = temp;
                                             }
                                         }
                                     } else {

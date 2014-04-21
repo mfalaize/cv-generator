@@ -83,7 +83,7 @@ function loadCV($scope, $http, $sce, dataFile) {
         // age calculation
         var temp = new Date();
         temp.setFullYear(data.birthDate.year);
-        temp.setMonth(data.birthDate.month);
+        temp.setMonth(data.birthDate.month - 1);
         temp.setDate(data.birthDate.day);
         var duration = diffDate(temp, new Date());
         data.age = stringFormatDuration($scope, duration);
@@ -91,7 +91,7 @@ function loadCV($scope, $http, $sce, dataFile) {
         // experience calculation
         temp = new Date();
         temp.setFullYear(data.currentJobFirstExperienceDate.year);
-        temp.setMonth(data.currentJobFirstExperienceDate.month);
+        temp.setMonth(data.currentJobFirstExperienceDate.month - 1);
         duration = diffDate(temp, new Date());
         data.experienceDuration = stringFormatDuration($scope, duration);
 
