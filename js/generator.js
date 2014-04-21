@@ -80,8 +80,12 @@ function loadSavedFile(file) {
         reader.onload = function(e) {
             var content = e.target.result;
             var cv = JSON.parse(content);
+
             $.each(cv, function(locale, fields) {
                 var parent = locale;
+                if ($("#" + parent).length === 0) {
+                    loadGenerator(locale);
+                }
 
                 var eachFunction = function(field, value) {
                     if (value instanceof Array) {
@@ -133,8 +137,8 @@ cvGeneratorApp.animation(".animation", function() {
 
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
-cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
-    function($scope, $http) {
+cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$window",
+    function($scope, $http, $window) {
         $scope.showGenerator = false;
         $("#localeModal").modal("show");
 
@@ -387,8 +391,10 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
             return undefined;
         };
 
-        $scope.loadGenerator = function() {
-            var localeKey = $("#locale").val();
+        $scope.loadGenerator = function(localeKey) {
+            if (localeKey === undefined) {
+                localeKey = $("#locale").val();
+            }
             var indexLocale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
                 var l = $scope.supportedLocales[i];
@@ -433,6 +439,8 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http",
                 }
             }
         };
+
+        $window.loadGenerator = $scope.loadGenerator;
 
         $scope.addLanguage = function() {
             $("#localeModal").modal("show");

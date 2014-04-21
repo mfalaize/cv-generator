@@ -18,7 +18,7 @@ Note that this application is mainly designed for developers but its architectur
 
 This application is provided with a GUI that let you generate easily your CV.
 
-You can see a demo of the GUI [here](http://demogui.maxime-falaize.fr).
+You can see a demo of the GUI [here](http://cvgenerator.maxime-falaize.fr).
 
 You can see the application changelog [here](CHANGELOG.md).
 
@@ -26,7 +26,7 @@ You can see the application changelog [here](CHANGELOG.md).
 
 ####Getting started
 
-To create your own CV, you can easily download the application and launch the index.html with your favourite browser and let you guide by the generator.
+To create your own CV, you can easily download the application, put it in your a web server (e.g. Apache Server) and launch the index.html with your favourite browser and let you guide by the generator.
 
 Another way is to fork this repository and manually modify <code>cv/data/data_{yourLanguage}.json</code> (or create one from existing) and <code>cv/locale/locales.json</code>. The architecture of the json files should be easily understandable. Then change the picture present in <code>cv/img/identity.jpeg</code> by your own. Finally you just have to keep all the <code>cv</code> directory content and launch index.html from it.
 
