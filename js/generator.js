@@ -391,7 +391,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     folderString += folders[j];
                 }
 
-                if (data instanceof Object) {
+                if (data instanceof Object && !(data instanceof ArrayBuffer)) {
                     data = JSON.stringify(data);
                 }
 
@@ -402,7 +402,13 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 i++;
                 if (i < urls.length) {
                     url = urls[i];
-                    $http.get("cv/" + url).success(getFunction);
+                    var options = {};
+                    var splitUrl = url.split(".");
+                    var extension = splitUrl[splitUrl.length - 1];
+                    if (extension !== undefined && $.inArray(extension, ["jpg", "jpeg", "png", "gif", "bmp"]) !== -1) {
+                        options = {responseType: "arraybuffer"};
+                    }
+                    $http.get("cv/" + url, options).success(getFunction);
                 } else {
                     var content = zip.generate();
                     location.href = "data:application/zip;base64," + content;
