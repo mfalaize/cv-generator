@@ -431,8 +431,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         };
 
         $scope.loadGenerator = function(localeKey) {
+            var removePanels = false;
             if (localeKey === undefined) {
                 localeKey = $("#locale").val();
+                // in this case, we load a saved file so we don't need the panels to be generated
+                removePanels = true;
             }
             var indexLocale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
@@ -469,6 +472,31 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     li.find("a").attr("href", "#" + locale.locale);
                     li.find("img").attr("class", "flag " + locale.flagClass);
                     li.find("img").attr("alt", locale.flagClass);
+
+                    // regenerate panels ids if any
+                    div.find(".panel").each(function() {
+                        if (removePanels) {
+                            if ($(this).attr("style") !== "display: none;") {
+                                $(this).remove();
+                            }
+                        } else {
+                            if ($(this).attr("style") !== "display: none;") {
+                                $(this).attr("id", generateUniqueId());
+                                $(this).find(".panel-title > a").attr("href", "#collapse" + id);
+                                $(this).find(".panel-collapse").attr("id", "collapse" + id);
+                                $(this).find("input, select, textarea, .panel-group").each(function() {
+                                    $(this).attr("id", $(this).attr("id") + id);
+                                });
+                                $(this).find("label").each(function() {
+                                    $(this).attr("for", $(this).attr("for") + id);
+                                });
+                                $(this).find("a[data-toggle='collapse']").each(function() {
+                                    $(this).attr("data-parent", $(this).attr("data-parent" + id));
+                                });
+                            }
+                        }
+                    });
+
                     $(".active").each(function() {
                         $(this).removeClass("active");
                     });
