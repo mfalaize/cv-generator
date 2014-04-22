@@ -101,7 +101,9 @@ function loadSavedFile(file) {
                         if (jfield.attr("type") === "checkbox") {
                             jfield.prop("checked", value);
                         } else if (jfield.attr("type") === "file") {
-                            addImagePreview(value, jfield);
+                            if (value !== "") {
+                                addImagePreview(value, jfield);
+                            }
                         } else {
                             jfield.val(value);
                         }
@@ -116,6 +118,12 @@ function loadSavedFile(file) {
 }
 
 function addImagePreview(content, elementToInsertAfter) {
+    var next = $(elementToInsertAfter).next();
+    if (next.get(0) !== undefined && next.get(0).tagName === "IMG") {
+        next.hide("slow", function() {
+            next.remove();
+        });
+    }
     $("<img src=\"" + content + "\" class=\"img-thumbnail\"/>").hide().insertAfter(elementToInsertAfter).show("slow");
 }
 
