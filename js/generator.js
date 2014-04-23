@@ -434,9 +434,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             var removePanels = false;
             if (localeKey === undefined) {
                 localeKey = $("#locale").val();
+            } else {
                 // in this case, we load a saved file so we don't need the panels to be generated
                 removePanels = true;
             }
+
             var indexLocale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
                 var l = $scope.supportedLocales[i];
