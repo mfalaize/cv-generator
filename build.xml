@@ -31,10 +31,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <target name="copy" depends="init">
         <copy encoding="${encoding}" todir="${buildCvDir}">
-            <fileset dir="${basedir}" includes="**/*.html,**/*.css,**/*.js,**/*.json,**/*.png,**/*.jpeg,**/*.gif,LICENSE" excludes="build/**"/>
+            <fileset dir="${basedir}" includes="**/*.html,**/*.css,**/*.js,**/*.json,LICENSE" excludes="build/**"/>
             <filterset>
                 <filter token="VERSION" value="${version}"/>
             </filterset>
+        </copy>
+        <copy todir="${buildCvDir}">
+            <fileset dir="${basedir}" includes="**/*.png,**/*.jpeg,**/*.gif" excludes="build/**"/>
         </copy>
     </target>
 
