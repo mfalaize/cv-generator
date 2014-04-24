@@ -91,7 +91,7 @@ function loadSavedFile(file) {
                     if (value instanceof Array) {
                         var temp = parent;
                         for (var i = 0; i < value.length; i++) {
-                            var div = addField($("#" + parent).find("#" + field + "-add"));
+                            var div = addField($("#" + parent).find("#" + field + "-add").first());
                             parent = div.attr("id");
                             $.each(value[i], eachFunction);
                             parent = temp;
