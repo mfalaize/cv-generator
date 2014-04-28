@@ -1,4 +1,4 @@
-CV Generator
+CV Generator [![Build Status](https://travis-ci.org/mfalaize/cv-generator.svg)](https://travis-ci.org/mfalaize/cv-generator)
 ============
 
 ###Description
