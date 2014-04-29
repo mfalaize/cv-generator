@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </h1>
     </header>
     <ul class="nav nav-tabs">
-        <li id="defaultLocale" ng-repeat="cvLocale in cv" ng-class="{(cv.active === cvLocale.locale.locale): active}">
+        <li id="defaultLocale" ng-repeat="cvLocale in cv" ng-class="{active: active === cvLocale.locale.locale}">
             <a href="#{{cvLocale.locale.locale}}" data-toggle="tab">
                 <img src="img/blank.gif" class="flag {{cvLocale.locale.flagClass}}" alt="{{cvLocale.locale.flagClass}}"/>
             </a>
@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ul>
     <br/>
     <div class="tab-content">
-        <div ng-repeat="cvLocale in cv" class="tab-pane" ng-class="{(cv.active === cvLocale.locale.locale): active}" id="{{cvLocale.locale.locale}}">
+        <div ng-repeat="cvLocale in cv" class="tab-pane" ng-class="{active: active === cvLocale.locale.locale}" id="{{cvLocale.locale.locale}}">
             <div class="form-horizontal">
                 <div ng-repeat="fi in cvLocale.fields" ng-init="field = fi">
                     <ng-include src="'include/panel.html'"></ng-include>
