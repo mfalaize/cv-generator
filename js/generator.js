@@ -254,7 +254,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             var photo = _base64ToArrayBuffer($("input[name='photo']").first().next().attr("src").split(",")[1]);
             root.folder("img").file("identity.jpeg", photo);
 
-            var urls = ["js/cv.js", "js/jspdf.min.js", "index.html", modelPath + model + ".html",
+            var urls = ["js/cv.js", "index.html", modelPath + model + ".html",
                 modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js",
                 "locale/locales.json"];
 
