@@ -21,27 +21,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <h3>
         <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
         <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
-        <button id="{{field.key}}-add" onclick="addField(this);" class="btn btn-success btn-xs">
+        <button id="{{field.key}}-add" ng-click="addField(field)" class="btn btn-success btn-xs">
             <span style="display: none;">{{field.key}}</span>
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </h3>
     <div class="panel-group" id="{{field.key}}-append"></div>
-    <div draggable="true" class="panel panel-default" style="display: none;" id="{{field.key}}" name="{{field.key}}">
+    <div ng-repeat="f in field.fields" draggable="true" class="panel panel-default animation" id="{{field.key}}" name="{{field.key}}">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="{{field.key}}-append" href="#">
-                    <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
-                    <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+                    <span ng-bind-template-ext="field.titleTemplate"></span>
+                    <!--                    <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
+                                        <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>-->
                 </a>
                 <span class="btn-group pull-right">
-                    <button onclick="removeField(this)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                    <button ng-click="$rootScope.removeField(f)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
                 </span>
             </h4>
         </div>
-        <div class="panel-collapse collapse">
+        <div class="panel-collapse collapse in">
             <div class="panel-body">
-                <div ng-repeat="f in field.fields" ng-init="field = f">
+                <div ng-repeat="innerField in f.subFields" ng-init="field = innerField">
                     <ng-include src="'include/panel.html'"></ng-include>
                 </div>
             </div>

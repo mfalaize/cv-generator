@@ -192,7 +192,8 @@
         {
             "key": "workExperience",
             "inputType": "panel",
-            "fields": [
+            "titleTemplate": "field.fields[4].value",
+            "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
                     "inputType": "checkbox"
@@ -249,7 +250,7 @@
                 {
                     "key": "missions",
                     "inputType": "panel",
-                    "fields": [
+                    "fieldsTemplate": [
                         {
                             "key": "description",
                             "inputType": "textarea"
@@ -273,7 +274,7 @@
         {
             "key": "education",
             "inputType": "panel",
-            "fields": [
+            "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
                     "inputType": "checkbox"
@@ -311,7 +312,7 @@
         {
             "key": "languages",
             "inputType": "panel",
-            "fields": [
+            "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
                     "inputType": "checkbox"
@@ -329,7 +330,7 @@
         {
             "key": "pastimes",
             "inputType": "panel",
-            "fields": [
+            "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
                     "inputType": "checkbox"
@@ -348,7 +349,7 @@
             "key": "contributionLanguages",
             "keyLabel": "contributions",
             "inputType": "panel",
-            "fields": [
+            "fieldsTemplate": [
                 {
                     "key": "label",
                     "keyLabel": "programmingLanguage",
@@ -357,7 +358,7 @@
                 {
                     "key": "contributions",
                     "inputType": "panel",
-                    "fields": [
+                    "fieldsTemplate": [
                         {
                             "key": "project",
                             "inputType": "text"
@@ -381,7 +382,7 @@
                         {
                             "key": "links",
                             "inputType": "panel",
-                            "fields": [
+                            "fieldsTemplate": [
                                 {
                                     "key": "label",
                                     "inputType": "text"
@@ -400,7 +401,7 @@
         {
             "key": "skills",
             "inputType": "panel",
-            "fields": [
+            "fieldsTemplate": [
                 {
                     "key": "label",
                     "keyLabel": "skillType",
@@ -410,7 +411,7 @@
                     "key": "types",
                     "keyLabel": "subTypes",
                     "inputType": "panel",
-                    "fields": [
+                    "fieldsTemplate": [
                         {
                             "key": "name",
                             "inputType": "text"
@@ -418,7 +419,7 @@
                         {
                             "key": "categories",
                             "inputType": "panel",
-                            "fields": [
+                            "fieldsTemplate": [
                                 {
                                     "key": "name",
                                     "inputType": "text"
@@ -426,7 +427,7 @@
                                 {
                                     "key": "skills",
                                     "inputType": "panel",
-                                    "fields": [
+                                    "fieldsTemplate": [
                                         {
                                             "key": "name",
                                             "inputType": "text"

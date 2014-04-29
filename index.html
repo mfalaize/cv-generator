@@ -40,8 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                     <div class="modal-body">
                         <label class="control-label">Choose your CV language</label>
-                        <select id="locale" class="form-control">
-                            <option ng-repeat="supported in getSupportedLocales()" value="{{supported.locale}}">{{supported.label}}</option>
+                        <select id="locale" ng-model="selectedLocale" class="form-control">
+                            <option ng-repeat="supported in supportedLocales" value="{{supported.locale}}">{{supported.label}}</option>
                         </select>
                     </div>
                     <div class="modal-footer">

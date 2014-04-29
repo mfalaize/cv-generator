@@ -35,9 +35,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </h1>
     </header>
     <ul class="nav nav-tabs">
-        <li id="defaultLocale" class="active">
-            <a href="#{{choosenLocale.locale}}" data-toggle="tab">
-                <img src="img/blank.gif" class="flag {{choosenLocale.flagClass}}" alt="{{choosenLocale.flagClass}}"/>
+        <li id="defaultLocale" ng-repeat="cvLocale in cv" ng-class="{(cv.active === cvLocale.locale.locale): active}">
+            <a href="#{{cvLocale.locale.locale}}" data-toggle="tab">
+                <img src="img/blank.gif" class="flag {{cvLocale.locale.flagClass}}" alt="{{cvLocale.locale.flagClass}}"/>
             </a>
         </li>
         <li id="addLanguage">
@@ -46,9 +46,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ul>
     <br/>
     <div class="tab-content">
-        <div class="tab-pane active" id="{{choosenLocale.locale}}">
+        <div ng-repeat="cvLocale in cv" class="tab-pane" ng-class="{(cv.active === cvLocale.locale.locale): active}" id="{{cvLocale.locale.locale}}">
             <div class="form-horizontal">
-                <div ng-repeat="fi in fields" ng-init="field = fi">
+                <div ng-repeat="fi in cvLocale.fields" ng-init="field = fi">
                     <ng-include src="'include/panel.html'"></ng-include>
                     <div ng-if="fi.value">
                         <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange" added="true" name="{{fi.key}}.{{onchange.key}}">

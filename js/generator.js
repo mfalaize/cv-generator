@@ -39,6 +39,7 @@ function addField(button) {
     });
     var appendDiv = genericDiv.prev();
     div.appendTo(appendDiv);
+    angular.element(div.find("[ng-bind-template-ext]")).scope().$digest();
     div.show("slow");
     div.on({
         dragstart: function(e) {
@@ -150,9 +151,21 @@ function _base64ToArrayBuffer(base64) {
     return bytes.buffer;
 }
 
+function removeSupportedLocale($scope, locale) {
+    var temp = new Array();
+    for (var i = 0; i < $scope.supportedLocales.length; i++) {
+        var supportedLocale = $scope.supportedLocales[i];
+        if (supportedLocale.locale !== locale.locale) {
+            temp.push(supportedLocale);
+        }
+    }
+    $scope.supportedLocales = temp;
+}
+
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
     "cvGeneratorControllers",
-    "ngAnimate"
+    "ngAnimate",
+    "cvGeneratorDirectives"
 ]);
 
 cvGeneratorApp.animation(".animation", function() {
@@ -172,15 +185,57 @@ cvGeneratorApp.animation(".animation", function() {
     };
 });
 
+var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
+
+cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
+        function link(scope, element, attrs) {
+            var value = scope.$eval(attrs.ngBindTemplateExt);
+            if (value === undefined) {
+                element.text("Temp");
+            } else {
+                scope.$watch(value, function(value2) {
+                    if (value2 === undefined) {
+                        element.text("Temp");
+                    } else {
+                        element.text(value2);
+                    }
+                });
+            }
+        }
+
+        return {
+            link: link
+        };
+    }]);
+
+
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
 cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$window",
     function($scope, $http, $window) {
+        // We hide the form at the beginning
         $scope.showGenerator = false;
+        // Selected locale default value to english
+        $scope.selectedLocale = "en_US";
+
+        // We show the modal panel to choose our language
         $("#localeModal").modal("show");
 
         $scope.loadCV = function() {
             $("#savedFile").click();
+        };
+
+        $scope.addField = function(field) {
+            if (field.fields === undefined) {
+                field.fields = new Array();
+            }
+            var subField = new Object();
+            subField.subFields = field.fieldsTemplate;
+            field.fields.push(subField);
+        };
+
+        $scope.removeField = function(field) {
+            delete field;
         };
 
         $scope.saveCV = function() {
@@ -430,30 +485,24 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             return undefined;
         };
 
-        $scope.loadGenerator = function(localeKey) {
-            var removePanels = false;
-            if (localeKey === undefined) {
-                localeKey = $("#locale").val();
-            } else {
-                // in this case, we load a saved file so we don't need the panels to be generated
-                removePanels = true;
-            }
-
-            var indexLocale = null;
+        $scope.loadGenerator = function() {
+            // We retrieve the locale from the list
+            var locale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
                 var l = $scope.supportedLocales[i];
-                if (l.locale === localeKey) {
-                    indexLocale = i;
+                if (l.locale === $scope.selectedLocale) {
+                    locale = $scope.supportedLocales[i];
                     break;
                 }
             }
-            if (indexLocale !== null) {
-                var locale = $scope.supportedLocales[indexLocale];
 
-                if ($scope.choosenLocale === undefined) {
+            if (locale !== null) {
+                // We activate the locale tab
+                $scope.active = locale.locale;
+
+                if ($scope.cv === undefined) {
                     // This is the first time we choose a language
-                    $scope.choosenLocale = locale;
-
+                    // We load the different strings to display them in the selected locale
                     $http.get("cv/locale/" + locale.localeFile).success(function(data) {
                         $http.get("locale/" + locale.localeFile).success(function(data2) {
                             // We concatenate the two locale files
@@ -461,49 +510,37 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 data[key] = data2[key];
                             }
                             $scope.locale = data;
-                            $scope.showGenerator = true;
-                            $("#localeModal").modal("hide");
+
+                            // We load the fields to display in the form. We do it here
+                            // because we need the locale before to add the fields at the
+                            // right place in the model.
+                            $http.get("data/data-fields.json").success(function(data) {
+                                var cv = $scope.cv = new Array();
+                                var choosenLocale = cv[locale.locale] = new Object();
+                                choosenLocale.fields = data.fields;
+                                choosenLocale.locale = locale;
+                                cv.push(choosenLocale);
+
+                                // We delete the choosen locale from the supported list and
+                                // reselect the first input
+                                removeSupportedLocale($scope, locale);
+                                if ($scope.supportedLocales.length > 0) {
+                                    $scope.selectedLocale = $scope.supportedLocales[0].locale;
+                                }
+
+                                // We show the CV generator
+                                $scope.showGenerator = true;
+                                $("#localeModal").modal("hide");
+                            });
                         });
                     });
                 } else {
                     // The default language is already set, we have to add a new language here
-                    var div = $("#" + $scope.choosenLocale.locale).clone();
-                    div.attr("id", locale.locale);
-                    var li = $("#defaultLocale").clone();
-                    li.attr("id", "li_" + locale.locale);
-                    li.find("a").attr("href", "#" + locale.locale);
-                    li.find("img").attr("class", "flag " + locale.flagClass);
-                    li.find("img").attr("alt", locale.flagClass);
+                    var choosenLocale = $scope.cv[locale.locale] = new Object();
+                    choosenLocale.fields = $scope.cv[0].fields;
+                    choosenLocale.locale = locale;
+                    $scope.cv.push(choosenLocale);
 
-                    // regenerate panels ids if any
-                    div.find(".panel").each(function() {
-                        if (removePanels) {
-                            if ($(this).attr("style") !== "display: none;") {
-                                $(this).remove();
-                            }
-                        } else {
-                            if ($(this).attr("style") !== "display: none;") {
-                                $(this).attr("id", generateUniqueId());
-                                $(this).find(".panel-title > a").attr("href", "#collapse" + id);
-                                $(this).find(".panel-collapse").attr("id", "collapse" + id);
-                                $(this).find("input, select, textarea, .panel-group").each(function() {
-                                    $(this).attr("id", $(this).attr("id") + id);
-                                });
-                                $(this).find("label").each(function() {
-                                    $(this).attr("for", $(this).attr("for") + id);
-                                });
-                                $(this).find("a[data-toggle='collapse']").each(function() {
-                                    $(this).attr("data-parent", $(this).attr("data-parent" + id));
-                                });
-                            }
-                        }
-                    });
-
-                    $(".active").each(function() {
-                        $(this).removeClass("active");
-                    });
-                    li.insertBefore("#addLanguage");
-                    div.appendTo(".tab-content");
                     $("#localeModal").modal("hide");
                 }
             }
@@ -515,29 +552,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             $("#localeModal").modal("show");
         };
 
-        $http.get("data/data-fields.json").success(function(data) {
-            $scope.fields = data.fields;
-        });
         $http.get("locale/locales.json").success(function(data) {
             $scope.supportedLocales = data.supportedLocales;
-
-            $scope.getSupportedLocales = function() {
-                var supportedLocales = new Array();
-                for (var i = 0; i < $scope.supportedLocales.length; i++) {
-                    var locale = $scope.supportedLocales[i];
-                    var available = true;
-                    $(".tab-pane").each(function() {
-                        var localeUnavailable = $(this).attr("id");
-                        if (locale.locale === localeUnavailable) {
-                            available = false;
-                        }
-                    });
-                    if (available) {
-                        supportedLocales.push(locale);
-                    }
-                }
-                return supportedLocales;
-
-            };
         });
     }]);
