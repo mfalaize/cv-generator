@@ -22,6 +22,8 @@ You can see a demo of the GUI [here](http://cvgenerator.maxime-falaize.fr).
 
 You can see the application changelog [here](CHANGELOG.md).
 
+You can download the latest version [here](http://cvgenerator.build.maxime-falaize.fr/snapshot/cv-generator-1.1.0-SNAPSHOT.zip) and access the latest demo [here](http://cvgenerator.build.maxime-falaize.fr/snapshot/cv/index.html). Please note that this version may be unstable.
+
 ###Guidelines for users
 
 ####Getting started
