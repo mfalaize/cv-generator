@@ -15,38 +15,38 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div ng-if="field.inputType !== 'checkbox'">
-    <label class ="control-label col-md-2" for="{{field.key}}">
+    <label class ="control-label col-md-2" for="{{field.id}}">
         <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
         <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
     </label>
     <div class="col-md-10">
-        <select ng-if="field.inputType === 'select'" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <select ng-if="field.inputType === 'select'" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
             <option ng-repeat="option in field.options" value="{{option.value}}">
             <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
             <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
-        <select ng-if="field.inputType === 'selectMultiple'" multiple ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
+        <select ng-if="field.inputType === 'selectMultiple'" multiple ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
             <option ng-repeat="option in field.options" value="{{option.value}}">
             <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
             <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
-        <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'text'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" min="{{field.min}}" max="{{field.max}}" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}">
-        <input ng-if="field.inputType === 'image'" type="file" ng-model="field.value" accept="{{field.accept}}" id="{{field.key}}" name="{{field.key}}" onchange="loadImage(this)">
-        <textarea ng-if="field.inputType === 'textarea'" type="text" ng-model="field.value" class="form-control" id="{{field.key}}" name="{{field.key}}" rows="5"></textarea>
+        <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'text'" type="text" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" min="{{field.min}}" max="{{field.max}}" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'image'" type="file" ng-model="field.value" accept="{{field.accept}}" id="{{field.id}}" name="{{field.key}}" onchange="loadImage(this)">
+        <textarea ng-if="field.inputType === 'textarea'" type="text" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}" rows="5"></textarea>
     </div>
 </div>
 <div ng-if="field.inputType === 'checkbox'">
     <div class="col-md-offset-2 col-md-10">
         <div class="checkbox">
             <label>
-                <input type="checkbox" ng-model="field.value" id="{{field.key}}" name="{{field.key}}">
+                <input type="checkbox" ng-model="field.value" id="{{field.id}}" name="{{field.key}}">
                 <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
                 <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
             </label>

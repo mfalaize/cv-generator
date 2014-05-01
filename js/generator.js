@@ -17,6 +17,10 @@
 $.event.props.push('dataTransfer');
 var id = 0, i = 0, $this;
 
+/**
+ * Generate a unique Id for each call.
+ * @returns {String} The id.
+ */
 function generateUniqueId() {
     return "ui-id-" + id++;
 }
@@ -151,15 +155,22 @@ function _base64ToArrayBuffer(base64) {
     return bytes.buffer;
 }
 
-function removeSupportedLocale($scope, locale) {
-    var temp = new Array();
-    for (var i = 0; i < $scope.supportedLocales.length; i++) {
-        var supportedLocale = $scope.supportedLocales[i];
-        if (supportedLocale.locale !== locale.locale) {
-            temp.push(supportedLocale);
+/**
+ * Remove an object from an array.
+ *
+ * @param {Array} array
+ * @param {String} idProperty
+ * @param {Object} objectToRemove
+ * @returns {Array|removeFromArray.res} A new instance of the array without the removed object.
+ */
+function removeFromArray(array, idProperty, objectToRemove) {
+    var res = new Array();
+    angular.forEach(array, function(object, index) {
+        if (object[idProperty] !== objectToRemove[idProperty]) {
+            res.push(object);
         }
-    }
-    $scope.supportedLocales = temp;
+    });
+    return res;
 }
 
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
@@ -229,13 +240,21 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             if (field.fields === undefined) {
                 field.fields = new Array();
             }
+
             var subField = new Object();
-            subField.subFields = field.fieldsTemplate;
+            subField.subFields = angular.copy(field.fieldsTemplate);
+
+            // Unique id generation
+            subField.id = generateUniqueId();
+            angular.forEach(subField.subFields, function(f, index) {
+                f.id = generateUniqueId();
+            });
+
             field.fields.push(subField);
         };
 
-        $scope.removeField = function(field) {
-            delete field;
+        $scope.removeField = function(field, f) {
+            field.fields = removeFromArray(field.fields, "id", f);
         };
 
         $scope.saveCV = function() {
@@ -502,7 +521,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
                 // We delete the choosen locale from the supported list and
                 // reselect the first input
-                removeSupportedLocale($scope, locale);
+                $scope.supportedLocales = removeFromArray($scope.supportedLocales, "locale", locale);
                 if ($scope.supportedLocales.length > 0) {
                     $scope.selectedLocale = $scope.supportedLocales[0].locale;
                 }
@@ -524,6 +543,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             $http.get("data/data-fields.json").success(function(data) {
                                 var cv = $scope.cv = new Array();
                                 var choosenLocale = cv[locale.locale] = new Object();
+
+                                // Unique id generation for each fields
+                                angular.forEach(data.fields, function(field, index) {
+                                    field.id = generateUniqueId();
+                                });
+
                                 choosenLocale.fields = data.fields;
                                 choosenLocale.locale = locale;
                                 cv.push(choosenLocale);
