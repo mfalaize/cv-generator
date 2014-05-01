@@ -16,8 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div ng-if="field.inputType !== 'checkbox'">
     <label class ="control-label col-md-2" for="{{field.id}}">
-        <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
-        <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+        <span>{{locale[field.keyLabel]}}</span>
     </label>
     <div class="col-md-10">
         <select ng-if="field.inputType === 'select'" ng-model="field.value" class="form-control" id="{{field.id}}" name="{{field.key}}">
@@ -47,8 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="checkbox">
             <label>
                 <input type="checkbox" ng-model="field.value" id="{{field.id}}" name="{{field.key}}">
-                <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
-                <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+                <span>{{locale[field.keyLabel]}}</span>
             </label>
         </div>
     </div>

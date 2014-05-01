@@ -19,18 +19,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 <div ng-if="field.inputType === 'panel'">
     <h3>
-        <span ng-if="field.keyLabel">{{locale[field.keyLabel]}}</span>
-        <span ng-if="!field.keyLabel">{{locale[field.key]}}</span>
+        <span>{{locale[field.keyLabel]}}</span>
         <button id="{{field.key}}-add" ng-click="addField(field)" class="btn btn-success btn-xs">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </h3>
     <div class="panel-group" id="{{field.id}}">
-        <div ng-repeat="f in field.fields" draggable="true" class="panel panel-default animation" id="{{f.id}}" name="{{field.key}}">
+        <div ng-repeat="f in field.fields" class="panel panel-default animation" id="{{f.id}}" name="{{field.key}}">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="{{field.id}}" href="#{{f.id}}-collapse">
-                        <span ng-bind-template-ext="field.titleTemplate"></span>
+                        <span ng-bind-template-ext="field.titleTemplate, locale[field.keyLabel]"></span>
                     </a>
                     <span class="btn-group pull-right">
                         <button ng-click="removeField(field, f)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>

@@ -19,64 +19,11 @@ var id = 0, i = 0, $this;
 
 /**
  * Generate a unique Id for each call.
+ *
  * @returns {String} The id.
  */
 function generateUniqueId() {
     return "ui-id-" + id++;
-}
-
-function addField(button) {
-    var key = $(button).children().first().text();
-    var genericDiv = $(button).parents("div").first().children("#" + key);
-    var div = genericDiv.clone();
-    div.attr("id", generateUniqueId());
-    div.find(".panel-title > a").attr("href", "#collapse" + id);
-    div.find(".panel-collapse").attr("id", "collapse" + id);
-    div.find("input, select, textarea, .panel-group").each(function() {
-        $(this).attr("id", $(this).attr("id") + id);
-    });
-    div.find("label").each(function() {
-        $(this).attr("for", $(this).attr("for") + id);
-    });
-    div.find("a[data-toggle='collapse']").each(function() {
-        $(this).attr("data-parent", $(this).attr("data-parent" + id));
-    });
-    var appendDiv = genericDiv.prev();
-    div.appendTo(appendDiv);
-    angular.element(div.find("[ng-bind-template-ext]")).scope().$digest();
-    div.show("slow");
-    div.on({
-        dragstart: function(e) {
-            $this = $(this);
-            i = $(this).index();
-            $(this).find("input").each(function() {
-                $(this).attr("value", $(this).val());
-            });
-            e.dataTransfer.setData("text/html", $(this).html());
-        },
-        dragover: function(e) {
-            e.preventDefault();
-        },
-        drop: function(e) {
-            if (i !== $(this).index()) {
-                var data = e.dataTransfer.getData("text/html");
-                $(this).find("input").each(function() {
-                    $(this).attr("value", $(this).val());
-                });
-                $this.html($(this).html());
-                $(this).html(data);
-            }
-        }
-    });
-
-    return div;
-}
-
-function removeField(button) {
-    var div = $(button).parents(".panel").first();
-    div.hide("slow", function() {
-        div.remove();
-    });
 }
 
 function loadSavedFile(file) {
@@ -200,13 +147,18 @@ var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
 
 cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
         function link(scope, element, attrs) {
-            var value = scope.$eval(attrs.ngBindTemplateExt);
+            var template = attrs.ngBindTemplateExt.split(",")[0].trim();
+            var defaultValue = "Temp";
+            if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
+                defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
+            }
+            var value = scope.$eval(template);
             if (value === undefined) {
-                element.text("Temp");
+                element.text(defaultValue);
             } else {
                 scope.$watch(value, function(value2) {
-                    if (value2 === undefined) {
-                        element.text("Temp");
+                    if (value2 === undefined || value2 === "") {
+                        element.text(defaultValue);
                     } else {
                         element.text(value2);
                     }
