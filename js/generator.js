@@ -26,71 +26,6 @@ function generateUniqueId() {
     return "ui-id-" + id++;
 }
 
-function loadSavedFile(file) {
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var content = e.target.result;
-            var cv = JSON.parse(content);
-
-            $.each(cv, function(locale, fields) {
-                var parent = locale;
-                if ($("#" + parent).length === 0) {
-                    loadGenerator(locale);
-                }
-
-                var eachFunction = function(field, value) {
-                    if (value instanceof Array) {
-                        var temp = parent;
-                        for (var i = 0; i < value.length; i++) {
-                            var div = addField($("#" + parent).find("#" + field + "-add").first());
-                            parent = div.attr("id");
-                            $.each(value[i], eachFunction);
-                            parent = temp;
-                        }
-                    } else {
-                        var jfield = $("#" + parent).find("[name='" + field + "']");
-                        if (jfield.attr("type") === "checkbox") {
-                            jfield.prop("checked", value);
-                        } else if (jfield.attr("type") === "file") {
-                            if (value !== "") {
-                                addImagePreview(value, jfield);
-                            }
-                        } else {
-                            jfield.val(value);
-                        }
-                    }
-                };
-
-                $.each(fields, eachFunction);
-            });
-        };
-        reader.readAsText(file);
-    }
-}
-
-function addImagePreview(content, elementToInsertAfter) {
-    var next = $(elementToInsertAfter).next();
-    if (next.get(0) !== undefined && next.get(0).tagName === "IMG") {
-        next.hide("slow", function() {
-            next.remove();
-        });
-    }
-    $("<img src=\"" + content + "\" class=\"img-thumbnail\"/>").hide().insertAfter(elementToInsertAfter).show("slow");
-}
-
-function loadImage(input) {
-    var image = input.files[0];
-    if (image) {
-        var reader = new FileReader();
-        reader.onloadend = function() {
-            var content = reader.result;
-            addImagePreview(content, input);
-        };
-        reader.readAsDataURL(image);
-    }
-}
-
 function _base64ToArrayBuffer(base64) {
     var binary_string = window.atob(base64);
     var len = binary_string.length;
@@ -146,31 +81,39 @@ cvGeneratorApp.animation(".animation", function() {
 var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
 
 cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
-        function link(scope, element, attrs) {
-            var template = attrs.ngBindTemplateExt.split(",")[0].trim();
-            var defaultValue = "Temp";
-            if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
-                defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
+        return {
+            link: function link(scope, element, attrs) {
+                var template = attrs.ngBindTemplateExt.split(",")[0].trim();
+                var defaultValue = "Temp";
+                if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
+                    defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
+                }
+                var value = scope.$eval(template);
+                if (value === undefined) {
+                    element.text(defaultValue);
+                } else {
+                    scope.$watch(value, function(value2) {
+                        if (value2 === undefined || value2 === "") {
+                            element.text(defaultValue);
+                        } else {
+                            element.text(value2);
+                        }
+                    });
+                }
             }
-            var value = scope.$eval(template);
-            if (value === undefined) {
-                element.text(defaultValue);
-            } else {
-                scope.$watch(value, function(value2) {
-                    if (value2 === undefined || value2 === "") {
-                        element.text(defaultValue);
-                    } else {
-                        element.text(value2);
-                    }
+        };
+    }]).directive("ngFileChange", [function() {
+        return {
+            restrict: "A",
+            link: function(scope, element, attrs) {
+                element.on("change", function() {
+                    scope.this = element;
+                    scope.$eval(attrs.ngFileChange);
+                    delete scope.this;
                 });
             }
-        }
-
-        return {
-            link: link
         };
     }]);
-
 
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
@@ -186,6 +129,20 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
         $scope.loadCV = function() {
             $("#savedFile").click();
+        };
+
+        $scope.loadSavedFile = function(input) {
+            var file = input[0].files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var content = e.target.result;
+                    var cv = angular.fromJson(content);
+                    $scope.cv = cv;
+                    $scope.$apply();
+                };
+                reader.readAsText(file);
+            }
         };
 
         $scope.addField = function(field) {
@@ -209,55 +166,23 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             field.fields = removeFromArray(field.fields, "id", f);
         };
 
-        $scope.saveCV = function() {
-            var saveJson = new Object();
-            $(".tab-pane").each(function() {
-                var localeContent = new Object();
-                var tempContent = localeContent;
-
-                var eachFunction = function() {
-                    var name = $(this).attr("name");
-                    var children = $(this).children();
-
-                    if (name !== undefined && $(this).attr("added") !== "true") {
-                        var tagname = $(this).get(0).tagName;
-                        if (tagname === "DIV") {
-                            if ($(this).attr("style") !== "display: none;") {
-                                if (tempContent[name] === undefined) {
-                                    tempContent[name] = new Array();
-                                }
-                                var temp = tempContent;
-                                tempContent = new Object();
-                                children.each(eachFunction);
-                                temp[name].push(tempContent);
-                                tempContent = temp;
-                            }
-                        } else {
-                            var val = $(this).val();
-                            if ($(this).attr("type") === "checkbox") {
-                                val = $(this).is(":checked");
-                            }
-                            if ($(this).attr("type") === "file") {
-                                val = $(this).next().attr("src");
-                            }
-                            tempContent[name] = val;
-                        }
-                    } else {
-                        children.each(eachFunction);
-                    }
+        $scope.loadImage = function(input, field) {
+            var image = input[0].files[0];
+            if (image) {
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    var content = reader.result;
+                    field.data = content;
+                    input.scope().$apply();
                 };
+                reader.readAsDataURL(image);
+            }
+        };
 
-                // We recursively retrieve all values
-                $(this).children().each(eachFunction);
-
-                saveJson[$(this).attr("id")] = localeContent;
-            });
-            var exportData = 'data:text/json;charset=utf-8,';
-            exportData += encodeURIComponent(JSON.stringify(saveJson));
-            var saveLink = $("#saveCV");
-            var nameFile = angular.lowercase($("input[name='lastName']").first().val()) + "_" + angular.lowercase($("input[name='firstName']").first().val()) + ".cvg";
-            saveLink.attr("download", nameFile);
-            saveLink.attr("href", exportData);
+        $scope.saveCV = function() {
+            var exportData = 'data:application/octet-stream;charset=utf-8,';
+            exportData += encodeURIComponent(angular.toJson($scope.cv));
+            $window.location = exportData;
         };
 
         $scope.generateCV = function() {
@@ -493,7 +418,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             // because we need the locale before to add the fields at the
                             // right place in the model.
                             $http.get("data/data-fields.json").success(function(data) {
-                                var cv = $scope.cv = new Array();
+                                var cv = $scope.cv = new Object();
                                 var choosenLocale = cv[locale.locale] = new Object();
 
                                 // Unique id generation for each fields
@@ -503,7 +428,6 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
                                 choosenLocale.fields = data.fields;
                                 choosenLocale.locale = locale;
-                                cv.push(choosenLocale);
 
                                 // We show the CV generator
                                 $scope.showGenerator = true;
@@ -516,7 +440,6 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     var choosenLocale = $scope.cv[locale.locale] = new Object();
                     choosenLocale.fields = angular.copy($scope.cv[0].fields);
                     choosenLocale.locale = locale;
-                    $scope.cv.push(choosenLocale);
 
                     $("#localeModal").modal("hide");
                 }

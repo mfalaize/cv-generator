@@ -18,11 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <header class="page-header">
         <h1>Curriculum Vitae Generator <small>v@VERSION@</small>
             <span class="btn-group pull-right">
-                <input style="display:none;" type="file" accept=".cvg" id="savedFile" onchange="loadSavedFile(this.files[0])">
-                <a id="saveCV" class="btn btn-default" ng-click="saveCV()" download="cv.json">
+                <input style="display:none;" type="file" id="savedFile" ng-file-change="loadSavedFile(this)">
+                <button class="btn btn-default" ng-click="saveCV()">
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                     <span> {{locale.saveCV}}</span>
-                </a>
+                </button>
                 <button class="btn btn-default" ng-click="loadCV()">
                     <span class="glyphicon glyphicon-folder-open"></span>
                     <span> {{locale.loadCV}}</span
