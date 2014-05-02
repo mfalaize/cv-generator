@@ -26,7 +26,13 @@ function generateUniqueId() {
     return "ui-id-" + id++;
 }
 
-function _base64ToArrayBuffer(base64) {
+/**
+ * Convert the base64 string to ArrayBuffer.
+ *
+ * @param {type} base64 The base64 string to convert.
+ * @returns {convertBase64ToArrayBuffer.ascii.buffer}
+ */
+function convertBase64ToArrayBuffer(base64) {
     var binary_string = window.atob(base64);
     var len = binary_string.length;
     var bytes = new Uint8Array(len);
@@ -81,6 +87,14 @@ cvGeneratorApp.animation(".animation", function() {
 var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
 
 cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
+        /*
+         * This directive allows to use a ng-bind template from the data-fields.json.
+         * Example : ng-bind-template-ext="test.template, test.default" will evaluate
+         * the test.template value from the element angular scope as a ng-bind-template
+         * attribute. The value after the comma will be evaluated in the element angular
+         * scope as a default value if the value is undefined or empty string. The default
+         * value is optionnal and if it is not specified, it will be "Temp".
+         */
         return {
             link: function link(scope, element, attrs) {
                 var template = attrs.ngBindTemplateExt.split(",")[0].trim();
@@ -103,6 +117,11 @@ cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
             }
         };
     }]).directive("ngFileChange", [function() {
+        /*
+         * This directive is a ng-change directive for file input (because the
+         * ng-change directive does not work with file input).
+         * You can use "this" in the attribute.
+         */
         return {
             restrict: "A",
             link: function(scope, element, attrs) {
@@ -127,10 +146,21 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         // We show the modal panel to choose our language
         $("#localeModal").modal("show");
 
+        /**
+         * Do a click to the hidden input field to let the user choose a file.
+         *
+         * @returns {undefined}
+         */
         $scope.loadCV = function() {
             $("#savedFile").click();
         };
 
+        /**
+         * Load the CV from the file selected in the field. It just replaces the angular model.
+         *
+         * @param {type} input The input field from which you select the file.
+         * @returns {undefined}
+         */
         $scope.loadSavedFile = function(input) {
             var file = input[0].files[0];
             if (file) {
@@ -145,6 +175,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             }
         };
 
+        /**
+         * Add a new field for panel fields.
+         *
+         * @param {type} field The panel field to add the new field to.
+         * @returns {undefined}
+         */
         $scope.addField = function(field) {
             if (field.fields === undefined) {
                 field.fields = new Array();
@@ -162,6 +198,13 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             field.fields.push(subField);
         };
 
+        /**
+         * Remove the field from a panel field.
+         *
+         * @param {type} field The panel field to remove the field from.
+         * @param {type} f The field to remove.
+         * @returns {undefined}
+         */
         $scope.removeField = function(field, f) {
             field.fields = removeFromArray(field.fields, "id", f);
         };
@@ -179,12 +222,22 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             }
         };
 
+        /**
+         * Save the CV in a file. It just converts the angular model to JSON.
+         *
+         * @returns {undefined}
+         */
         $scope.saveCV = function() {
             var exportData = 'data:application/octet-stream;charset=utf-8,';
             exportData += encodeURIComponent(angular.toJson($scope.cv));
             $window.location = exportData;
         };
 
+        /**
+         * Generate the CV website as a ZIP file to download.
+         *
+         * @returns {undefined}
+         */
         $scope.generateCV = function() {
             var zip = new JSZip();
             var lastName = angular.lowercase($("input[name='lastName']").first().val());
@@ -369,6 +422,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             $http.get("cv/" + url).success(getFunction);
         };
 
+        /**
+         * Get the option from a select field with the field value.
+         *
+         * @param {type} field The select field to get the option from.
+         * @returns {onchange.options|fi.options}
+         */
         $scope.getOption = function(field) {
             if (field && field.options && field.value) {
                 for (var i = 0; i < field.options.length; i++) {
@@ -378,9 +437,14 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     }
                 }
             }
-            return undefined;
         };
 
+        /**
+         * Load the generator UI and generate the fields for one locale.
+         * This function can be call again to add another locale to the CV.
+         *
+         * @returns {undefined}
+         */
         $scope.loadGenerator = function() {
             // We retrieve the locale from the list
             var locale = null;
@@ -446,12 +510,16 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             }
         };
 
-        $window.loadGenerator = $scope.loadGenerator;
-
+        /**
+         * This function just show the modal panel to choose a language to add.
+         *
+         * @returns {undefined}
+         */
         $scope.addLanguage = function() {
             $("#localeModal").modal("show");
         };
 
+        // Get the supported locales
         $http.get("locale/locales.json").success(function(data) {
             $scope.supportedLocales = data.supportedLocales;
         });

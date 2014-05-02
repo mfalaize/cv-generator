@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="form-horizontal">
                 <div ng-repeat="fi in cvLocale.fields" ng-init="field = fi">
                     <ng-include src="'include/panel.html'"></ng-include>
-                    <div ng-if="fi.value">
+                    <div ng-if="getOption(fi)">
                         <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange" name="{{fi.key}}.{{onchange.key}}">
                             <ng-include src="'include/panel.html'"></ng-include>
                         </div>
