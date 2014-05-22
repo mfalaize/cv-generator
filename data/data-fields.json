@@ -209,7 +209,7 @@
             "inputType": "url"
         },
         {
-            "key": "drivingLicence",
+            "key": "miscellaneous.drivingLicence",
             "keyLabel": "drivingLicence",
             "inputType": "checkbox"
         },
@@ -217,7 +217,7 @@
             "key": "workExperience",
             "keyLabel": "workExperience",
             "inputType": "panel",
-            "titleTemplate": "f.subFields[4].value",
+            "titleTemplate": "panel.fields[4].value",
             "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
@@ -361,7 +361,7 @@
             ]
         },
         {
-            "key": "languages",
+            "key": "miscellaneous.languages",
             "keyLabel": "languages",
             "inputType": "panel",
             "fieldsTemplate": [
@@ -383,7 +383,7 @@
             ]
         },
         {
-            "key": "pastimes",
+            "key": "miscellaneous.pastimes",
             "keyLabel": "pastimes",
             "inputType": "panel",
             "fieldsTemplate": [
