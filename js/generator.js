@@ -170,6 +170,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 reader.onload = function(e) {
                     var content = e.target.result;
                     var saveFile = angular.fromJson(content);
+
+                    // We update the id global variable
+                    var matchIds = content.match(/ui-id-[0-9]+/g);
+                    angular.forEach(matchIds, function(match, index) {
+                        var matchId = match.substring(6, match.length);
+                        if (id < matchId) {
+                            id = matchId;
+                        }
+                    });
+                    id++;
+
                     if (saveFile.version !== "@VERSION@") {
                         // We retrieve the versions.json to know how many versions
                         // there are from the save file app version
@@ -196,12 +207,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                         if (textStatus === "success") {
                                             // Execute the function loaded in the script
                                             saveFile.cv = updateVersion(saveFile.cv);
+                                        }
 
-                                            // If this is the last script, we apply the generated model
-                                            if (index === (scriptsToLoad.length - 1)) {
-                                                $scope.cv = saveFile.cv;
-                                                $scope.$apply();
-                                            }
+                                        // If this is the last script, we apply the generated model
+                                        if (index === (scriptsToLoad.length - 1)) {
+                                            $scope.cv = saveFile.cv;
+                                            $scope.$apply();
                                         }
                                     });
                                 });
@@ -234,6 +245,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             subField.id = generateUniqueId();
             angular.forEach(subField.fields, function(f, index) {
                 f.id = generateUniqueId();
+
+                // Special case for option onchange fields
+                if (f.options) {
+                    angular.forEach(f.options, function(option, indexOption) {
+                        if (option.onchange) {
+                            angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                                onchange.id = generateUniqueId();
+                            });
+                        }
+                    });
+                }
             });
 
             field.panels.push(subField);
@@ -528,6 +550,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 // Unique id generation for each fields
                                 angular.forEach(data.fields, function(field, index) {
                                     field.id = generateUniqueId();
+
+                                    // Special case for option onchange fields
+                                    if (field.options) {
+                                        angular.forEach(field.options, function(option, indexOption) {
+                                            if (option.onchange) {
+                                                angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                                                    onchange.id = generateUniqueId();
+                                                });
+                                            }
+                                        });
+                                    }
                                 });
 
                                 choosenLocale.fields = data.fields;
@@ -542,7 +575,18 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 } else {
                     // The default language is already set, we have to add a new language here
                     var choosenLocale = $scope.cv[locale.locale] = new Object();
-                    choosenLocale.fields = angular.copy($scope.cv[0].fields);
+                    for (var firstLocale in $scope.cv) {
+                        var jsonString = angular.toJson($scope.cv[firstLocale].fields);
+
+                        // Generate unique ids for the new language fields
+                        var idsToReplace = jsonString.match(/ui-id-[0-9]+/g);
+                        angular.forEach(idsToReplace, function(idToReplace, index) {
+                            jsonString = jsonString.replace("\"" + idToReplace + "\"", "\"" + generateUniqueId() + "\"");
+                        });
+
+                        choosenLocale.fields = angular.copy(angular.fromJson(jsonString));
+                        break;
+                    }
                     choosenLocale.locale = locale;
 
                     $("#localeModal").modal("hide");

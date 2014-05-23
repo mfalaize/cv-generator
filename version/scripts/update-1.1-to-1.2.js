@@ -22,8 +22,8 @@
 var updateVersion = function(cv) {
     if (cv["en_US"]) {
         var newField = new Object();
-        newField.key = "test";
-        newField.keyLabel = "job";
+        newField.key = "test2";
+        newField.keyLabel = "companyName";
         newField.inputType = "text";
         newField.id = generateUniqueId();
         cv["en_US"].fields.push(newField);
