@@ -16,17 +16,19 @@
  */
 /**
  * Update the cv model for the newer app version.
+ *
  * @param {type} cv The cv model.
  * @returns {type} the modified cv parameter.
  */
 var updateVersion = function(cv) {
-    if (cv["en_US"]) {
-        var newField = new Object();
-        newField.key = "test";
-        newField.keyLabel = "job";
-        newField.inputType = "text";
-        newField.id = generateUniqueId();
-        cv["en_US"].fields.push(newField);
-    }
+//    This is an example of what we can do in this function
+//    for (var locale in cv) {
+//        var newField = new Object();
+//        newField.key = "test";
+//        newField.keyLabel = "test";
+//        newField.inputType = "text";
+//        newField.id = generateUniqueId();
+//        cv[locale].fields.push(newField);
+//    }
     return cv;
 };

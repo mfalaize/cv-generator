@@ -320,7 +320,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             var lastName, firstName, model, pdfModel, photo = null;
 
             // Fill the variables from the model
-            for (cvLocale in $scope.cv) {
+            for (var cvLocale in $scope.cv) {
                 angular.forEach($scope.cv[cvLocale].fields, function(field, i) {
                     switch (field.key) {
                         case "lastName":
@@ -336,7 +336,9 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             pdfModel = field.value;
                             break;
                         case "photo":
-                            photo = convertBase64ToArrayBuffer(field.value.split(",")[1]);
+                            if (field.data) {
+                                photo = convertBase64ToArrayBuffer(field.data.split(",")[1]);
+                            }
                             break;
                     }
                 });
@@ -375,9 +377,13 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
                 var eachFunction = function(field, i) {
                     var key = field.key;
-                    if (field.key.indexOf(".") === -1) {
+                    var temp = dataParent;
+                    if (field.key.indexOf(".") !== -1) {
                         var splitedKey = field.key.split(".");
-                        dataParent = data[splitedKey[0]] = new Object();
+                        if (data[splitedKey[0]] === undefined) {
+                            data[splitedKey[0]] = new Object();
+                        }
+                        dataParent = data[splitedKey[0]];
                         key = splitedKey[1];
                     }
 
@@ -395,10 +401,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             break;
                         case "date":
                             var date = dataParent[key] = new Object();
-                            var dateValues = field.value.split("-");
-                            date.day = dateValues[2];
-                            date.month = dateValues[1];
-                            date.year = dateValues[0];
+                            if (field.value) {
+                                var dateValues = field.value.split("-");
+                                date.day = dateValues[2];
+                                date.month = dateValues[1];
+                                date.year = dateValues[0];
+                            }
                             break;
                         case "panel":
                             var panels = dataParent[key] = new Array();
@@ -410,15 +418,20 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 dataParent = temp;
                             });
                             break;
-                        case "text":
+                        default:
                             if ($.inArray(key, ["address", "zipCode", "city", "country"]) !== -1) {
-                                var address = dataParent.address = new Object();
-                                address[key] = field.value;
+                                if (dataParent.address === undefined) {
+                                    dataParent.address = new Object();
+                                }
+                                dataParent.address[key] = field.value;
                             } else {
                                 dataParent[key] = field.value;
                             }
                             break;
                     }
+
+                    // We redefine the dataParent if necessary
+                    dataParent = temp;
                 };
 
                 angular.forEach(localeCv.fields, eachFunction);
