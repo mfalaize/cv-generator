@@ -8,7 +8,7 @@ deploy:
   access_key_id: AKIAJVWJS6FLJFUSQ65A
   secret_access_key:
     secure: VYFGEgf/8WAKxLSZLXKj4jEcAXMZIijYvL5nW9SfYwT94x/pqXzWf2uTppKkSsMhbnVVDHnG5q9RYdAtQzmbvleFTC3QDPpChvyYj5ZMBmQFnu4MkLEfSzfieU8Z0zWhWreqKv/p5pWa/Q+CAREUq+sfStU4xbopkwFppQNOFGA=
-  bucket: cvgenerator.build.maxime-falaize.fr
+  bucket: build.cvgenerator.net
   region: eu-west-1
   skip_cleanup: true
   local-dir: build

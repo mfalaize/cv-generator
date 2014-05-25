@@ -12,17 +12,17 @@ This application is a 100% javascript and HTML5/CSS website that fills the follo
 * Centralized CV data for better maintainability.
 * Module based architecture to easily create new website templates and PDF templates.
 
-You can see a demo [here](http://demo.maxime-falaize.fr).
+You can see a demo [here](http://demo.cvgenerator.net).
 
 Note that this application is mainly designed for developers but its architecture allows to enhance it for other jobs.
 
 This application is provided with a GUI that let you generate easily your CV.
 
-You can see a demo of the GUI [here](http://cvgenerator.maxime-falaize.fr).
+You can see a demo of the GUI [here](http://www.cvgenerator.net).
 
 You can see the application changelog [here](CHANGELOG.md).
 
-You can download the latest version [here](http://cvgenerator.build.maxime-falaize.fr/snapshot/cv-generator-1.1.0-SNAPSHOT.zip) and access the latest demo [here](http://cvgenerator.build.maxime-falaize.fr/snapshot/cv/index.html). Please note that this version may be unstable.
+You can download the latest version [here](http://build.cvgenerator.net/snapshot/cv-generator-1.1.0-SNAPSHOT.zip) and access the latest demo [here](http://build.cvgenerator.net/snapshot/cv/index.html). Please note that this version may be unstable.
 
 ###Guidelines for users
 
