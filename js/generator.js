@@ -17,129 +17,22 @@
 $.event.props.push('dataTransfer');
 var id = 0, i = 0, $this;
 
+/**
+ * Generate a unique Id for each call.
+ *
+ * @returns {String} The id.
+ */
 function generateUniqueId() {
     return "ui-id-" + id++;
 }
 
-function addField(button) {
-    var key = $(button).children().first().text();
-    var genericDiv = $(button).parents("div").first().children("#" + key);
-    var div = genericDiv.clone();
-    div.attr("id", generateUniqueId());
-    div.find(".panel-title > a").attr("href", "#collapse" + id);
-    div.find(".panel-collapse").attr("id", "collapse" + id);
-    div.find("input, select, textarea, .panel-group").each(function() {
-        $(this).attr("id", $(this).attr("id") + id);
-    });
-    div.find("label").each(function() {
-        $(this).attr("for", $(this).attr("for") + id);
-    });
-    div.find("a[data-toggle='collapse']").each(function() {
-        $(this).attr("data-parent", $(this).attr("data-parent" + id));
-    });
-    var appendDiv = genericDiv.prev();
-    div.appendTo(appendDiv);
-    div.show("slow");
-    div.on({
-        dragstart: function(e) {
-            $this = $(this);
-            i = $(this).index();
-            $(this).find("input").each(function() {
-                $(this).attr("value", $(this).val());
-            });
-            e.dataTransfer.setData("text/html", $(this).html());
-        },
-        dragover: function(e) {
-            e.preventDefault();
-        },
-        drop: function(e) {
-            if (i !== $(this).index()) {
-                var data = e.dataTransfer.getData("text/html");
-                $(this).find("input").each(function() {
-                    $(this).attr("value", $(this).val());
-                });
-                $this.html($(this).html());
-                $(this).html(data);
-            }
-        }
-    });
-
-    return div;
-}
-
-function removeField(button) {
-    var div = $(button).parents(".panel").first();
-    div.hide("slow", function() {
-        div.remove();
-    });
-}
-
-function loadSavedFile(file) {
-    if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var content = e.target.result;
-            var cv = JSON.parse(content);
-
-            $.each(cv, function(locale, fields) {
-                var parent = locale;
-                if ($("#" + parent).length === 0) {
-                    loadGenerator(locale);
-                }
-
-                var eachFunction = function(field, value) {
-                    if (value instanceof Array) {
-                        var temp = parent;
-                        for (var i = 0; i < value.length; i++) {
-                            var div = addField($("#" + parent).find("#" + field + "-add").first());
-                            parent = div.attr("id");
-                            $.each(value[i], eachFunction);
-                            parent = temp;
-                        }
-                    } else {
-                        var jfield = $("#" + parent).find("[name='" + field + "']");
-                        if (jfield.attr("type") === "checkbox") {
-                            jfield.prop("checked", value);
-                        } else if (jfield.attr("type") === "file") {
-                            if (value !== "") {
-                                addImagePreview(value, jfield);
-                            }
-                        } else {
-                            jfield.val(value);
-                        }
-                    }
-                };
-
-                $.each(fields, eachFunction);
-            });
-        };
-        reader.readAsText(file);
-    }
-}
-
-function addImagePreview(content, elementToInsertAfter) {
-    var next = $(elementToInsertAfter).next();
-    if (next.get(0) !== undefined && next.get(0).tagName === "IMG") {
-        next.hide("slow", function() {
-            next.remove();
-        });
-    }
-    $("<img src=\"" + content + "\" class=\"img-thumbnail\"/>").hide().insertAfter(elementToInsertAfter).show("slow");
-}
-
-function loadImage(input) {
-    var image = input.files[0];
-    if (image) {
-        var reader = new FileReader();
-        reader.onloadend = function() {
-            var content = reader.result;
-            addImagePreview(content, input);
-        };
-        reader.readAsDataURL(image);
-    }
-}
-
-function _base64ToArrayBuffer(base64) {
+/**
+ * Convert the base64 string to ArrayBuffer.
+ *
+ * @param {type} base64 The base64 string to convert.
+ * @returns {convertBase64ToArrayBuffer.ascii.buffer}
+ */
+function convertBase64ToArrayBuffer(base64) {
     var binary_string = window.atob(base64);
     var len = binary_string.length;
     var bytes = new Uint8Array(len);
@@ -150,9 +43,28 @@ function _base64ToArrayBuffer(base64) {
     return bytes.buffer;
 }
 
+/**
+ * Remove an object from an array.
+ *
+ * @param {Array} array
+ * @param {String} idProperty
+ * @param {Object} objectToRemove
+ * @returns {Array|removeFromArray.res} A new instance of the array without the removed object.
+ */
+function removeFromArray(array, idProperty, objectToRemove) {
+    var res = new Array();
+    angular.forEach(array, function(object, index) {
+        if (object[idProperty] !== objectToRemove[idProperty]) {
+            res.push(object);
+        }
+    });
+    return res;
+}
+
 var cvGeneratorApp = angular.module("cvGeneratorApp", [
     "cvGeneratorControllers",
-    "ngAnimate"
+    "ngAnimate",
+    "cvGeneratorDirectives"
 ]);
 
 cvGeneratorApp.animation(".animation", function() {
@@ -172,215 +84,392 @@ cvGeneratorApp.animation(".animation", function() {
     };
 });
 
+var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
+
+cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
+        /*
+         * This directive allows to use a ng-bind template from the data-fields.json.
+         * Example : ng-bind-template-ext="test.template, test.default" will evaluate
+         * the test.template value from the element angular scope as a ng-bind-template
+         * attribute. The value after the comma will be evaluated in the element angular
+         * scope as a default value if the value is undefined or empty string. The default
+         * value is optionnal and if it is not specified, it will be "Temp".
+         */
+        return {
+            link: function link(scope, element, attrs) {
+                var template = attrs.ngBindTemplateExt.split(",")[0].trim();
+                var defaultValue = "Temp";
+                if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
+                    defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
+                }
+                var value = scope.$eval(template);
+                if (value === undefined) {
+                    element.text(defaultValue);
+                } else {
+                    scope.$watch(value, function(value2) {
+                        if (value2 === undefined || value2 === "") {
+                            element.text(defaultValue);
+                        } else {
+                            element.text(value2);
+                        }
+                    });
+                }
+            }
+        };
+    }]).directive("ngFileChange", [function() {
+        /*
+         * This directive is a ng-change directive for file input (because the
+         * ng-change directive does not work with file input).
+         * You can use "this" in the attribute.
+         */
+        return {
+            restrict: "A",
+            link: function(scope, element, attrs) {
+                element.on("change", function() {
+                    scope.this = element;
+                    scope.$eval(attrs.ngFileChange);
+                    delete scope.this;
+                });
+            }
+        };
+    }]);
+
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
 cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$window",
     function($scope, $http, $window) {
+        // We hide the form at the beginning
         $scope.showGenerator = false;
+        // Selected locale default value to english
+        $scope.selectedLocale = "en_US";
+
+        // We show the modal panel to choose our language
         $("#localeModal").modal("show");
 
+        /**
+         * Do a click to the hidden input field to let the user choose a file.
+         *
+         * @returns {undefined}
+         */
         $scope.loadCV = function() {
             $("#savedFile").click();
         };
 
-        $scope.saveCV = function() {
-            var saveJson = new Object();
-            $(".tab-pane").each(function() {
-                var localeContent = new Object();
-                var tempContent = localeContent;
+        /**
+         * Load the CV from the file selected in the field. It just replaces the angular model
+         * and compare the actual app version with the app version in the file. If they are
+         * different, we update the model for the newer version (if needed).
+         *
+         * @param {type} input The input field from which you select the file.
+         * @returns {undefined}
+         */
+        $scope.loadSavedFile = function(input) {
+            var file = input[0].files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var content = e.target.result;
+                    var saveFile = angular.fromJson(content);
 
-                var eachFunction = function() {
-                    var name = $(this).attr("name");
-                    var children = $(this).children();
-
-                    if (name !== undefined && $(this).attr("added") !== "true") {
-                        var tagname = $(this).get(0).tagName;
-                        if (tagname === "DIV") {
-                            if ($(this).attr("style") !== "display: none;") {
-                                if (tempContent[name] === undefined) {
-                                    tempContent[name] = new Array();
-                                }
-                                var temp = tempContent;
-                                tempContent = new Object();
-                                children.each(eachFunction);
-                                temp[name].push(tempContent);
-                                tempContent = temp;
-                            }
-                        } else {
-                            var val = $(this).val();
-                            if ($(this).attr("type") === "checkbox") {
-                                val = $(this).is(":checked");
-                            }
-                            if ($(this).attr("type") === "file") {
-                                val = $(this).next().attr("src");
-                            }
-                            tempContent[name] = val;
+                    // We update the id global variable
+                    var matchIds = content.match(/ui-id-[0-9]+/g);
+                    angular.forEach(matchIds, function(match, index) {
+                        var matchId = match.substring(6, match.length);
+                        if (id < matchId) {
+                            id = matchId;
                         }
+                    });
+                    id++;
+
+                    // We delete all the saved file's locales from the supported list and
+                    // reselect the first input
+                    for (var locale in saveFile.cv) {
+                        var localeObject = new Object();
+                        localeObject.locale = locale;
+                        $scope.supportedLocales = removeFromArray($scope.supportedLocales, "locale", localeObject);
+                        if ($scope.supportedLocales.length > 0) {
+                            $scope.selectedLocale = $scope.supportedLocales[0].locale;
+                        }
+                    }
+
+                    if (saveFile.version !== "@VERSION@") {
+                        // We retrieve the versions.json to know how many versions
+                        // there are from the save file app version
+                        $http.get("version/versions.json").success(function(data) {
+                            var scriptsToLoad = new Array();
+                            var start = false;
+                            angular.forEach(data.versions, function(version, index) {
+                                if (start) {
+                                    // Add a convention named update script file to the list
+                                    scriptsToLoad.push("update-" + data.versions[index - 1].version + "-to-" + version.version + ".js");
+                                }
+                                if (version.version === saveFile.version) {
+                                    start = true;
+                                }
+                            });
+
+                            if (scriptsToLoad.length === 0) {
+                                $scope.cv = saveFile.cv;
+                                $scope.$apply();
+                            } else {
+                                // We load each update script we need to run (if they exist)
+                                angular.forEach(scriptsToLoad, function(script, index) {
+                                    $.getScript("version/scripts/" + script, function(data, textStatus) {
+                                        if (textStatus === "success") {
+                                            // Execute the function loaded in the script
+                                            saveFile.cv = updateVersion(saveFile.cv);
+                                        }
+
+                                        // If this is the last script, we apply the generated model
+                                        if (index === (scriptsToLoad.length - 1)) {
+                                            $scope.cv = saveFile.cv;
+                                            $scope.$apply();
+                                        }
+                                    });
+                                });
+                            }
+                        });
                     } else {
-                        children.each(eachFunction);
+                        $scope.cv = saveFile.cv;
+                        $scope.$apply();
                     }
                 };
-
-                // We recursively retrieve all values
-                $(this).children().each(eachFunction);
-
-                saveJson[$(this).attr("id")] = localeContent;
-            });
-            var exportData = 'data:text/json;charset=utf-8,';
-            exportData += encodeURIComponent(JSON.stringify(saveJson));
-            var saveLink = $("#saveCV");
-            var nameFile = angular.lowercase($("input[name='lastName']").first().val()) + "_" + angular.lowercase($("input[name='firstName']").first().val()) + ".cvg";
-            saveLink.attr("download", nameFile);
-            saveLink.attr("href", exportData);
+                reader.readAsText(file);
+            }
         };
 
-        $scope.generateCV = function() {
-            var zip = new JSZip();
-            var lastName = angular.lowercase($("input[name='lastName']").first().val());
-            var firstName = angular.lowercase($("input[name='firstName']").first().val());
-            var root = zip.folder("cv-" + lastName + "-" + firstName + "-v@VERSION@");
+        /**
+         * Add a new panel for panel fields.
+         *
+         * @param {type} field The panel field to add the new panel to.
+         * @returns {undefined}
+         */
+        $scope.addPanel = function(field) {
+            if (field.panels === undefined) {
+                field.panels = new Array();
+            }
 
-            var model = $("select[name='model']").first().val();
-            var pdfModel = $("select[name='pdfModel']").first().val();
-            var modelPath = "model/" + model + "/";
+            var subField = new Object();
+            subField.fields = angular.copy(field.fieldsTemplate);
 
-            var locales = new Array();
-            $(".tab-pane").each(function() {
-                var locale = $(this).attr("id");
-                locales.push(locale);
+            // Unique id generation
+            subField.id = generateUniqueId();
+            angular.forEach(subField.fields, function(f, index) {
+                f.id = generateUniqueId();
+
+                // Special case for option onchange fields
+                if (f.options) {
+                    angular.forEach(f.options, function(option, indexOption) {
+                        if (option.onchange) {
+                            angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                                onchange.id = generateUniqueId();
+                            });
+                        }
+                    });
+                }
             });
 
-            // Get identity photo
-            var photo = _base64ToArrayBuffer($("input[name='photo']").first().next().attr("src").split(",")[1]);
+            field.panels.push(subField);
+        };
+
+        /**
+         * Remove the panel from a panel field.
+         *
+         * @param {type} field The panel field to remove the panel from.
+         * @param {type} panel The panel to remove.
+         * @returns {undefined}
+         */
+        $scope.removePanel = function(field, panel) {
+            field.panels = removeFromArray(field.panels, "id", panel);
+        };
+
+        /**
+         * Load the image contained as a file by the input parameter and add its content
+         * into the field parameter.
+         * The image is loaded in a base64 format.
+         *
+         * @param {type} input The form file input which contains the image.
+         * @param {type} field The field angular model object to add the image content to.
+         * @returns {undefined}
+         */
+        $scope.loadImage = function(input, field) {
+            var image = input[0].files[0];
+            if (image) {
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    var content = reader.result;
+                    field.data = content;
+                    input.scope().$apply();
+                };
+                reader.readAsDataURL(image);
+            }
+        };
+
+        /**
+         * Save the CV in a file. It just add the angular model and the app version and
+         * converts them to JSON.
+         *
+         * @returns {undefined}
+         */
+        $scope.saveCV = function() {
+            var exportData = 'data:application/octet-stream;charset=utf-8,';
+            var save = new Object();
+            save.version = "@VERSION@";
+            save.cv = $scope.cv;
+            exportData += encodeURIComponent(angular.toJson(save));
+            $window.location = exportData;
+        };
+
+        /**
+         * Generate the CV website as a ZIP file to download.
+         *
+         * @returns {undefined}
+         */
+        $scope.generateCV = function() {
+            var zip = new JSZip();
+
+            var lastName, firstName, model, pdfModel, photo = null;
+
+            // Fill the variables from the model
+            for (var cvLocale in $scope.cv) {
+                angular.forEach($scope.cv[cvLocale].fields, function(field, i) {
+                    switch (field.key) {
+                        case "lastName":
+                            lastName = angular.lowercase(field.value);
+                            break;
+                        case "firstName":
+                            firstName = angular.lowercase(field.value);
+                            break;
+                        case "model":
+                            model = field.value;
+                            break;
+                        case "pdfModel":
+                            pdfModel = field.value;
+                            break;
+                        case "photo":
+                            if (field.data) {
+                                photo = convertBase64ToArrayBuffer(field.data.split(",")[1]);
+                            }
+                            break;
+                    }
+                });
+                break;
+            }
+
+            // Create the root zip file
+            var root = zip.folder("cv-" + lastName + "-" + firstName + "-v@VERSION@");
+
+            // Create the photo image file
             root.folder("img").file("identity.jpeg", photo);
 
+            var modelPath = "model/" + model + "/";
+
             var urls = ["js/cv.js", "index.html", modelPath + model + ".html",
-                modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js",
-                "locale/locales.json"];
+                modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js"];
 
             var i = 0;
             var url = urls[i];
 
+            var localeFile = new Object();
+            localeFile.supportedLocales = new Array();
+            angular.forEach($scope.cv, function(localeCv, localeKey) {
+                // Generate the locales.json file content
+                if ($scope.choosenLocale.locale === localeCv.locale.locale) {
+                    localeCv.locale.default = true;
+                } else {
+                    localeCv.locale.default = false;
+                }
+                localeFile.supportedLocales.push(localeCv.locale);
+                urls.push("locale/" + localeCv.locale.localeFile);
+
+                // We browse the fields to create the data file content for this locale
+                var data = new Object();
+                var dataParent = data;
+
+                var eachFunction = function(field, i) {
+                    var key = field.key;
+                    var temp = dataParent;
+                    if (field.key.indexOf(".") !== -1) {
+                        var splitedKey = field.key.split(".");
+                        if (data[splitedKey[0]] === undefined) {
+                            data[splitedKey[0]] = new Object();
+                        }
+                        dataParent = data[splitedKey[0]];
+                        key = splitedKey[1];
+                    }
+
+                    switch (field.inputType) {
+                        case "select":
+                            dataParent[key] = field.value;
+                            angular.forEach(field.options, function(option, j) {
+                                if (option.onchange) {
+                                    angular.forEach(option.onchange, function(onchange, k) {
+                                        var config = dataParent[key + "Config"] = new Object();
+                                        config[onchange.key] = onchange.value;
+                                    });
+                                }
+                            });
+                            break;
+                        case "date":
+                            var date = dataParent[key] = new Object();
+                            if (field.value) {
+                                var dateValues = field.value.split("-");
+                                date.day = dateValues[2];
+                                date.month = dateValues[1];
+                                date.year = dateValues[0];
+                            }
+                            break;
+                        case "panel":
+                            var panels = dataParent[key] = new Array();
+                            angular.forEach(field.panels, function(panel, j) {
+                                var temp = dataParent;
+                                dataParent = new Object();
+                                angular.forEach(panel.fields, eachFunction);
+                                panels.push(dataParent);
+                                dataParent = temp;
+                            });
+                            break;
+                        default:
+                            if ($.inArray(key, ["address", "zipCode", "city", "country"]) !== -1) {
+                                if (dataParent.address === undefined) {
+                                    dataParent.address = new Object();
+                                }
+                                dataParent.address[key] = field.value;
+                            } else {
+                                if (field.value === undefined) {
+                                    dataParent[key] = "";
+                                } else {
+                                    dataParent[key] = field.value;
+                                }
+                            }
+                            break;
+                    }
+
+                    // We redefine the dataParent if necessary
+                    dataParent = temp;
+                };
+
+                angular.forEach(localeCv.fields, eachFunction);
+
+                root.folder("data").file(localeCv.locale.dataFile, angular.toJson(data));
+            });
+
+            // Create the locales.json file
+            root.folder("locale").file("locales.json", angular.toJson(localeFile));
+
             var getFunction = function(data) {
                 var addFile = true;
 
-                if (url === "locale/locales.json") {
-                    var newLocales = new Object();
-                    newLocales.supportedLocales = new Array();
-                    for (var j = 0; j < data.supportedLocales.length; j++) {
-                        var supportedLocale = data.supportedLocales[j];
-                        if (locales.indexOf(supportedLocale.locale) !== -1) {
-                            if ($scope.choosenLocale.locale === supportedLocale.locale) {
-                                data.supportedLocales[j].default = true;
-                            } else {
-                                data.supportedLocales[j].default = false;
-                            }
-                            newLocales.supportedLocales.push(data.supportedLocales[j]);
-                            urls.push("locale/" + supportedLocale.localeFile);
-
-                            // Generate the locale data
-                            var dataLocale = new Object();
-                            var tempContent = dataLocale;
-
-                            var eachFunction = function() {
-                                var name = $(this).attr("name");
-                                var children = $(this).children();
-
-                                if (name !== undefined) {
-                                    var tagname = $(this).get(0).tagName;
-                                    if (tagname === "DIV") {
-                                        if ($(this).attr("style") !== "display: none;") {
-                                            if (name.indexOf(".") !== -1) {
-                                                var splitName = name.split(".");
-                                                tempContent[splitName[0] + "Config"] = new Object();
-                                                var temp = tempContent;
-                                                tempContent = tempContent[splitName[0] + "Config"];
-                                                children.each(eachFunction);
-                                                tempContent = temp;
-                                            } else {
-                                                if ($.inArray(name, ["languages", "pastimes"]) !== -1) {
-                                                    if (tempContent.miscellaneous === undefined) {
-                                                        tempContent.miscellaneous = new Object();
-                                                    }
-                                                    if (tempContent.miscellaneous[name] === undefined) {
-                                                        tempContent.miscellaneous[name] = new Array();
-                                                    }
-                                                    var temp = tempContent;
-                                                    tempContent = new Object();
-                                                    children.each(eachFunction);
-                                                    temp.miscellaneous[name].push(tempContent);
-                                                    tempContent = temp;
-                                                } else {
-
-                                                    if (tempContent[name] === undefined) {
-                                                        tempContent[name] = new Array();
-                                                    }
-                                                    var temp = tempContent;
-                                                    tempContent = new Object();
-                                                    children.each(eachFunction);
-                                                    temp[name].push(tempContent);
-                                                    tempContent = temp;
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        var val = $(this).val();
-                                        if ($(this).attr("type") === "checkbox") {
-                                            val = $(this).is(":checked");
-                                        }
-
-                                        var temp = tempContent;
-                                        if (name.search("^currentEmployer\.") !== -1) {
-                                            var realName = name.split(".");
-                                            name = realName[1];
-                                            if (tempContent.currentEmployer === undefined) {
-                                                tempContent.currentEmployer = new Object();
-                                            }
-                                            tempContent = tempContent.currentEmployer;
-                                        }
-
-                                        if (angular.isString(val) && val.search("^[0-9]{4}-[0-9]{2}-[0-9]{2}$") !== -1) {
-                                            // It is a date
-                                            var splitDate = val.split("-");
-                                            tempContent[name] = new Object();
-                                            tempContent[name].day = splitDate[2];
-                                            tempContent[name].month = splitDate[1];
-                                            tempContent[name].year = splitDate[0];
-                                        } else if ($.inArray(name, ["address", "zipCode", "city", "country"]) !== -1) {
-                                            // It is an address
-                                            if (tempContent.address === undefined) {
-                                                tempContent.address = new Object();
-                                            }
-                                            tempContent.address[name] = val;
-                                        } else if ($.inArray(name, ["drivingLicence", "languages", "pastimes"]) !== -1) {
-                                            if (tempContent.miscellaneous === undefined) {
-                                                tempContent.miscellaneous = new Object();
-                                            }
-                                            tempContent.miscellaneous[name] = val;
-                                        } else {
-                                            tempContent[name] = val;
-                                        }
-                                        tempContent = temp;
-                                    }
-                                } else {
-                                    children.each(eachFunction);
-                                }
-                            };
-
-                            $("#" + supportedLocale.locale).children().each(eachFunction);
-                            root.folder("data").file(supportedLocale.dataFile, JSON.stringify(dataLocale));
-                        }
-                    }
-                    data = newLocales;
-                }
-
+                // We add to the download urls the files indicated in the index.json
                 if (url === modelPath + "index.json") {
                     for (var j = 0; j < data.index.length; j++) {
                         urls.push(modelPath + data.index[j]);
                     }
+                    // We don't have to include the index.json file in the final zip
                     addFile = false;
                 }
 
+                // Build the folder path string from the url
                 var folders = url.split("/");
                 var folderString = "";
 
@@ -392,7 +481,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 }
 
                 if (data instanceof Object && !(data instanceof ArrayBuffer)) {
-                    data = JSON.stringify(data);
+                    data = angular.toJson(data);
                 }
 
                 if (addFile) {
@@ -405,19 +494,27 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     var options = {};
                     var splitUrl = url.split(".");
                     var extension = splitUrl[splitUrl.length - 1];
+                    // If the next file to download is an image, we download it as an ArrayBuffer
                     if (extension !== undefined && $.inArray(extension, ["jpg", "jpeg", "png", "gif", "bmp"]) !== -1) {
                         options = {responseType: "arraybuffer"};
                     }
                     $http.get("cv/" + url, options).success(getFunction);
                 } else {
+                    // If we do not have other url to process, we can generate the zip application
                     var content = zip.generate();
-                    location.href = "data:application/zip;base64," + content;
+                    $window.location = "data:application/zip;base64," + content;
                 }
             };
 
             $http.get("cv/" + url).success(getFunction);
         };
 
+        /**
+         * Get the option from a select field with the field value.
+         *
+         * @param {type} field The select field to get the option from.
+         * @returns {onchange.options|fi.options}
+         */
         $scope.getOption = function(field) {
             if (field && field.options && field.value) {
                 for (var i = 0; i < field.options.length; i++) {
@@ -427,33 +524,42 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     }
                 }
             }
-            return undefined;
         };
 
-        $scope.loadGenerator = function(localeKey) {
-            var removePanels = false;
-            if (localeKey === undefined) {
-                localeKey = $("#locale").val();
-            } else {
-                // in this case, we load a saved file so we don't need the panels to be generated
-                removePanels = true;
-            }
-
-            var indexLocale = null;
+        /**
+         * Load the generator UI and generate the fields for one locale.
+         * This function can be call again to add another locale to the CV.
+         *
+         * @returns {undefined}
+         */
+        $scope.loadGenerator = function() {
+            // We retrieve the locale from the list
+            var locale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
                 var l = $scope.supportedLocales[i];
-                if (l.locale === localeKey) {
-                    indexLocale = i;
+                if (l.locale === $scope.selectedLocale) {
+                    locale = $scope.supportedLocales[i];
                     break;
                 }
             }
-            if (indexLocale !== null) {
-                var locale = $scope.supportedLocales[indexLocale];
 
-                if ($scope.choosenLocale === undefined) {
+            if (locale !== null) {
+
+                // We activate the locale tab
+                $scope.active = locale.locale;
+
+                // We delete the choosen locale from the supported list and
+                // reselect the first input
+                $scope.supportedLocales = removeFromArray($scope.supportedLocales, "locale", locale);
+                if ($scope.supportedLocales.length > 0) {
+                    $scope.selectedLocale = $scope.supportedLocales[0].locale;
+                }
+
+                if ($scope.cv === undefined) {
                     // This is the first time we choose a language
                     $scope.choosenLocale = locale;
 
+                    // We load the different strings to display them in the selected locale
                     $http.get("cv/locale/" + locale.localeFile).success(function(data) {
                         $http.get("locale/" + locale.localeFile).success(function(data2) {
                             // We concatenate the two locale files
@@ -461,83 +567,72 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 data[key] = data2[key];
                             }
                             $scope.locale = data;
-                            $scope.showGenerator = true;
-                            $("#localeModal").modal("hide");
+
+                            // We load the fields to display in the form. We do it here
+                            // because we need the locale before to add the fields at the
+                            // right place in the model.
+                            $http.get("data/data-fields.json").success(function(data) {
+                                var cv = $scope.cv = new Object();
+                                var choosenLocale = cv[locale.locale] = new Object();
+
+                                // Unique id generation for each fields
+                                angular.forEach(data.fields, function(field, index) {
+                                    field.id = generateUniqueId();
+
+                                    // Special case for option onchange fields
+                                    if (field.options) {
+                                        angular.forEach(field.options, function(option, indexOption) {
+                                            if (option.onchange) {
+                                                angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                                                    onchange.id = generateUniqueId();
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                                choosenLocale.fields = data.fields;
+                                choosenLocale.locale = locale;
+
+                                // We show the CV generator
+                                $scope.showGenerator = true;
+                                $("#localeModal").modal("hide");
+                            });
                         });
                     });
                 } else {
                     // The default language is already set, we have to add a new language here
-                    var div = $("#" + $scope.choosenLocale.locale).clone();
-                    div.attr("id", locale.locale);
-                    var li = $("#defaultLocale").clone();
-                    li.attr("id", "li_" + locale.locale);
-                    li.find("a").attr("href", "#" + locale.locale);
-                    li.find("img").attr("class", "flag " + locale.flagClass);
-                    li.find("img").attr("alt", locale.flagClass);
+                    var choosenLocale = $scope.cv[locale.locale] = new Object();
+                    for (var firstLocale in $scope.cv) {
+                        var jsonString = angular.toJson($scope.cv[firstLocale].fields);
 
-                    // regenerate panels ids if any
-                    div.find(".panel").each(function() {
-                        if (removePanels) {
-                            if ($(this).attr("style") !== "display: none;") {
-                                $(this).remove();
-                            }
-                        } else {
-                            if ($(this).attr("style") !== "display: none;") {
-                                $(this).attr("id", generateUniqueId());
-                                $(this).find(".panel-title > a").attr("href", "#collapse" + id);
-                                $(this).find(".panel-collapse").attr("id", "collapse" + id);
-                                $(this).find("input, select, textarea, .panel-group").each(function() {
-                                    $(this).attr("id", $(this).attr("id") + id);
-                                });
-                                $(this).find("label").each(function() {
-                                    $(this).attr("for", $(this).attr("for") + id);
-                                });
-                                $(this).find("a[data-toggle='collapse']").each(function() {
-                                    $(this).attr("data-parent", $(this).attr("data-parent" + id));
-                                });
-                            }
-                        }
-                    });
+                        // Generate unique ids for the new language fields
+                        var idsToReplace = jsonString.match(/ui-id-[0-9]+/g);
+                        angular.forEach(idsToReplace, function(idToReplace, index) {
+                            jsonString = jsonString.replace("\"" + idToReplace + "\"", "\"" + generateUniqueId() + "\"");
+                        });
 
-                    $(".active").each(function() {
-                        $(this).removeClass("active");
-                    });
-                    li.insertBefore("#addLanguage");
-                    div.appendTo(".tab-content");
+                        choosenLocale.fields = angular.copy(angular.fromJson(jsonString));
+                        break;
+                    }
+                    choosenLocale.locale = locale;
+
                     $("#localeModal").modal("hide");
                 }
             }
         };
 
-        $window.loadGenerator = $scope.loadGenerator;
-
+        /**
+         * This function just show the modal panel to choose a language to add.
+         *
+         * @returns {undefined}
+         */
         $scope.addLanguage = function() {
             $("#localeModal").modal("show");
         };
 
-        $http.get("data/data-fields.json").success(function(data) {
-            $scope.fields = data.fields;
-        });
+        // Get the supported locales
         $http.get("locale/locales.json").success(function(data) {
             $scope.supportedLocales = data.supportedLocales;
-
-            $scope.getSupportedLocales = function() {
-                var supportedLocales = new Array();
-                for (var i = 0; i < $scope.supportedLocales.length; i++) {
-                    var locale = $scope.supportedLocales[i];
-                    var available = true;
-                    $(".tab-pane").each(function() {
-                        var localeUnavailable = $(this).attr("id");
-                        if (locale.locale === localeUnavailable) {
-                            available = false;
-                        }
-                    });
-                    if (available) {
-                        supportedLocales.push(locale);
-                    }
-                }
-                return supportedLocales;
-
-            };
         });
     }]);
