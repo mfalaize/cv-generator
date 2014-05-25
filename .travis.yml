@@ -15,3 +15,4 @@ deploy:
   upload-dir: snapshot
   on:
     repo: mfalaize/cv-generator
+    branch: master

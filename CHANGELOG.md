@@ -7,3 +7,4 @@ CV Generator v1.1.0
 
 * Add a 100% HTML/Javascript GUI to write your CV easily and generate a custom website which embbed only the files it requires.
 * Add an Ant build script to generate snapshots and releases.
+* Put the project under Travis-CI.
