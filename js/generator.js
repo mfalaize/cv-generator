@@ -436,7 +436,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 }
                                 dataParent.address[key] = field.value;
                             } else {
-                                dataParent[key] = field.value;
+                                if (field.value === undefined) {
+                                    dataParent[key] = "";
+                                } else {
+                                    dataParent[key] = field.value;
+                                }
                             }
                             break;
                     }
