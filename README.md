@@ -93,3 +93,7 @@ Then you have to write your template into the ```pdfContent(cv, locale, img)``` 
 As the PDF is generated with the jsPdf library, the <code>pdfContent</code> function must return the <code>jsPDF</code> object created at the beginning of the function. Your code should start by ```var doc = new jsPDF();```.
 
 When your template is complete you finally have to update the GUI by adding your template in the options of the PDF model field. To do so, edit the <code>data/data-fields.json</code>. Note that you can add custom properties (with custom new fields) as it is done with the default model (please see the JSON file to know how to do).
+
+####Note for the <code>data/data-fields.json</code> file
+
+When you edit the <code>data/data-fields.json</code> file, you also have to write a JS script in the <code>version/scripts</code> directory. This script is necessary to automatically adapt the saved CV files to the new model (as this file is only an angular model dump). The file name is important and have to be in the same template as <code>update-1.0-to-1.1.js</code>. If the script does not exist, just copy the <code>update-1.0-to-1.1.js</code> file, change its name and adapt its content. If the script already exists, just add your modifications to the content.
