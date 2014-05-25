@@ -181,6 +181,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     });
                     id++;
 
+                    // We delete all the saved file's locales from the supported list and
+                    // reselect the first input
+                    for (var locale in saveFile.cv) {
+                        var localeObject = new Object();
+                        localeObject.locale = locale;
+                        $scope.supportedLocales = removeFromArray($scope.supportedLocales, "locale", localeObject);
+                        if ($scope.supportedLocales.length > 0) {
+                            $scope.selectedLocale = $scope.supportedLocales[0].locale;
+                        }
+                    }
+
                     if (saveFile.version !== "@VERSION@") {
                         // We retrieve the versions.json to know how many versions
                         // there are from the save file app version

@@ -317,6 +317,7 @@
             "key": "education",
             "keyLabel": "education",
             "inputType": "panel",
+            "titleTemplate": "panel.fields[5].value",
             "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
@@ -364,6 +365,7 @@
             "key": "miscellaneous.languages",
             "keyLabel": "languages",
             "inputType": "panel",
+            "titleTemplate": "panel.fields[1].value",
             "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
@@ -386,6 +388,7 @@
             "key": "miscellaneous.pastimes",
             "keyLabel": "pastimes",
             "inputType": "panel",
+            "titleTemplate": "panel.fields[1].value",
             "fieldsTemplate": [
                 {
                     "key": "displayOnPdf",
@@ -408,6 +411,7 @@
             "key": "contributionLanguages",
             "keyLabel": "contributions",
             "inputType": "panel",
+            "titleTemplate": "panel.fields[0].value",
             "fieldsTemplate": [
                 {
                     "key": "label",
@@ -418,6 +422,7 @@
                     "key": "contributions",
                     "keyLabel": "contributions",
                     "inputType": "panel",
+                    "titleTemplate": "panel.fields[0].value",
                     "fieldsTemplate": [
                         {
                             "key": "project",
@@ -448,6 +453,7 @@
                             "key": "links",
                             "keyLabel": "links",
                             "inputType": "panel",
+                            "titleTemplate": "panel.fields[0].value",
                             "fieldsTemplate": [
                                 {
                                     "key": "label",
@@ -469,6 +475,7 @@
             "key": "skills",
             "keyLabel": "skills",
             "inputType": "panel",
+            "titleTemplate": "panel.fields[0].value",
             "fieldsTemplate": [
                 {
                     "key": "label",
@@ -479,6 +486,7 @@
                     "key": "types",
                     "keyLabel": "subTypes",
                     "inputType": "panel",
+                    "titleTemplate": "panel.fields[0].value",
                     "fieldsTemplate": [
                         {
                             "key": "name",
@@ -489,6 +497,7 @@
                             "key": "categories",
                             "keyLabel": "categories",
                             "inputType": "panel",
+                            "titleTemplate": "panel.fields[0].value",
                             "fieldsTemplate": [
                                 {
                                     "key": "name",
@@ -499,6 +508,7 @@
                                     "key": "skills",
                                     "keyLabel": "skills",
                                     "inputType": "panel",
+                                    "titleTemplate": "panel.fields[0].value",
                                     "fieldsTemplate": [
                                         {
                                             "key": "name",
