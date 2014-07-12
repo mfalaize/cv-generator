@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Maxime Falaize
+ * Copyright (C) 2014  Maxime Falaize
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 $.event.props.push('dataTransfer');
 var id = 0, i = 0, $this;
 
@@ -53,7 +54,7 @@ function convertBase64ToArrayBuffer(base64) {
  */
 function removeFromArray(array, idProperty, objectToRemove) {
     var res = new Array();
-    angular.forEach(array, function(object, index) {
+    angular.forEach(array, function (object, index) {
         if (object[idProperty] !== objectToRemove[idProperty]) {
             res.push(object);
         }
@@ -67,17 +68,17 @@ var cvGeneratorApp = angular.module("cvGeneratorApp", [
     "cvGeneratorDirectives"
 ]);
 
-cvGeneratorApp.animation(".animation", function() {
+cvGeneratorApp.animation(".animation", function () {
     return {
-        enter: function(element, done) {
+        enter: function (element, done) {
             // We hide immediatly before showing because the element cannot be set
             // with display: none as it is not displayed at the first page load.
             // This workaround is invisible for our eyes.
             $(element).hide();
             $(element).show("slow");
         },
-        leave: function(element, done) {
-            $(element).hide("slow", function() {
+        leave: function (element, done) {
+            $(element).hide("slow", function () {
                 $(element).remove();
             });
         }
@@ -86,58 +87,58 @@ cvGeneratorApp.animation(".animation", function() {
 
 var cvGeneratorDirectives = angular.module("cvGeneratorDirectives", []);
 
-cvGeneratorDirectives.directive("ngBindTemplateExt", [function() {
-        /*
-         * This directive allows to use a ng-bind template from the data-fields.json.
-         * Example : ng-bind-template-ext="test.template, test.default" will evaluate
-         * the test.template value from the element angular scope as a ng-bind-template
-         * attribute. The value after the comma will be evaluated in the element angular
-         * scope as a default value if the value is undefined or empty string. The default
-         * value is optionnal and if it is not specified, it will be "Temp".
-         */
-        return {
-            link: function link(scope, element, attrs) {
-                var template = attrs.ngBindTemplateExt.split(",")[0].trim();
-                var defaultValue = "Temp";
-                if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
-                    defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
-                }
-                var value = scope.$eval(template);
-                if (value === undefined) {
-                    element.text(defaultValue);
-                } else {
-                    scope.$watch(value, function(value2) {
-                        if (value2 === undefined || value2 === "") {
-                            element.text(defaultValue);
-                        } else {
-                            element.text(value2);
-                        }
-                    });
-                }
+cvGeneratorDirectives.directive("ngBindTemplateExt", [function () {
+    /*
+     * This directive allows to use a ng-bind template from the data-fields.json.
+     * Example : ng-bind-template-ext="test.template, test.default" will evaluate
+     * the test.template value from the element angular scope as a ng-bind-template
+     * attribute. The value after the comma will be evaluated in the element angular
+     * scope as a default value if the value is undefined or empty string. The default
+     * value is optionnal and if it is not specified, it will be "Temp".
+     */
+    return {
+        link: function link(scope, element, attrs) {
+            var template = attrs.ngBindTemplateExt.split(",")[0].trim();
+            var defaultValue = "Temp";
+            if (attrs.ngBindTemplateExt.indexOf(",") !== -1) {
+                defaultValue = scope.$eval(attrs.ngBindTemplateExt.split(",")[1].trim());
             }
-        };
-    }]).directive("ngFileChange", [function() {
-        /*
-         * This directive is a ng-change directive for file input (because the
-         * ng-change directive does not work with file input).
-         * You can use "this" in the attribute.
-         */
-        return {
-            restrict: "A",
-            link: function(scope, element, attrs) {
-                element.on("change", function() {
-                    scope.this = element;
-                    scope.$eval(attrs.ngFileChange);
-                    delete scope.this;
+            var value = scope.$eval(template);
+            if (value === undefined) {
+                element.text(defaultValue);
+            } else {
+                scope.$watch(value, function (value2) {
+                    if (value2 === undefined || value2 === "") {
+                        element.text(defaultValue);
+                    } else {
+                        element.text(value2);
+                    }
                 });
             }
-        };
-    }]);
+        }
+    };
+}]).directive("ngFileChange", [function () {
+    /*
+     * This directive is a ng-change directive for file input (because the
+     * ng-change directive does not work with file input).
+     * You can use "this" in the attribute.
+     */
+    return {
+        restrict: "A",
+        link: function (scope, element, attrs) {
+            element.on("change", function () {
+                scope.this = element;
+                scope.$eval(attrs.ngFileChange);
+                delete scope.this;
+            });
+        }
+    };
+}]);
 
 var cvGeneratorControllers = angular.module("cvGeneratorControllers", []);
 
 cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "$window",
-    function($scope, $http, $window) {
+    function ($scope, $http, $window) {
         // We hide the form at the beginning
         $scope.showGenerator = false;
         // Selected locale default value to english
@@ -151,7 +152,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          *
          * @returns {undefined}
          */
-        $scope.loadCV = function() {
+        $scope.loadCV = function () {
             $("#savedFile").click();
         };
 
@@ -163,17 +164,17 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          * @param {type} input The input field from which you select the file.
          * @returns {undefined}
          */
-        $scope.loadSavedFile = function(input) {
+        $scope.loadSavedFile = function (input) {
             var file = input[0].files[0];
             if (file) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     var content = e.target.result;
                     var saveFile = angular.fromJson(content);
 
                     // We update the id global variable
                     var matchIds = content.match(/ui-id-[0-9]+/g);
-                    angular.forEach(matchIds, function(match, index) {
+                    angular.forEach(matchIds, function (match, index) {
                         var matchId = match.substring(6, match.length);
                         if (id < matchId) {
                             id = matchId;
@@ -195,10 +196,10 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     if (saveFile.version !== "@VERSION@") {
                         // We retrieve the versions.json to know how many versions
                         // there are from the save file app version
-                        $http.get("version/versions.json").success(function(data) {
+                        $http.get("version/versions.json").success(function (data) {
                             var scriptsToLoad = new Array();
                             var start = false;
-                            angular.forEach(data.versions, function(version, index) {
+                            angular.forEach(data.versions, function (version, index) {
                                 if (start) {
                                     // Add a convention named update script file to the list
                                     scriptsToLoad.push("update-" + data.versions[index - 1].version + "-to-" + version.version + ".js");
@@ -213,8 +214,8 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 $scope.$apply();
                             } else {
                                 // We load each update script we need to run (if they exist)
-                                angular.forEach(scriptsToLoad, function(script, index) {
-                                    $.getScript("version/scripts/" + script, function(data, textStatus) {
+                                angular.forEach(scriptsToLoad, function (script, index) {
+                                    $.getScript("version/scripts/" + script, function (data, textStatus) {
                                         if (textStatus === "success") {
                                             // Execute the function loaded in the script
                                             saveFile.cv = updateVersion(saveFile.cv);
@@ -244,7 +245,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          * @param {type} field The panel field to add the new panel to.
          * @returns {undefined}
          */
-        $scope.addPanel = function(field) {
+        $scope.addPanel = function (field) {
             if (field.panels === undefined) {
                 field.panels = new Array();
             }
@@ -254,14 +255,14 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
             // Unique id generation
             subField.id = generateUniqueId();
-            angular.forEach(subField.fields, function(f, index) {
+            angular.forEach(subField.fields, function (f, index) {
                 f.id = generateUniqueId();
 
                 // Special case for option onchange fields
                 if (f.options) {
-                    angular.forEach(f.options, function(option, indexOption) {
+                    angular.forEach(f.options, function (option, indexOption) {
                         if (option.onchange) {
-                            angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                            angular.forEach(option.onchange, function (onchange, indexOnchange) {
                                 onchange.id = generateUniqueId();
                             });
                         }
@@ -279,7 +280,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          * @param {type} panel The panel to remove.
          * @returns {undefined}
          */
-        $scope.removePanel = function(field, panel) {
+        $scope.removePanel = function (field, panel) {
             field.panels = removeFromArray(field.panels, "id", panel);
         };
 
@@ -292,11 +293,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          * @param {type} field The field angular model object to add the image content to.
          * @returns {undefined}
          */
-        $scope.loadImage = function(input, field) {
+        $scope.loadImage = function (input, field) {
             var image = input[0].files[0];
             if (image) {
                 var reader = new FileReader();
-                reader.onloadend = function() {
+                reader.onloadend = function () {
                     var content = reader.result;
                     field.data = content;
                     input.scope().$apply();
@@ -311,7 +312,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          *
          * @returns {undefined}
          */
-        $scope.saveCV = function() {
+        $scope.saveCV = function () {
             var exportData = 'data:application/octet-stream;charset=utf-8,';
             var save = new Object();
             save.version = "@VERSION@";
@@ -325,14 +326,14 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          *
          * @returns {undefined}
          */
-        $scope.generateCV = function() {
+        $scope.generateCV = function () {
             var zip = new JSZip();
 
             var lastName, firstName, model, pdfModel, photo = null;
 
             // Fill the variables from the model
             for (var cvLocale in $scope.cv) {
-                angular.forEach($scope.cv[cvLocale].fields, function(field, i) {
+                angular.forEach($scope.cv[cvLocale].fields, function (field, i) {
                     switch (field.key) {
                         case "lastName":
                             lastName = angular.lowercase(field.value);
@@ -365,14 +366,14 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             var modelPath = "model/" + model + "/";
 
             var urls = ["js/cv.js", "index.html", modelPath + model + ".html",
-                modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js"];
+                    modelPath + model + "-head.html", modelPath + "index.json", "pdfmodel/" + pdfModel + ".js"];
 
             var i = 0;
             var url = urls[i];
 
             var localeFile = new Object();
             localeFile.supportedLocales = new Array();
-            angular.forEach($scope.cv, function(localeCv, localeKey) {
+            angular.forEach($scope.cv, function (localeCv, localeKey) {
                 // Generate the locales.json file content
                 if ($scope.choosenLocale.locale === localeCv.locale.locale) {
                     localeCv.locale.default = true;
@@ -386,7 +387,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 var data = new Object();
                 var dataParent = data;
 
-                var eachFunction = function(field, i) {
+                var eachFunction = function (field, i) {
                     var key = field.key;
                     var temp = dataParent;
                     if (field.key.indexOf(".") !== -1) {
@@ -401,9 +402,9 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     switch (field.inputType) {
                         case "select":
                             dataParent[key] = field.value;
-                            angular.forEach(field.options, function(option, j) {
+                            angular.forEach(field.options, function (option, j) {
                                 if (option.onchange) {
-                                    angular.forEach(option.onchange, function(onchange, k) {
+                                    angular.forEach(option.onchange, function (onchange, k) {
                                         var config = dataParent[key + "Config"] = new Object();
                                         config[onchange.key] = onchange.value;
                                     });
@@ -421,7 +422,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             break;
                         case "panel":
                             var panels = dataParent[key] = new Array();
-                            angular.forEach(field.panels, function(panel, j) {
+                            angular.forEach(field.panels, function (panel, j) {
                                 var temp = dataParent;
                                 dataParent = new Object();
                                 angular.forEach(panel.fields, eachFunction);
@@ -457,7 +458,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             // Create the locales.json file
             root.folder("locale").file("locales.json", angular.toJson(localeFile));
 
-            var getFunction = function(data) {
+            var getFunction = function (data) {
                 var addFile = true;
 
                 // We add to the download urls the files indicated in the index.json
@@ -515,7 +516,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          * @param {type} field The select field to get the option from.
          * @returns {onchange.options|fi.options}
          */
-        $scope.getOption = function(field) {
+        $scope.getOption = function (field) {
             if (field && field.options && field.value) {
                 for (var i = 0; i < field.options.length; i++) {
                     var option = field.options[i];
@@ -532,7 +533,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          *
          * @returns {undefined}
          */
-        $scope.loadGenerator = function() {
+        $scope.loadGenerator = function () {
             // We retrieve the locale from the list
             var locale = null;
             for (var i = 0; i < $scope.supportedLocales.length; i++) {
@@ -560,8 +561,8 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     $scope.choosenLocale = locale;
 
                     // We load the different strings to display them in the selected locale
-                    $http.get("cv/locale/" + locale.localeFile).success(function(data) {
-                        $http.get("locale/" + locale.localeFile).success(function(data2) {
+                    $http.get("cv/locale/" + locale.localeFile).success(function (data) {
+                        $http.get("locale/" + locale.localeFile).success(function (data2) {
                             // We concatenate the two locale files
                             for (var key in data2) {
                                 data[key] = data2[key];
@@ -571,19 +572,19 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             // We load the fields to display in the form. We do it here
                             // because we need the locale before to add the fields at the
                             // right place in the model.
-                            $http.get("data/data-fields.json").success(function(data) {
+                            $http.get("data/data-fields.json").success(function (data) {
                                 var cv = $scope.cv = new Object();
                                 var choosenLocale = cv[locale.locale] = new Object();
 
                                 // Unique id generation for each fields
-                                angular.forEach(data.fields, function(field, index) {
+                                angular.forEach(data.fields, function (field, index) {
                                     field.id = generateUniqueId();
 
                                     // Special case for option onchange fields
                                     if (field.options) {
-                                        angular.forEach(field.options, function(option, indexOption) {
+                                        angular.forEach(field.options, function (option, indexOption) {
                                             if (option.onchange) {
-                                                angular.forEach(option.onchange, function(onchange, indexOnchange) {
+                                                angular.forEach(option.onchange, function (onchange, indexOnchange) {
                                                     onchange.id = generateUniqueId();
                                                 });
                                             }
@@ -608,7 +609,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
                         // Generate unique ids for the new language fields
                         var idsToReplace = jsonString.match(/ui-id-[0-9]+/g);
-                        angular.forEach(idsToReplace, function(idToReplace, index) {
+                        angular.forEach(idsToReplace, function (idToReplace, index) {
                             jsonString = jsonString.replace("\"" + idToReplace + "\"", "\"" + generateUniqueId() + "\"");
                         });
 
@@ -627,12 +628,12 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
          *
          * @returns {undefined}
          */
-        $scope.addLanguage = function() {
+        $scope.addLanguage = function () {
             $("#localeModal").modal("show");
         };
 
         // Get the supported locales
-        $http.get("locale/locales.json").success(function(data) {
+        $http.get("locale/locales.json").success(function (data) {
             $scope.supportedLocales = data.supportedLocales;
         });
     }]);

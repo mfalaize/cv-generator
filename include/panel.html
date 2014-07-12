@@ -1,19 +1,20 @@
 <!--
-Copyright (C) 2014 Maxime Falaize
+  ~ Copyright (C) 2014  Maxime Falaize
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <div class="form-group" ng-if="field.inputType !== 'panel'">
     <ng-include src="'include/fields.html'"></ng-include>
 </div>
@@ -25,14 +26,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </button>
     </h3>
     <div class="panel-group" id="{{field.id}}">
-        <div ng-repeat="panel in field.panels" class="panel panel-default animation" id="{{panel.id}}" name="{{field.key}}">
+        <div ng-repeat="panel in field.panels" class="panel panel-default animation" id="{{panel.id}}"
+             name="{{field.key}}">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="{{field.id}}" href="#{{panel.id}}-collapse">
                         <span ng-bind-template-ext="field.titleTemplate, locale[field.keyLabel]"></span>
                     </a>
                     <span class="btn-group pull-right">
-                        <button ng-click="removePanel(field, panel)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span></button>
+                        <button ng-click="removePanel(field, panel)" class="btn btn-danger btn-xs"><span
+                                class="glyphicon glyphicon-minus"></span></button>
                     </span>
                 </h4>
             </div>

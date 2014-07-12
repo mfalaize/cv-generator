@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Maxime Falaize
+ * Copyright (C) 2014  Maxime Falaize
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Update the cv model for the newer app version.
  *
  * @param {type} cv The cv model.
  * @returns {type} the modified cv parameter.
  */
-var updateVersion = function(cv) {
+var updateVersion = function (cv) {
 //    This is an example of what we can do in this function
 //    for (var locale in cv) {
 //        var newField = new Object();

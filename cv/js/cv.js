@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2014  Maxime Falaize
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 var cvApp = angular.module("cvApp", [
     "cvControllers"
 ]);
@@ -5,27 +22,27 @@ var cvApp = angular.module("cvApp", [
 var cvControllers = angular.module("cvControllers", []);
 
 cvControllers.controller("CVController", ["$scope", "$http", "$sce",
-    function($scope, $http, $sce) {
-        $scope.printCV = function() {
-            getImageFromUrl("img/identity.jpeg", function(img) {
+    function ($scope, $http, $sce) {
+        $scope.printCV = function () {
+            getImageFromUrl("img/identity.jpeg", function (img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.output("datauri");
             });
         };
-        $scope.downloadCV = function() {
-            getImageFromUrl("img/identity.jpeg", function(img) {
+        $scope.downloadCV = function () {
+            getImageFromUrl("img/identity.jpeg", function (img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.save("cv_" + angular.lowercase($scope.cv.firstName) + "_" + angular.lowercase($scope.cv.lastName) + ".pdf");
             });
         };
 
         // Function to change the locale
-        $scope.changeLocale = function(locale, localeFile, dataFile) {
+        $scope.changeLocale = function (locale, localeFile, dataFile) {
             $("html").attr("lang", locale);
             loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile);
         };
 
-        $http.get("locale/locales.json").success(function(data) {
+        $http.get("locale/locales.json").success(function (data) {
             $scope.supportedLocales = data.supportedLocales;
             for (var i = 0; i < data.supportedLocales.length; i++) {
                 var locale = data.supportedLocales[i];
@@ -36,20 +53,20 @@ cvControllers.controller("CVController", ["$scope", "$http", "$sce",
             }
         });
 
-        $scope.$on("$includeContentLoaded", function() {
+        $scope.$on("$includeContentLoaded", function () {
             $scope.onReady = onReady;
         });
     }]);
 
 function loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile) {
-    $http.get("locale/" + localeFile).success(function(data) {
+    $http.get("locale/" + localeFile).success(function (data) {
         data.htmlCaptionSkills = $sce.trustAsHtml(data.htmlCaptionSkills);
         data.htmlContributionsInfos = $sce.trustAsHtml(data.htmlContributionsInfos);
         data.htmlAboutThisSite = $sce.trustAsHtml(data.htmlAboutThisSite);
 
-        $scope.formatAddressHtml = function(address) {
+        $scope.formatAddressHtml = function (address) {
             var htmlAddress = data.htmlAddressFormat;
-            $.each(address, function(key, value) {
+            $.each(address, function (key, value) {
                 htmlAddress = htmlAddress.replace("{" + key + "}", value);
             });
             return $sce.trustAsHtml(htmlAddress);
@@ -62,7 +79,7 @@ function loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile) {
 }
 
 function loadCV($scope, $http, $sce, dataFile) {
-    $http.get("data/" + dataFile).success(function(data) {
+    $http.get("data/" + dataFile).success(function (data) {
         if (data.model) {
             data.linkModel = "model/" + data.model + "/" + data.model + ".html";
             data.linkModelHead = "model/" + data.model + "/" + data.model + "-head.html";
@@ -165,7 +182,7 @@ function diffDate(dateBefore, dateAfter) {
     return dif;
 }
 
-String.format = function() {
+String.format = function () {
     var s = arguments[0];
     if (s !== undefined) {
         for (var i = 0; i < arguments.length - 1; i++) {
@@ -184,10 +201,10 @@ function onReady() {
 function getImageFromUrl(url, callback) {
     var img = new Image, data, ret = {data: null, pending: true};
 
-    img.onError = function() {
+    img.onError = function () {
         throw new Error('Cannot load image: "' + url + '"');
     };
-    img.onload = function() {
+    img.onload = function () {
         var canvas = document.createElement('canvas');
         document.body.appendChild(canvas);
         canvas.width = img.width;
@@ -213,8 +230,8 @@ function getImageFromUrl(url, callback) {
     return ret;
 }
 
-(function(jsPDFAPI) {
-    jsPDFAPI.getTextWidth = function(txt) {
+(function (jsPDFAPI) {
+    jsPDFAPI.getTextWidth = function (txt) {
         var fontName = this.internal.getFont().fontName;
         var fontSize = this.table_font_size || this.internal.getFontSize();
         var fontStyle = this.internal.getFont().fontStyle;

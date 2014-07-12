@@ -1,22 +1,23 @@
 <!--
-Copyright (C) 2014 Maxime Falaize
+  ~ Copyright (C) 2014  Maxime Falaize
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <project name="cv-generator" default="snapshot" basedir=".">
     <property name="build" location="build"/>
-    <property name="buildCvDir"  location="${build}/cv"/>
+    <property name="buildCvDir" location="${build}/cv"/>
     <property name="lib" location="lib"/>
     <property name="version" value="1.1.0"/>
     <property name="encoding" value="UTF-8"/>
@@ -46,7 +47,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </target>
 
     <target name="release" depends="snapshot">
-        <move file="${build}/${ant.project.name}-${version}-SNAPSHOT.zip" tofile="${build}/${ant.project.name}-${version}.zip"/>
+        <move file="${build}/${ant.project.name}-${version}-SNAPSHOT.zip"
+              tofile="${build}/${ant.project.name}-${version}.zip"/>
         <checksum file="${build}/${ant.project.name}-${version}.zip" algorithm="MD5"/>
         <checksum file="${build}/${ant.project.name}-${version}.zip" algorithm="SHA"/>
     </target>
