@@ -71,7 +71,7 @@ var cvGeneratorApp = angular.module("cvGeneratorApp", [
 cvGeneratorApp.animation(".animation", function () {
     return {
         enter: function (element, done) {
-            // We hide immediatly before showing because the element cannot be set
+            // We hide immediately before showing because the element cannot be set
             // with display: none as it is not displayed at the first page load.
             // This workaround is invisible for our eyes.
             $(element).hide();
@@ -94,7 +94,7 @@ cvGeneratorDirectives.directive("ngBindTemplateExt", [function () {
      * the test.template value from the element angular scope as a ng-bind-template
      * attribute. The value after the comma will be evaluated in the element angular
      * scope as a default value if the value is undefined or empty string. The default
-     * value is optionnal and if it is not specified, it will be "Temp".
+     * value is optional and if it is not specified, it will be "Temp".
      */
     return {
         link: function link(scope, element, attrs) {
@@ -549,7 +549,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 // We activate the locale tab
                 $scope.active = locale.locale;
 
-                // We delete the choosen locale from the supported list and
+                // We delete the chosen locale from the supported list and
                 // reselect the first input
                 $scope.supportedLocales = removeFromArray($scope.supportedLocales, "locale", locale);
                 if ($scope.supportedLocales.length > 0) {
