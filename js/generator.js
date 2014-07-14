@@ -220,13 +220,13 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                             // Execute the function loaded in the script
                                             saveFile.cv = updateVersion(saveFile.cv);
                                         }
+                                    })
 
-                                        // If this is the last script, we apply the generated model
-                                        if (index === (scriptsToLoad.length - 1)) {
-                                            $scope.cv = saveFile.cv;
-                                            $scope.$apply();
-                                        }
-                                    });
+                                    // If this is the last script, we apply the generated model
+                                    if (index === (scriptsToLoad.length - 1)) {
+                                        $scope.cv = saveFile.cv;
+                                        $scope.$apply();
+                                    }
                                 });
                             }
                         });
