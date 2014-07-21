@@ -17,19 +17,17 @@
 
 /**
  * Update the cv model for the newer app version.
+ * Use updateCVUtils methods to update the cv model.
  *
  * @param {type} cv The cv model.
  * @returns {type} the modified cv parameter.
  */
 var updateVersion = function (cv) {
-//    This is an example of what we can do in this function
-//    for (var locale in cv) {
-//        var newField = new Object();
-//        newField.key = "test";
-//        newField.keyLabel = "test";
-//        newField.inputType = "text";
-//        newField.id = generateUniqueId();
-//        cv[locale].fields.push(newField);
-//    }
+//  This is an example of what we can do in this function
+//  var testField = new Object();
+//  testField.key = "test";
+//  testField.inputType = "textarea";
+//  updateCVUtils.insertField(testField, "workExperience/name", false, cv);
+
     return cv;
 };

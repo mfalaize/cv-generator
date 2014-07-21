@@ -43,5 +43,8 @@
     "currentEmployer.zipCode": "Current employer zipcode",
     "currentEmployer.city": "Current employer city",
     "currentEmployer.country": "Current employer country",
-    "currentEmployer.phone": "Current employer phone"
+    "currentEmployer.phone": "Current employer phone",
+    "customerLogo": "Customer logo",
+    "logo": "Logo",
+    "customer": "Customer"
 }

@@ -245,6 +245,11 @@
                     "inputType": "text"
                 },
                 {
+                    "key": "logo",
+                    "keyLabel": "logo",
+                    "inputType": "image"
+                },
+                {
                     "key": "type",
                     "keyLabel": "type",
                     "inputType": "text"
@@ -290,6 +295,16 @@
                     "inputType": "panel",
                     "fieldsTemplate": [
                         {
+                            "key": "customer",
+                            "keyLabel": "customer",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "logo",
+                            "keyLabel": "customerLogo",
+                            "inputType": "image"
+                        },
+                        {
                             "key": "description",
                             "keyLabel": "description",
                             "inputType": "textarea"
@@ -297,6 +312,16 @@
                         {
                             "key": "technologies",
                             "keyLabel": "technologies",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "workEnvironment",
+                            "keyLabel": "workEnvironment",
+                            "inputType": "textarea"
+                        },
+                        {
+                            "key": "comment",
+                            "keyLabel": "comment",
                             "inputType": "textarea"
                         }
                     ]

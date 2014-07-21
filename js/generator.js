@@ -19,6 +19,83 @@ $.event.props.push('dataTransfer');
 var id = 0, i = 0, $this;
 
 /**
+ * Utils methods to update the CV model between two versions.
+ */
+var updateCVUtils = {
+
+    /**
+     * Insert a field after or before another in the angular model.
+     *
+     * @param field The field object to insert with at least the key attribute. If not defined
+     * the keyLabel attribute take the key attribute value, inputType attribute take the "text".
+     * @param fieldKey The field key to add the field after (or before). If the field is
+     * contained into another, you can add slashes to the key to specify the complete path.
+     * For example, you can use the key "workExperience/endDate" to add a field after the
+     * "end date" field contained into the "work experience" panel.
+     * @param {boolean) isBefore if true, the field is inserted before the field associated with
+     * the fieldKey attribute.
+     * @param $cv The cv model.
+     */
+    insertField: function (field, fieldKey, isBefore, $cv) {
+        // Set field default values
+        if (field.keyLabel === undefined) {
+            field.keyLabel = field.key;
+        }
+
+        if (field.inputType === undefined) {
+            field.inputType = "text";
+        }
+
+        var splitKeys = fieldKey.split("/");
+
+        for (var locale in $cv) {
+            var indexSplit = 0;
+            var parent = $cv[locale].fields;
+            var keepGoing = true;
+
+            var lookupField = function (f, index) {
+                if (keepGoing) {
+                    if (f.key === splitKeys[indexSplit]) {
+                        if (indexSplit < (splitKeys.length - 1)) {
+                            // In this case, the field's input type is a panel
+                            indexSplit++;
+
+                            // Search the field into the fieldsTemplate
+                            parent = f.fieldsTemplate;
+                            angular.forEach(f.fieldsTemplate, lookupField);
+                            keepGoing = true;
+
+                            // Search the field into each fields in the panel
+                            angular.forEach(f.panels, function (panel) {
+                                parent = panel.fields;
+                                angular.forEach(panel.fields, lookupField);
+                                keepGoing = true;
+                            });
+
+                            indexSplit--;
+                        } else {
+                            // This is the field we looked for
+                            var indexNew = index + 1;
+                            if (isBefore) {
+                                indexNew = index;
+                            }
+
+                            var newField = angular.copy(field);
+                            newField.id = generateUniqueId();
+
+                            parent.splice(indexNew, 0, newField);
+                            keepGoing = false;
+                        }
+                    }
+                }
+            };
+
+            angular.forEach($cv[locale].fields, lookupField);
+        }
+    }
+};
+
+/**
  * Generate a unique Id for each call.
  *
  * @returns {String} The id.

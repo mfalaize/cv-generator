@@ -14,3 +14,9 @@ CV Generator v1.1.1
 #####Bug fixes
 
 * Fix an issue when you load a saved file that does not select the right option in select fields.
+
+#####New features
+
+* Possibility to add company's logos to your work experiences.
+* Possibility to add customer name, customer's logos, work environment and comment to each mission in a single experience.
+* Adapt html and pdf default model to these features.

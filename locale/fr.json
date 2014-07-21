@@ -43,5 +43,8 @@
     "currentEmployer.zipCode": "Code postal de l'employeur actuel",
     "currentEmployer.city": "Ville de l'employeur actuel",
     "currentEmployer.country": "Pays de l'employeur actuel",
-    "currentEmployer.phone": "Tél de l'employeur actuel"
+    "currentEmployer.phone": "Tél de l'employeur actuel",
+    "customerLogo": "Logo du client",
+    "logo": "Logo",
+    "customer": "Client"
 }
