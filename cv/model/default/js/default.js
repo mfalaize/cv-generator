@@ -23,14 +23,14 @@ function onReady() {
         $(e.target).addClass('active'); // activated list-item
     });
 
-    // Activation des popover sur les compétences
+    // Popover activation for skills and work experiences
     var popover = $("a[data-toggle=popover]");
     if (popover.popover) {
         popover.popover({
             html: true,
             trigger: "hover",
             container: "body",
-            placement: "left"
+            template: '<div class="popover" style="max-width: 600px;" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
         });
     }
 

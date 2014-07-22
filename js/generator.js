@@ -424,11 +424,6 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                         case "pdfModel":
                             pdfModel = field.value;
                             break;
-                        case "photo":
-                            if (field.data) {
-                                photo = convertBase64ToArrayBuffer(field.data.split(",")[1]);
-                            }
-                            break;
                     }
                 });
                 break;
@@ -437,8 +432,8 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
             // Create the root zip file
             var root = zip.folder("cv-" + lastName + "-" + firstName + "-v@VERSION@");
 
-            // Create the photo image file
-            root.folder("img").file("identity.jpeg", photo);
+            // Create the img root folder
+            var img = root.folder("img");
 
             var modelPath = "model/" + model + "/";
 
@@ -506,6 +501,19 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                                 panels.push(dataParent);
                                 dataParent = temp;
                             });
+                            break;
+                        case "image":
+                            if (field.data) {
+                                var arraybuffer = convertBase64ToArrayBuffer(field.data.split(",")[1]);
+                                var path = field.id + ".jpg";
+
+                                // Create the image file in the img folder
+                                img.file(path, arraybuffer);
+
+                                // Add information to display the image in the model
+                                dataParent[key + "Path"] = path;
+                                dataParent[key + "Alt"] = field.id;
+                            }
                             break;
                         default:
                             if ($.inArray(key, ["address", "zipCode", "city", "country"]) !== -1) {

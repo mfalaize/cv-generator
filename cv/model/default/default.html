@@ -20,8 +20,12 @@
     <h1>Curriculum Vitae
         <small>{{cv.firstName + " " + cv.lastName}}</small>
             <span class="btn-group pull-right">
-                <button class="btn btn-primary" ng-click="printCV()">{{locale.printCV}}</button>
-                <button class="btn btn-default" ng-click="downloadCV()">{{locale.pdf}}</button>
+                <button class="btn btn-primary" ng-click="printCV()">
+                    <span class="glyphicon glyphicon-print"></span> {{locale.printCV}}
+                </button>
+                <button class="btn btn-default" ng-click="downloadCV()">
+                    <span class="glyphicon glyphicon-save"></span> {{locale.pdf}}
+                </button>
             </span>
     </h1>
 </header>
@@ -84,7 +88,7 @@
             <p><a href="mailto:{{cv.mail}}">{{cv.mail}}</a></p>
         </div>
         <div class="col-md-2">
-            <img src="img/identity.jpeg" class="img-thumbnail" alt="identity photo"/>
+            <img ng-if="cv.photoPath" ng-src="img/{{cv.photoPath}}" class="img-thumbnail" alt="{{cv.photoAlt}}"/>
         </div>
     </div>
     <div class="row">
@@ -97,9 +101,58 @@
 </div>
 <div class="tab-pane fade" id="workExperience">
     <div class="row" ng-repeat="exp in cv.workExperience">
-        <div class="col-md-3 text-right">
-            <h4>{{exp.beginDate}} - {{exp.endDate}}</h4>
-            <h5>{{exp.job}}</h5>
+        <h4>{{exp.beginDate}} - {{exp.endDate}}</h4>
+        <h5>{{exp.job}}
+            <a ng-if="exp.workEnvironment || exp.comment" href="#" data-toggle="popover" data-placement="right"
+               data-content="&lt;p ng-if=&quot;exp.workEnvironment&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-hdd&quot;&gt;&lt;/span&gt; {{exp.workEnvironment}}&lt;/p&gt;
+                &lt;p ng-if=&quot;exp.comment&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-comment&quot;&gt;&lt;/span&gt; {{exp.comment}}&lt;/p&gt;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+            </a>
+        </h5>
+
+        <div class="col-md-9">
+            <table ng-repeat="mission in exp.missions" class="table table-bordered">
+                <thead class="active">
+                <tr class="active">
+                    <th>
+    						<span ng-if="mission.customer">
+    							<img ng-if="mission.logoPath" ng-src="img/{{mission.logoPath}}"
+                                     alt="img/{{mission.logoAlt}}"/>
+    							<strong>{{locale.customer}} :</strong> {{mission.customer}}
+    						</span>
+                        <span ng-if="!mission.customer">{{locale.mission}}</span>
+                        <a ng-if="mission.workEnvironment || mission.comment" href="#" data-toggle="popover"
+                           data-placement="top"
+                           data-content="&lt;p ng-if=&quot;mission.workEnvironment&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-hdd&quot;&gt;&lt;/span&gt; {{mission.workEnvironment}}&lt;/p&gt;
+                &lt;p ng-if=&quot;mission.comment&quot;&gt;&lt;span class=&quot;glyphicon glyphicon-comment&quot;&gt;&lt;/span&gt; {{mission.comment}}&lt;/p&gt;"
+                           class="pull-right">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{mission.description}}</td>
+                </tr>
+                <tr ng-if="mission.duration || mission.teamSize || mission.technologies">
+                    <td>
+                        <div ng-if="mission.duration"><span class="glyphicon glyphicon-time"></span>
+                            {{mission.duration}}
+                        </div>
+                        <div ng-if="mission.teamSize"><span class="glyphicon glyphicon-user"></span>
+                            {{mission.teamSize}}
+                        </div>
+                        <div ng-if="mission.technologies"><span class="glyphicon glyphicon-wrench"></span>
+                            {{mission.technologies}}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <img ng-if="exp.logoPath" ng-src="img/{{exp.logoPath}}" alt="{{exp.logoAlt}}"/>
             <address>
                 <strong>{{exp.name}}</strong>
 
@@ -108,20 +161,6 @@
                     {{locale.phone}}: {{exp.phone}}
                 </div>
             </address>
-        </div>
-        <div class="col-md-9 well">
-            <span><strong>{{locale.missions}} :</strong></span>
-            <ul>
-                <li ng-repeat="mission in exp.missions">
-                    {{mission.description}}<br/>
-                    <span ng-if="mission.technologies"><strong>{{locale.technologies}} :</strong></span>
-                    {{mission.technologies}}<br/>
-                </li>
-            </ul>
-            <span ng-if="exp.workEnvironment"><strong>{{locale.workEnvironment}}
-                :</strong> {{exp.workEnvironment}}</span>
-
-            <p ng-if="exp.comment"><strong>{{locale.comments}} :</strong> {{exp.comment}}</p>
         </div>
     </div>
 </div>
@@ -172,7 +211,7 @@
                         <td ng-if="actualSkill.rowspan" rowspan="{{actualSkill.rowspan}}">{{actualSkill.category}}
                         </td>
                         <td>{{actualSkill.name}}</td>
-                        <td><a href="#" data-toggle="popover"
+                        <td><a href="#" data-toggle="popover" data-placement="left"
                                data-content="{{actualSkill.htmlDescription}}" class="badge">
                             <span ng-if="actualSkill.level >= 1" class="glyphicon glyphicon-star"></span>
                             <span ng-if="actualSkill.level >= 2" class="glyphicon glyphicon-star"></span>
@@ -246,7 +285,7 @@
             </ul>
         </div>
         <div class="col-md-2">
-            <img src="img/identity.jpeg" class="img-thumbnail" alt="identity photo"/>
+            <img ng-if="cv.photoPath" ng-src="img/{{cv.photoPath}}" class="img-thumbnail" alt="{{cv.photoAlt}}"/>
         </div>
     </div>
     <div class="row">

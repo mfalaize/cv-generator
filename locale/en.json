@@ -46,5 +46,7 @@
     "currentEmployer.phone": "Current employer phone",
     "customerLogo": "Customer logo",
     "logo": "Logo",
-    "customer": "Customer"
+    "customer": "Customer",
+    "duration": "Duration",
+    "teamSize": "Team size"
 }

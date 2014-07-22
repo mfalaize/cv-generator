@@ -53,5 +53,15 @@ var updateVersion = function (cv) {
 
     updateCVUtils.insertField(logoMissionField, "workExperience/missions/customer", false, cv);
 
+    var durationField = new Object();
+    durationField.key = "duration";
+
+    updateCVUtils.insertField(durationField, "workExperience/missions/description", false, cv);
+
+    var teamSizeField = new Object();
+    teamSizeField.key = "teamSize";
+
+    updateCVUtils.insertField(teamSizeField, "workExperience/missions/duration", false, cv);
+
     return cv;
 };
