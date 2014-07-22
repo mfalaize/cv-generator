@@ -117,7 +117,7 @@
                     <th>
     						<span ng-if="mission.customer">
     							<img ng-if="mission.logoPath" ng-src="img/{{mission.logoPath}}"
-                                     alt="img/{{mission.logoAlt}}"/>
+                                     alt="img/{{mission.logoAlt}}" height="30"/>
     							<strong>{{locale.customer}} :</strong> {{mission.customer}}
     						</span>
                         <span ng-if="!mission.customer">{{locale.mission}}</span>
@@ -152,7 +152,7 @@
             </table>
         </div>
         <div class="col-md-3">
-            <img ng-if="exp.logoPath" ng-src="img/{{exp.logoPath}}" alt="{{exp.logoAlt}}"/>
+            <img ng-if="exp.logoPath" ng-src="img/{{exp.logoPath}}" alt="{{exp.logoAlt}}" width="100"/>
             <address>
                 <strong>{{exp.name}}</strong>
 
