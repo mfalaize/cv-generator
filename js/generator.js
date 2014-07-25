@@ -354,7 +354,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                 }
             });
 
-            field.panels.push(subField);
+            field.panels.unshift(subField);
         };
 
         /**
