@@ -30,6 +30,13 @@
              name="{{field.key}}">
             <div class="panel-heading">
                 <h4 class="panel-title">
+                    <span class="btn-group">
+                        <button ng-if="!$first" ng-click="movePanel($index, true, field)"
+                                class="btn btn-default btn-xs"><span
+                                class="glyphicon glyphicon-chevron-up"></span></button>
+                        <button ng-if="!$last" ng-click="movePanel($index, false, field)" class="btn btn-xs"><span
+                                class="glyphicon glyphicon-chevron-down"></span></button>
+                    </span>
                     <a data-toggle="collapse" data-parent="{{field.id}}" href="#{{panel.id}}-collapse">
                         <span ng-bind-template-ext="field.titleTemplate, locale[field.keyLabel]"></span>
                     </a>

@@ -369,6 +369,23 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
         };
 
         /**
+         * Move the panel to an upper or lower position in the panel field.
+         *
+         * @param index The index of the panel to move.
+         * @param {boolean} up True if we have to move to an upper position. False
+         * for a lower position.
+         * @param field The panel field to move the panel from.
+         */
+        $scope.movePanel = function (index, up, field) {
+            var panel = field.panels.splice(index, 1);
+            if (up) {
+                field.panels.splice(index - 1, 0, panel[0]);
+            } else {
+                field.panels.splice(index + 1, 0, panel[0]);
+            }
+        };
+
+        /**
          * Load the image contained as a file by the input parameter and add its content
          * into the field parameter.
          * The image is loaded in a base64 format.
