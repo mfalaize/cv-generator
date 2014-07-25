@@ -187,6 +187,7 @@
                 <legend>{{locale.caption}}</legend>
                 <div ng-bind-html="locale.htmlCaptionSkills"></div>
             </fieldset>
+            {{locale.lastUpdate}} : {{cv.lastSkillsUpdateFormat}}
         </div>
     </div>
     <div ng-repeat="skill in cv.skills">
@@ -293,6 +294,7 @@
             <h4>{{locale.aboutThisSite}} :</h4>
 
             <div ng-bind-html="locale.htmlAboutThisSite"></div>
+            <div>{{locale.lastUpdate}} : {{cv.generationDateFormat}}</div>
             <div ng-show="onReady()"></div>
         </div>
     </div>

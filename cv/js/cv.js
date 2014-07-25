@@ -123,6 +123,22 @@ function loadCV($scope, $http, $sce, dataFile) {
             }
         }
 
+        // Generation date formatting
+        temp = new Date();
+        temp.setFullYear(data.generationDate.year);
+        temp.setMonth(data.generationDate.month - 1);
+        temp.setDate(data.generationDate.day);
+        data.generationDateFormat = temp.toLocaleDateString();
+
+        // Skills last update formatting
+        if (data.lastSkillsUpdate !== undefined) {
+            temp = new Date();
+            temp.setFullYear(data.lastSkillsUpdate.year);
+            temp.setMonth(data.lastSkillsUpdate.month - 1);
+            temp.setDate(data.lastSkillsUpdate.day);
+            data.lastSkillsUpdateFormat = temp.toLocaleDateString();
+        }
+
         // skills reformatting
         if (data.skills) {
             for (var i = 0; i < data.skills.length; i++) {
