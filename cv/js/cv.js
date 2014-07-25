@@ -130,6 +130,15 @@ function loadCV($scope, $http, $sce, dataFile) {
         temp.setDate(data.generationDate.day);
         data.generationDateFormat = temp.toLocaleDateString();
 
+        // Mission description HTML escaping
+        if (data.workExperience) {
+            angular.forEach(data.workExperience, function (workExperience) {
+                angular.forEach(workExperience.missions, function (mission) {
+                    mission.description = $sce.trustAsHtml(mission.description);
+                });
+            });
+        }
+
         // Skills last update formatting
         if (data.lastSkillsUpdate !== undefined) {
             temp = new Date();

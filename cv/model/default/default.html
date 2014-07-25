@@ -133,7 +133,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{mission.description}}</td>
+                    <td ng-bind-html="mission.description"></td>
                 </tr>
                 <tr ng-if="mission.duration || mission.teamSize || mission.technologies">
                     <td>
@@ -187,7 +187,7 @@
                 <legend>{{locale.caption}}</legend>
                 <div ng-bind-html="locale.htmlCaptionSkills"></div>
             </fieldset>
-            {{locale.lastUpdate}} : {{cv.lastSkillsUpdateFormat}}
+            <span ng-if="cv.lastSkillsUpdate">{{locale.lastUpdate}} : {{cv.lastSkillsUpdateFormat}}</span>
         </div>
     </div>
     <div ng-repeat="skill in cv.skills">

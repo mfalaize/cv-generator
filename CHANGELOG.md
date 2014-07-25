@@ -15,6 +15,7 @@ CV Generator v1.1.1
 * Adapt html and pdf default model to these features.
 * Possibility to organize the order of your experiences and other panels.
 * When you add a new field in a panel, it is now added to the beginning of the list and not to the end.
+* Possibility to use HTML in mission descriptions.
 
 ###Changelog v1.0.0 -> v1.1.0
 
