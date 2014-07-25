@@ -48,5 +48,6 @@
     "logo": "Logo",
     "customer": "Client",
     "duration": "Durée",
-    "teamSize": "Taille de l'équipe"
+    "teamSize": "Taille de l'équipe",
+    "lastSkillsUpdate": "Dernière modification des compétences"
 }

@@ -292,18 +292,25 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                             } else {
                                 // We load each update script we need to run (if they exist)
                                 angular.forEach(scriptsToLoad, function (script, index) {
-                                    $.getScript("version/scripts/" + script, function (data, textStatus) {
-                                        if (textStatus === "success") {
+                                    var request = $.ajax({
+                                        url: "version/scripts/" + script,
+                                        dataType: "script"
+                                    });
+
+                                    request.always(function (data, textStatus) {
+                                        try {
                                             // Execute the function loaded in the script
                                             saveFile.cv = updateVersion(saveFile.cv);
+                                        } catch (ex) {
+                                            // if the file doesn't exists
+                                        }
+
+                                        // If this is the last script, we apply the generated model
+                                        if (index === (scriptsToLoad.length - 1)) {
+                                            $scope.cv = saveFile.cv;
+                                            $scope.$apply();
                                         }
                                     })
-
-                                    // If this is the last script, we apply the generated model
-                                    if (index === (scriptsToLoad.length - 1)) {
-                                        $scope.cv = saveFile.cv;
-                                        $scope.$apply();
-                                    }
                                 });
                             }
                         });
@@ -457,6 +464,11 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
 
                 // We browse the fields to create the data file content for this locale
                 var data = new Object();
+                var generationDate = new Date();
+                data.generationDate = new Object();
+                data.generationDate.day = generationDate.getDate();
+                data.generationDate.month = generationDate.getMonth() + 1;
+                data.generationDate.year = generationDate.getFullYear();
                 var dataParent = data;
 
                 var eachFunction = function (field, i) {

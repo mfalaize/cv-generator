@@ -63,5 +63,11 @@ var updateVersion = function (cv) {
 
     updateCVUtils.insertField(teamSizeField, "workExperience/missions/duration", false, cv);
 
+    var lastUpdateField = new Object();
+    lastUpdateField.key = "lastSkillsUpdate";
+    lastUpdateField.inputType = "date";
+
+    updateCVUtils.insertField(lastUpdateField, "miscellaneous.drivingLicence", false, cv);
+
     return cv;
 };

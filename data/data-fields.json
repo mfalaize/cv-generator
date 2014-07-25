@@ -214,6 +214,11 @@
             "inputType": "checkbox"
         },
         {
+            "key": "lastSkillsUpdate",
+            "keyLabel": "lastSkillsUpdate",
+            "inputType": "date"
+        },
+        {
             "key": "workExperience",
             "keyLabel": "workExperience",
             "inputType": "panel",

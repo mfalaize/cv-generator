@@ -1,14 +1,6 @@
 CV Generator v1.1.1
 ===================
 
-###Changelog v1.0.0 -> v1.1.0
-
-#####New features
-
-* Add a 100% HTML/Javascript GUI to write your CV easily and generate a custom website which embed only the files it requires.
-* Add an Ant build script to generate snapshots and releases.
-* Put the project under Travis-CI.
-
 ###Changelog v1.1.0 -> v1.1.1
 
 #####Bug fixes
@@ -19,4 +11,15 @@ CV Generator v1.1.1
 
 * Possibility to add company's logos to your work experiences.
 * Possibility to add customer name, customer's logos, work environment and comment to each mission in a single experience.
+* Possibility to add the last skills update date.
 * Adapt html and pdf default model to these features.
+* Possibility to organize the order of your experiences and other panels.
+* When you add a new field in a panel, it is now added to the beginning of the list and not to the end.
+
+###Changelog v1.0.0 -> v1.1.0
+
+#####New features
+
+* Add a 100% HTML/Javascript GUI to write your CV easily and generate a custom website which embed only the files it requires.
+* Add an Ant build script to generate snapshots and releases.
+* Put the project under Travis-CI.
