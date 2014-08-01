@@ -24,13 +24,13 @@ var cvControllers = angular.module("cvControllers", []);
 cvControllers.controller("CVController", ["$scope", "$http", "$sce",
     function ($scope, $http, $sce) {
         $scope.printCV = function () {
-            getImageFromUrl("img/identity.jpeg", function (img) {
+            getImageFromUrl("img/" + $scope.cv.photoPath, function (img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.output("datauri");
             });
         };
         $scope.downloadCV = function () {
-            getImageFromUrl("img/identity.jpeg", function (img) {
+            getImageFromUrl("img/" + $scope.cv.photoPath, function (img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.save("cv_" + angular.lowercase($scope.cv.firstName) + "_" + angular.lowercase($scope.cv.lastName) + ".pdf");
             });
