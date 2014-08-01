@@ -13,11 +13,11 @@
   ~
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
+-->
 
 <div ng-if="field.inputType !== 'checkbox'">
     <label class="control-label col-md-2" for="{{field.id}}">
-    <span>{{locale[field.keyLabel]}}</span>
+        <span>{{locale[field.keyLabel]}}</span>
     </label>
 
     <div class="col-md-10">
@@ -26,7 +26,7 @@
             <option ng-repeat="option in field.options" value="{{option.value}}"
                     ng-selected="field.value === option.value">
             <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
-                <span ng-if="option.label">{{option.label}}</span>
+            <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
         <select ng-if="field.inputType === 'selectMultiple'" multiple ng-model="field.value" class="form-control"
@@ -34,7 +34,7 @@
             <option ng-repeat="option in field.options" value="{{option.value}}"
                     ng-selected="field.value === option.value">
             <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
-                <span ng-if="option.label">{{option.label}}</span>
+            <span ng-if="option.label">{{option.label}}</span>
             </option>
         </select>
         <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control"

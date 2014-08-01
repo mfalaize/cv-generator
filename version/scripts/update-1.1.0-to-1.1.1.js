@@ -22,7 +22,7 @@
  * @param {type} cv The cv model.
  * @returns {type} the modified cv parameter.
  */
-var updateVersion = function (cv) {
+var updateVersion = function(cv) {
     var logoField = new Object();
     logoField.key = "logo";
     logoField.inputType = "image";

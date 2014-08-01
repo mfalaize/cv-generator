@@ -22,7 +22,7 @@
  * @param {type} cv The cv model.
  * @returns {type} the modified cv parameter.
  */
-var updateVersion = function (cv) {
+var updateVersion = function(cv) {
 //  This is an example of what we can do in this function
 //  var testField = new Object();
 //  testField.key = "test";

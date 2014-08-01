@@ -22,27 +22,27 @@ var cvApp = angular.module("cvApp", [
 var cvControllers = angular.module("cvControllers", []);
 
 cvControllers.controller("CVController", ["$scope", "$http", "$sce",
-    function ($scope, $http, $sce) {
-        $scope.printCV = function () {
-            getImageFromUrl("img/" + $scope.cv.photoPath, function (img) {
+    function($scope, $http, $sce) {
+        $scope.printCV = function() {
+            getImageFromUrl("img/" + $scope.cv.photoPath, function(img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.output("datauri");
             });
         };
-        $scope.downloadCV = function () {
-            getImageFromUrl("img/" + $scope.cv.photoPath, function (img) {
+        $scope.downloadCV = function() {
+            getImageFromUrl("img/" + $scope.cv.photoPath, function(img) {
                 var doc = pdfContent($scope.cv, $scope.locale, img);
                 doc.save("cv_" + angular.lowercase($scope.cv.firstName) + "_" + angular.lowercase($scope.cv.lastName) + ".pdf");
             });
         };
 
         // Function to change the locale
-        $scope.changeLocale = function (locale, localeFile, dataFile) {
+        $scope.changeLocale = function(locale, localeFile, dataFile) {
             $("html").attr("lang", locale);
             loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile);
         };
 
-        $http.get("locale/locales.json").success(function (data) {
+        $http.get("locale/locales.json").success(function(data) {
             $scope.supportedLocales = data.supportedLocales;
             for (var i = 0; i < data.supportedLocales.length; i++) {
                 var locale = data.supportedLocales[i];
@@ -53,20 +53,20 @@ cvControllers.controller("CVController", ["$scope", "$http", "$sce",
             }
         });
 
-        $scope.$on("$includeContentLoaded", function () {
+        $scope.$on("$includeContentLoaded", function() {
             $scope.onReady = onReady;
         });
     }]);
 
 function loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile) {
-    $http.get("locale/" + localeFile).success(function (data) {
+    $http.get("locale/" + localeFile).success(function(data) {
         data.htmlCaptionSkills = $sce.trustAsHtml(data.htmlCaptionSkills);
         data.htmlContributionsInfos = $sce.trustAsHtml(data.htmlContributionsInfos);
         data.htmlAboutThisSite = $sce.trustAsHtml(data.htmlAboutThisSite);
 
-        $scope.formatAddressHtml = function (address) {
+        $scope.formatAddressHtml = function(address) {
             var htmlAddress = data.htmlAddressFormat;
-            $.each(address, function (key, value) {
+            $.each(address, function(key, value) {
                 htmlAddress = htmlAddress.replace("{" + key + "}", value);
             });
             return $sce.trustAsHtml(htmlAddress);
@@ -79,7 +79,7 @@ function loadLocaleAndCV($scope, $http, $sce, localeFile, dataFile) {
 }
 
 function loadCV($scope, $http, $sce, dataFile) {
-    $http.get("data/" + dataFile).success(function (data) {
+    $http.get("data/" + dataFile).success(function(data) {
         if (data.model) {
             data.linkModel = "model/" + data.model + "/" + data.model + ".html";
             data.linkModelHead = "model/" + data.model + "/" + data.model + "-head.html";
@@ -132,8 +132,8 @@ function loadCV($scope, $http, $sce, dataFile) {
 
         // Mission description HTML escaping
         if (data.workExperience) {
-            angular.forEach(data.workExperience, function (workExperience) {
-                angular.forEach(workExperience.missions, function (mission) {
+            angular.forEach(data.workExperience, function(workExperience) {
+                angular.forEach(workExperience.missions, function(mission) {
                     mission.description = $sce.trustAsHtml(mission.description);
                 });
             });
@@ -207,7 +207,7 @@ function diffDate(dateBefore, dateAfter) {
     return dif;
 }
 
-String.format = function () {
+String.format = function() {
     var s = arguments[0];
     if (s !== undefined) {
         for (var i = 0; i < arguments.length - 1; i++) {
@@ -226,10 +226,10 @@ function onReady() {
 function getImageFromUrl(url, callback) {
     var img = new Image, data, ret = {data: null, pending: true};
 
-    img.onError = function () {
+    img.onError = function() {
         throw new Error('Cannot load image: "' + url + '"');
     };
-    img.onload = function () {
+    img.onload = function() {
         var canvas = document.createElement('canvas');
         document.body.appendChild(canvas);
         canvas.width = img.width;
@@ -255,8 +255,8 @@ function getImageFromUrl(url, callback) {
     return ret;
 }
 
-(function (jsPDFAPI) {
-    jsPDFAPI.getTextWidth = function (txt) {
+(function(jsPDFAPI) {
+    jsPDFAPI.getTextWidth = function(txt) {
         var fontName = this.internal.getFont().fontName;
         var fontSize = this.table_font_size || this.internal.getFontSize();
         var fontStyle = this.internal.getFont().fontStyle;
