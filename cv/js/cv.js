@@ -278,4 +278,12 @@ function getImageFromUrl(url, callback) {
 
         return width;
     };
+    
+    jsPDFAPI.getHtmlText = function(txt) {
+        var text = document.createElement('font');
+        text.id = "jsPDFCell";
+        $(text).html(txt);
+        
+        return $(text).text();
+    };
 })(jsPDF.API);

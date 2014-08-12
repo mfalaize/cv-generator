@@ -316,6 +316,16 @@
                             "inputType": "textarea"
                         },
                         {
+                            "key": "duration",
+                            "keyLabel": "duration",
+                            "inputType": "text"
+                        },
+                        {
+                            "key": "teamSize",
+                            "keyLabel": "teamSize",
+                            "inputType": "text"
+                        },
+                        {
                             "key": "technologies",
                             "keyLabel": "technologies",
                             "inputType": "textarea"

@@ -40,26 +40,40 @@ function pdfContent(cv, locale, img) {
     }
 
     function addText(marginText, text) {
-        var textWidth = doc.getTextWidth(text);
-        var tempString = "";
-        // automatic break line
-        if ((textWidth + marginText) > lineSize) {
-            var split = text.split(" ");
-            for (var i = 0; i < split.length; i++) {
-                var tempStringWidth = doc.getTextWidth(tempString);
-                var splitWidth = doc.getTextWidth(split[i]);
-                if ((tempStringWidth + splitWidth + marginText) <= lineSize) {
-                    tempString += (split[i] + " ");
-                } else {
-                    doc.text(marginText, y, tempString);
-                    addLine();
-                    tempString = (split[i] + " ");
+        var paragraphSplit = text.split("\n");
+        for (var i = 0; i < paragraphSplit.length; i++) {
+            text = paragraphSplit[i];
+
+            var textWidth = doc.getTextWidth(text);
+            var tempString = "";
+            // automatic break line
+            if ((textWidth + marginText) > lineSize) {
+                var split = text.split(" ");
+                for (var j = 0; j < split.length; j++) {
+                    var tempStringWidth = doc.getTextWidth(tempString);
+                    var splitWidth = doc.getTextWidth(split[j]);
+                    if ((tempStringWidth + splitWidth + marginText) <= lineSize) {
+                        tempString += (split[j] + " ");
+                    } else {
+                        doc.text(marginText, y, tempString);
+                        addLine();
+                        tempString = (split[j] + " ");
+                    }
                 }
+            } else {
+                tempString = text;
             }
-        } else {
-            tempString = text;
+            doc.text(marginText, y, tempString);
+
+            if (i !== (paragraphSplit.length - 1)) {
+                addLine();
+            }
         }
-        doc.text(marginText, y, tempString);
+    }
+
+    function addHtml(marginText, text) {
+        text = doc.getHtmlText(text);
+        addText(marginText, text);
     }
 
     doc.setFontType("bold");
@@ -139,7 +153,7 @@ function pdfContent(cv, locale, img) {
                 addLine();
                 addText(margin2, experience.job);
                 addLine();
-                addText(margin3, experience.name + ", " + experience.address.city + " (" + experience.address.country + ")");
+                addText(margin3, experience.name + ", " + experience.address.city + " (" + experience.address.country + ").");
                 addLine();
                 var typeCompany = experience.type;
                 if (experience.numberOfEmployees) {
@@ -158,7 +172,29 @@ function pdfContent(cv, locale, img) {
                         var mission = experience.missions[j];
                         addLine();
                         doc.setFontType("normal");
-                        addText(margin3, "• " + mission.description + " :");
+                        var description = "• ";
+                        
+                        if (mission.customer) {
+                            description += mission.customer + " : ";
+                        }
+                        
+                        description += mission.description;
+                        
+                        if (mission.duration || mission.teamSize) {
+                            description += " (";
+                            if (mission.duration) {
+                                description += mission.duration;
+                            }
+                            if (mission.duration && mission.teamSize) {
+                                description += ", ";
+                            } 
+                            if (mission.teamSize) {
+                                description += mission.teamSize;
+                            }
+                            description += ")."
+                        }
+                        
+                        addHtml(margin3, description);
                         addLine();
                         doc.setFontType("italic");
                         doc.setTextColor(150);
