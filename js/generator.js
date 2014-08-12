@@ -23,11 +23,50 @@ var id = 0, i = 0, $this;
  */
 var updateCVUtils = {
     /**
+     * Add or update an attribute in fields with particular key.
+     * 
+     * @param {string} fieldKey The field key to modify the attribute.
+     * @param {string} fieldAttributeKey The attribute name.
+     * @param {string} fieldAttributeValue The attribute value.
+     * @param $cv The cv model.
+     */
+    addOrUpdateFieldAttribute: function(fieldKey, fieldAttributeKey, fieldAttributeValue, $cv) {
+        var splitKeys = fieldKey.split("/");
+
+        for (var locale in $cv) {
+            var indexSplit = 0;
+
+            var lookupField = function(f, index) {
+                if (f.key === splitKeys[indexSplit]) {
+                    if (indexSplit < (splitKeys.length - 1)) {
+                        // In this case, the field's input type is a panel
+                        indexSplit++;
+
+                        // Search the field into the fieldsTemplate
+                        angular.forEach(f.fieldsTemplate, lookupField);
+
+                        // Search the field into each fields in the panel
+                        angular.forEach(f.panels, function(panel) {
+                            angular.forEach(panel.fields, lookupField);
+                        });
+
+                        indexSplit--;
+                    } else {
+                        // This is the field we looked for
+                        f[fieldAttributeKey] = fieldAttributeValue;
+                    }
+                }
+            };
+
+            angular.forEach($cv[locale].fields, lookupField);
+        }
+    },
+    /**
      * Insert a field after or before another in the angular model.
      *
      * @param field The field object to insert with at least the key attribute. If not defined
      * the keyLabel attribute take the key attribute value, inputType attribute take the "text".
-     * @param fieldKey The field key to add the field after (or before). If the field is
+     * @param {string} fieldKey The field key to add the field after (or before). If the field is
      * contained into another, you can add slashes to the key to specify the complete path.
      * For example, you can use the key "workExperience/endDate" to add a field after the
      * "end date" field contained into the "work experience" panel.

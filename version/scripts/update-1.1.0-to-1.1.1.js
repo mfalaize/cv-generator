@@ -68,6 +68,8 @@ var updateVersion = function(cv) {
     lastUpdateField.inputType = "date";
 
     updateCVUtils.insertField(lastUpdateField, "miscellaneous.drivingLicence", false, cv);
+    
+    updateCVUtils.addOrUpdateFieldAttribute("workExperience/missions", "titleTemplate", "panel.fields[0].value", cv);
 
     return cv;
 };

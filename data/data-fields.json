@@ -298,6 +298,7 @@
                     "key": "missions",
                     "keyLabel": "missions",
                     "inputType": "panel",
+                    "titleTemplate": "panel.fields[0].value",
                     "fieldsTemplate": [
                         {
                             "key": "customer",
