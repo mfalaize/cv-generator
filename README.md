@@ -22,7 +22,7 @@ You can generate your CV from the GUI [here](http://www.cvgenerator.net) or down
 
 You can see the application changelog [here](CHANGELOG.md).
 
-You can download the latest version [here](http://build.cvgenerator.net/snapshot/cv-generator-1.1.0-SNAPSHOT.zip) and access the latest generator [here](http://build.cvgenerator.net/snapshot/cv/index.html). Please note that this version may be unstable.
+You can download the latest version [here](http://build.cvgenerator.net/snapshot/cv-generator-1.1.1-SNAPSHOT.zip) and access the latest generator [here](http://build.cvgenerator.net/snapshot/cv/index.html). Please note that this version may be unstable.
 
 ###Guidelines for users
 
