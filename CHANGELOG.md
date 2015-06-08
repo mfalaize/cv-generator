@@ -1,6 +1,12 @@
 CV Generator v1.1.1
 ===================
 
+###Changelog v1.1.1 -> v1.1.2
+
+#####Bug fixes
+
+* Fix an issue when you load a saved file that does not allow you to add others experiences.
+
 ###Changelog v1.1.0 -> v1.1.1
 
 #####Bug fixes
