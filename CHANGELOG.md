@@ -1,5 +1,5 @@
-CV Generator v1.1.1
-===================
+CV Generator
+============
 
 ###Changelog v1.1.1 -> v1.1.2
 
