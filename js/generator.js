@@ -291,7 +291,7 @@ cvGeneratorControllers.controller("CVGeneratorController", ["$scope", "$http", "
                     var matchIds = content.match(/ui-id-[0-9]+/g);
                     angular.forEach(matchIds, function(match, index) {
                         var matchId = match.substring(6, match.length);
-                        if (id < matchId) {
+                        if (parseInt(id) < parseInt(matchId)) {
                             id = matchId;
                         }
                     });
