@@ -29,5 +29,25 @@ var updateVersion = function(cv) {
 
     updateCVUtils.insertField(keySkillField, "skills/types/categories/skills/name", false, cv);
 
+    angular.forEach(cv, function(cvLocale) {
+        angular.forEach(cvLocale, function(fields) {
+            angular.forEach(fields, function(field) {
+                if (field.key === "model") {
+                    angular.forEach(field.options, function(option) {
+                        angular.forEach(option.onchange, function(onchange) {
+                            angular.forEach(onchange.options, function(op) {
+                                op.value = "https:" + op.value;
+                            });
+                            var newOp = new Object();
+                            newOp.label = "Material Design"
+                            newOp.value = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.min.css";
+                            onchange.options.push(newOp);
+                        });
+                    });
+                }
+            });
+        });
+    });
+
     return cv;
 };

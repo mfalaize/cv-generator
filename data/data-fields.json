@@ -14,47 +14,47 @@
                             "key": "theme",
                             "keyLabel": "theme",
                             "inputType": "select",
-                            "value": "https//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css",
+                            "value": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css",
                             "options": [
                                 {
                                     "label": "Bootstrap (default)",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css"
                                 },
                                 {
                                     "label": "Amelia",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/amelia/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/amelia/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Cerulean",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cerulean/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cerulean/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Cosmo",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cosmo/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cosmo/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Custom",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/custom/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/custom/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Cyborg",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cyborg/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/cyborg/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Darkly",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/darkly/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/darkly/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Flatly",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/flatly/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/flatly/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Journal",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/journal/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/journal/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Lumen",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/lumen/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/lumen/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Material Design",
@@ -62,31 +62,31 @@
                                 },
                                 {
                                     "label": "Readable",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/readable/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/readable/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Simplex",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/simplex/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/simplex/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Slate",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/slate/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/slate/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Spacelab",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/spacelab/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/spacelab/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Superhero",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/superhero/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/superhero/bootstrap.min.css"
                                 },
                                 {
                                     "label": "United",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/united/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/united/bootstrap.min.css"
                                 },
                                 {
                                     "label": "Yeti",
-                                    "value": "https//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/yeti/bootstrap.min.css"
+                                    "value": "https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.1.1-1/css/yeti/bootstrap.min.css"
                                 }
                             ]
                         }
