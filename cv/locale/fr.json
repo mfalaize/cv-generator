@@ -40,5 +40,6 @@
     "htmlAboutThisSite": "<p>Ce site a été généré par l'application <a href=\"https://github.com/mfalaize/cv-generator\">CV Generator v@VERSION@</a>.</p>",
     "mission": "Mission",
     "customer": "Client",
-    "lastUpdate": "Dernière mise à jour"
+    "lastUpdate": "Dernière mise à jour",
+    "keySkills": "Compétences clées"
 }

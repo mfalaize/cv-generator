@@ -561,6 +561,11 @@
                                             "inputType": "text"
                                         },
                                         {
+                                          "key": "keySkill",
+                                          "keyLabel": "keySkill",
+                                          "inputType": "checkbox"
+                                        },
+                                        {
                                             "key": "level",
                                             "keyLabel": "level",
                                             "inputType": "select",

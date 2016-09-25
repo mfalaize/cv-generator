@@ -49,5 +49,6 @@
     "customer": "Client",
     "duration": "Durée",
     "teamSize": "Taille de l'équipe",
-    "lastSkillsUpdate": "Dernière modification des compétences"
+    "lastSkillsUpdate": "Dernière modification des compétences",
+    "keySkill": "Compétence clée"
 }

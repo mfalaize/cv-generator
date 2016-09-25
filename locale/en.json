@@ -49,5 +49,6 @@
     "customer": "Customer",
     "duration": "Duration",
     "teamSize": "Team size",
-    "lastSkillsUpdate": "Last skills update"
+    "lastSkillsUpdate": "Last skills update",
+    "keySkill": "Key skill"
 }
