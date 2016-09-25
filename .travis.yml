@@ -3,16 +3,3 @@ jdk:
 - oraclejdk7
 script:
 - ant snapshot
-deploy:
-  provider: s3
-  access_key_id: AKIAJVWJS6FLJFUSQ65A
-  secret_access_key:
-    secure: VYFGEgf/8WAKxLSZLXKj4jEcAXMZIijYvL5nW9SfYwT94x/pqXzWf2uTppKkSsMhbnVVDHnG5q9RYdAtQzmbvleFTC3QDPpChvyYj5ZMBmQFnu4MkLEfSzfieU8Z0zWhWreqKv/p5pWa/Q+CAREUq+sfStU4xbopkwFppQNOFGA=
-  bucket: build.maxime-falaize.fr
-  region: eu-west-1
-  skip_cleanup: true
-  local-dir: build
-  upload-dir: snapshot
-  on:
-    repo: mfalaize/cv-generator
-    branch: master
