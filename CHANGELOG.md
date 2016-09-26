@@ -1,6 +1,14 @@
 CV Generator
 ============
 
+###Changelog v1.1.2 -> v1.1.3
+
+#####New features
+
+* Remove star empty icons to improve readability of skills.
+* Add https protocol to all cdnjs urls to allow testing with file protocol.
+* Possibility to check skills as "key skills" in order to display it on the cv index page.
+
 ###Changelog v1.1.1 -> v1.1.2
 
 #####Bug fixes
