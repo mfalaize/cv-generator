@@ -1,0 +1,71 @@
+<!--
+  ~ Copyright (C) 2014  Maxime Falaize
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div ng-if="field.inputType !== 'checkbox'">
+    <label class="control-label col-md-2" for="{{field.id}}">
+        <span>{{locale[field.keyLabel]}}</span>
+    </label>
+
+    <div class="col-md-10">
+        <select ng-if="field.inputType === 'select'" ng-model="field.value" class="form-control" id="{{field.id}}"
+                name="{{field.key}}">
+            <option ng-repeat="option in field.options" value="{{option.value}}"
+                    ng-selected="field.value === option.value">
+            <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
+            <span ng-if="option.label">{{option.label}}</span>
+            </option>
+        </select>
+        <select ng-if="field.inputType === 'selectMultiple'" multiple ng-model="field.value" class="form-control"
+                id="{{field.id}}" name="{{field.key}}">
+            <option ng-repeat="option in field.options" value="{{option.value}}"
+                    ng-selected="field.value === option.value">
+            <span ng-if="option.keyLabel">{{locale[option.keyLabel]}}</span>
+            <span ng-if="option.label">{{option.label}}</span>
+            </option>
+        </select>
+        <input ng-if="field.inputType === 'date'" type="date" ng-model="field.value" class="form-control"
+               id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'text'" type="text" ng-model="field.value" class="form-control"
+               id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'number'" type="number" ng-model="field.value" min="{{field.min}}"
+               max="{{field.max}}" class="form-control" id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'mail'" type="email" ng-model="field.value" class="form-control"
+               id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'tel'" type="tel" ng-model="field.value" class="form-control"
+               id="{{field.id}}" name="{{field.key}}">
+        <input ng-if="field.inputType === 'url'" type="url" ng-model="field.value" class="form-control"
+               id="{{field.id}}" name="{{field.key}}">
+
+        <div ng-if="field.inputType === 'image'">
+            <input type="file" ng-model="field.value" accept="{{field.accept}}" id="{{field.id}}" name="{{field.key}}"
+                   ng-file-change="loadImage(this, field)">
+            <img ng-if="field.data" ng-src="{{field.data}}" class="img-thumbnail animation" alt="{{field.key}}"/>
+        </div>
+        <textarea ng-if="field.inputType === 'textarea'" type="text" ng-model="field.value" class="form-control"
+                  id="{{field.id}}" name="{{field.key}}" rows="5"></textarea>
+    </div>
+</div>
+<div ng-if="field.inputType === 'checkbox'">
+    <div class="col-md-offset-2 col-md-10">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="field.value" id="{{field.id}}" name="{{field.key}}">
+                <span>{{locale[field.keyLabel]}}</span>
+            </label>
+        </div>
+    </div>
+</div>

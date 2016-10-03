@@ -1,0 +1,58 @@
+<!--
+  ~ Copyright (C) 2014  Maxime Falaize
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="form-group" ng-if="field.inputType !== 'panel'">
+    <ng-include src="'include/fields.html'"></ng-include>
+</div>
+<div ng-if="field.inputType === 'panel'">
+    <h3>
+        <span>{{locale[field.keyLabel]}}</span>
+        <button id="{{field.key}}-add" ng-click="addPanel(field)" class="btn btn-success btn-xs">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </h3>
+    <div class="panel-group" id="{{field.id}}">
+        <div ng-repeat="panel in field.panels" class="panel panel-default animation" id="{{panel.id}}"
+             name="{{field.key}}">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span class="btn-group">
+                        <button ng-if="!$first" ng-click="movePanel($index, true, field)"
+                                class="btn btn-default btn-xs"><span
+                                class="glyphicon glyphicon-chevron-up"></span></button>
+                        <button ng-if="!$last" ng-click="movePanel($index, false, field)" class="btn btn-xs"><span
+                                class="glyphicon glyphicon-chevron-down"></span></button>
+                    </span>
+                    <a data-toggle="collapse" data-parent="{{field.id}}" href="#{{panel.id}}-collapse">
+                        <span ng-bind-template-ext="field.titleTemplate, locale[field.keyLabel]"></span>
+                    </a>
+                    <span class="btn-group pull-right">
+                        <button ng-click="removePanel(field, panel)" class="btn btn-danger btn-xs"><span
+                                class="glyphicon glyphicon-minus"></span></button>
+                    </span>
+                </h4>
+            </div>
+            <div class="panel-collapse collapse" id="{{panel.id}}-collapse">
+                <div class="panel-body">
+                    <div ng-repeat="f in panel.fields" ng-init="field = f">
+                        <ng-include src="'include/panel.html'"></ng-include>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

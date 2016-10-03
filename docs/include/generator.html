@@ -1,0 +1,72 @@
+<!--
+  ~ Copyright (C) 2014  Maxime Falaize
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="container" ng-cloak>
+    <header class="page-header">
+        <h1>Curriculum Vitae Generator
+            <small>v1.1.3</small>
+            <span class="btn-group pull-right">
+                <input style="display:none;" type="file" id="savedFile" ng-file-change="loadSavedFile(this)">
+                <button class="btn btn-default" ng-click="saveCV()">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                    <span> {{locale.saveCV}}</span>
+                </button>
+                <button class="btn btn-default" ng-click="loadCV()">
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                    <span> {{locale.loadCV}}</span>
+                </button>
+                <button class="btn btn-primary" ng-click="generateCV()">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                    <span> {{locale.generateCV}}</span>
+                </button>
+            </span>
+        </h1>
+    </header>
+    <ul class="nav nav-tabs">
+        <li id="defaultLocale" ng-repeat="cvLocale in cv" ng-class="{
+                    active: active === cvLocale.locale.locale
+                }">
+            <a href="#{{cvLocale.locale.locale}}" data-toggle="tab">
+                <img src="img/blank.gif" class="flag {{cvLocale.locale.flagClass}}"
+                     alt="{{cvLocale.locale.flagClass}}"/>
+            </a>
+        </li>
+        <li id="addLanguage">
+            <a href="#" ng-click="addLanguage()"><span class="glyphicon glyphicon-plus"></span></a>
+        </li>
+    </ul>
+    <br/>
+
+    <div class="tab-content">
+        <div ng-repeat="cvLocale in cv" class="tab-pane" ng-class="{
+                    active: active === cvLocale.locale.locale
+                }"
+             id="{{cvLocale.locale.locale}}">
+            <div class="form-horizontal">
+                <div ng-repeat="fi in cvLocale.fields" ng-init="field = fi">
+                    <ng-include src="'include/panel.html'"></ng-include>
+                    <div ng-if="getOption(fi)">
+                        <div class="animation" ng-repeat="onchange in getOption(fi).onchange" ng-init="field = onchange"
+                             name="{{fi.key}}.{{onchange.key}}">
+                            <ng-include src="'include/panel.html'"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

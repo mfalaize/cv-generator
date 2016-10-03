@@ -1,0 +1,18 @@
+{
+    "supportedLocales": [
+        {
+            "locale": "en_US",
+            "localeFile": "en.json",
+            "dataFile": "data_en.json",
+            "flagClass": "flag-us",
+            "label": "English"
+        },
+        {
+            "locale": "fr_FR",
+            "localeFile": "fr.json",
+            "dataFile": "data_fr.json",
+            "flagClass": "flag-fr",
+            "label": "Français"
+        }
+    ]
+}
