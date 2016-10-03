@@ -1,0 +1,9 @@
+body {
+	background-color: #EEE;
+	text-align: center;
+	max-width: 1024px;
+	margin: auto;
+}
+body p img {
+	width: 100%;
+}
