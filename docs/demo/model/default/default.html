@@ -91,6 +91,21 @@
                     <img ng-if="cv.photoPath" ng-src="img/{{cv.photoPath}}" class="img-thumbnail" alt="{{cv.photoAlt}}"/>
                 </div>
             </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-10">
+                    <h4>{{locale.keySkills}} :</h4>
+
+                    <span ng-repeat="skill in cv.skills">
+                        <span ng-repeat="type in skill.types">
+                            <span ng-repeat="actualSkill in type.actualSkills">
+                                <span ng-if="actualSkill.keySkill" class="badge">
+                                    {{actualSkill.name}}
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-10 well">
                     <h4>{{locale.presentation}} :</h4>
@@ -219,11 +234,6 @@
                                             <span ng-if="actualSkill.level >= 3" class="glyphicon glyphicon-star"></span>
                                             <span ng-if="actualSkill.level >= 4" class="glyphicon glyphicon-star"></span>
                                             <span ng-if="actualSkill.level >= 5" class="glyphicon glyphicon-star"></span>
-                                            <span ng-if="actualSkill.level < 1" class="glyphicon glyphicon-star-empty"></span>
-                                            <span ng-if="actualSkill.level < 2" class="glyphicon glyphicon-star-empty"></span>
-                                            <span ng-if="actualSkill.level < 3" class="glyphicon glyphicon-star-empty"></span>
-                                            <span ng-if="actualSkill.level < 4" class="glyphicon glyphicon-star-empty"></span>
-                                            <span ng-if="actualSkill.level < 5" class="glyphicon glyphicon-star-empty"></span>
                                         </a>
                                     </td>
                                 </tr>
