@@ -1,7 +1,7 @@
 CV Generator [![Build Status](https://travis-ci.org/mfalaize/cv-generator.svg)](https://travis-ci.org/mfalaize/cv-generator)
 ============
 
-###Description
+### Description
 
 This application is a 100% javascript and HTML5/CSS website that fills the following requirements for your CV :
 
@@ -22,9 +22,9 @@ You can generate your CV from the GUI [here](https://mfalaize.github.io/cv-gener
 
 You can see the application changelog [here](CHANGELOG.md).
 
-###Guidelines for users
+### Guidelines for users
 
-####Getting started
+#### Getting started
 
 To create your own CV, you can easily download the application, put it in your a web server (e.g. Apache Server) and launch the index.html with your favourite browser and let you guide by the generator.
 
@@ -32,25 +32,25 @@ Another way is to fork this repository and manually modify <code>cv/data/data_{y
 
 That's all!
 
-####For manual edition (without the GUI)
+#### For manual edition (without the GUI)
 
-#####Manage several languages
+##### Manage several languages
 
 To add a language or modify the default language, edit the <code>cv/locale/locale.json</code> file.
 
-#####Modify the templates
+##### Modify the templates
 
 To change the HTML template, just change the value of the <code>model</code> key at the beginning of your <code>cv/data/data_{yourLanguage}.json</code> file. The value must match with a directory name present in the <code>cv/model</code> directory.
 
 To change the PDF template, it is just the same as the HTML template. Just change the <code>pdfModel</code> value to match a js file name present in the <code>cv/pdfmodel</code> directory.
 
-#####Customize the PDF rendering
+##### Customize the PDF rendering
 
 You can choose what part of your CV you want to export in the PDF file. For that just put a <code>"displayOnPdf": true</code> in your <code>cv/data/data_{yourLanguage}.json</code> for each part you want to see in the PDF.
 
 By default your work experience, education, pastimes and languages are not displayed.
 
-###Fork
+### Fork
 
 Feel free to fork this repository and adapt the content to your own. The following list suggests what types of improvements you can add to the application :
 
@@ -62,13 +62,13 @@ These improvements should be integrated to the project so if you develop one, pl
 
 To discuss other enhancements or report bugs/translation errors, please use the github issue tracker.
 
-###Guidelines for contributors
+### Guidelines for contributors
 
-####Adding a new language
+#### Adding a new language
 
 Nothing easier. Copy the <code>cv/locale/en.json</code> to <code>cv/locale/{yourLanguage}.json</code> and replace all values except the keys. Do the same with <code>locale/en.json</code> to translate the GUI. For the GUI, you also have to add your new language in <code>locale/locales.json</code>.
 
-####Adding a new website template
+#### Adding a new website template
 
 A website template is identified by its name. You have to give your template a unique name. To see what names are unavailables, see the <code>cv/model</code> directory content.
 
@@ -80,7 +80,7 @@ Then you just have to develop your template as you want! Please just follow the 
 
 When your template is complete you finally have to update the GUI by adding your template in the options of the model field. To do so, edit the <code>data/data-fields.json</code>. Note that you can add custom properties (with custom new fields) as it is done with the default model (please see the JSON file to know how to do).
 
-####Adding a new PDF template
+#### Adding a new PDF template
 
 A PDF template is identified by its name. You have to give your template a unique name. To see what names are unavailables, see the <code>cv/pdfmodel</code> directory content.
 
@@ -92,6 +92,6 @@ As the PDF is generated with the jsPdf library, the <code>pdfContent</code> func
 
 When your template is complete you finally have to update the GUI by adding your template in the options of the PDF model field. To do so, edit the <code>data/data-fields.json</code>. Note that you can add custom properties (with custom new fields) as it is done with the default model (please see the JSON file to know how to do).
 
-####Note for the <code>data/data-fields.json</code> file
+#### Note for the <code>data/data-fields.json</code> file
 
 When you edit the <code>data/data-fields.json</code> file, you also have to write a JS script in the <code>version/scripts</code> directory. This script is necessary to automatically adapt the saved CV files to the new model (as this file is only an angular model dump). The file name is important and have to be in the same template as <code>update-1.0.0-to-1.1.0.js</code>. If the script does not exist, just copy the <code>update-1.0.0-to-1.1.0.js</code> file, change its name and adapt its content. If the script already exists, just add your modifications to the content.
